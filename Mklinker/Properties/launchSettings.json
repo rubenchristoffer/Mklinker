@@ -2,7 +2,7 @@
   "profiles": {
     "Mklinker": {
       "commandName": "Project",
-      "commandLineArgs": "build \"some path here\" \"another path here\" build"
+      "commandLineArgs": "build \"some path here\" \"another path here\" build here"
     }
   }
 }

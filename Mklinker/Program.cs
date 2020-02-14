@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using Mklinker.Commands;
 
 namespace Mklinker {
 
@@ -9,15 +10,14 @@ namespace Mklinker {
 
 		public const string configFile = "linker.config";
 
-		private static string[] config;
-		private static readonly Type commandType = typeof(Command);
+		public static string[] config { get; private set; }
 
-		private static Dictionary<Command, string[]> parsedCommands = new Dictionary<Command, string[]>();
+		private static ICommand[] availableCommands = new ICommand[] {
+			new BuildCommand(),
+			new AddLinkCommand()
+		};
 
-		public enum Command {
-			Build,
-			AddLink
-		}
+		private static List<Tuple<ICommand, string[]>> commandTasks = new List<Tuple<ICommand, string[]>>();
 
 		public static void Main(string[] args) {
 			if (!File.Exists(configFile)) {
@@ -29,15 +29,15 @@ namespace Mklinker {
 
 			config = File.ReadAllLines(configFile);
 			ParseCommands(args);
-			//ExecuteCommands(args);
+			ExecuteCommands();
 		}
 
 		public static bool IsCommand (string str) {
-			return Enum.GetNames(commandType).Any(c => c.ToLower().Equals(str.ToLower()));
+			return availableCommands.Any(c => c.GetName().ToLower().Equals(str));
 		}
 
-		public static Command GetCommand(string str) {
-			return (Command)Enum.Parse(commandType, str, true);
+		public static ICommand GetCommand(string str) {
+			return availableCommands.FirstOrDefault(c => c.GetName().ToLower().Equals(str));
 		}
 
 		public static void ParseCommands(string[] args) {
@@ -61,14 +61,14 @@ namespace Mklinker {
 				string[] commandArguments = new string[argumentAmount];
 				Array.Copy(args, index + 1, commandArguments, 0, argumentAmount);
 
-				parsedCommands.Add(GetCommand(args[index]), commandArguments);
+				commandTasks.Add(new Tuple<ICommand, string[]>(GetCommand(args[index]), commandArguments));
 			}
 		}
 
-		public static void ExecuteCommands () {
-			/*foreach (string arg in args) {
-				
-			}*/
+		public static void ExecuteCommands() {
+			foreach (Tuple <ICommand, string[]> commandTask in commandTasks) {
+				commandTask.Item1.ExecuteCommand(commandTask.Item2);
+			}
 		}
 
 	}
