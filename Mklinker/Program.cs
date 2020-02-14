@@ -9,15 +9,14 @@ namespace Mklinker {
 	public class Program {
 
 		public const string configFile = "linker.config";
-
 		public static string[] config { get; private set; }
+
+		private static List<CommandTask> commandTasks = new List<CommandTask>();
 
 		private static ICommand[] availableCommands = new ICommand[] {
 			new BuildCommand(),
 			new AddLinkCommand()
 		};
-
-		private static List<Tuple<ICommand, string[]>> commandTasks = new List<Tuple<ICommand, string[]>>();
 
 		public static void Main(string[] args) {
 			if (!File.Exists(configFile)) {
@@ -61,14 +60,12 @@ namespace Mklinker {
 				string[] commandArguments = new string[argumentAmount];
 				Array.Copy(args, index + 1, commandArguments, 0, argumentAmount);
 
-				commandTasks.Add(new Tuple<ICommand, string[]>(GetCommand(args[index]), commandArguments));
+				commandTasks.Add(new CommandTask(GetCommand(args[index]), commandArguments));
 			}
 		}
 
 		public static void ExecuteCommands() {
-			foreach (Tuple <ICommand, string[]> commandTask in commandTasks) {
-				commandTask.Item1.ExecuteCommand(commandTask.Item2);
-			}
+			commandTasks.ForEach(task => task.ExecuteTask());
 		}
 
 	}
