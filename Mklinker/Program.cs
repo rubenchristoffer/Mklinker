@@ -8,8 +8,7 @@ namespace Mklinker {
 
 	public class Program {
 
-		public const string configFile = "linker.config";
-		public static string[] config { get; private set; }
+		public static Config config { get; private set; }
 
 		private static List<CommandTask> commandTasks = new List<CommandTask>();
 
@@ -19,16 +18,22 @@ namespace Mklinker {
 		};
 
 		public static void Main(string[] args) {
-			if (!File.Exists(configFile)) {
+			if (!File.Exists(Config.configFile)) {
 				Console.WriteLine("Creating config file 'linker.config' since it does not exist");
-				File.Create(configFile);
+				File.Create(Config.configFile);
 			} else if (args.Length == 0) {
 				Console.WriteLine("No arguments are provided and config file already exists");
 			}
 
-			config = File.ReadAllLines(configFile);
+			config = Config.Deserialize(File.ReadAllText(Config.configFile));
 			ParseCommands(args);
 			ExecuteCommands();
+
+			config.elements.Add(new ConfigElement("targetdir", "sourcedir", Config.LinkType.Junction));
+
+			Console.WriteLine(config);
+
+			SaveConfig();
 		}
 
 		public static bool IsCommand (string str) {
@@ -66,6 +71,10 @@ namespace Mklinker {
 
 		public static void ExecuteCommands() {
 			commandTasks.ForEach(task => task.ExecuteTask());
+		}
+
+		public static void SaveConfig () {
+			File.WriteAllText(Config.configFile, config.Serialize());
 		}
 
 	}

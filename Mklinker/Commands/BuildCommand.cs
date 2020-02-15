@@ -3,23 +3,18 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 using System.IO;
+using LinkType = Mklinker.Config.LinkType;
 
 namespace Mklinker.Commands {
 
 	public class BuildCommand : ICommand {
 
-		public enum LinkType {
-			Junction,
-			Symbolic,
-			Hard
-		}
-
 		public void ExecuteCommand(string[] args) {
 			Console.WriteLine("Creating links based on config...");
 
-			foreach (string task in Program.config) {
+			/*foreach (string task in Program.config) {
 				Process mklinkProcess = Process.Start(GetProcessInfo(LinkType.Symbolic, args[1], args[2]));
-			}
+			}*/
 
 			Console.WriteLine("Finished");
 		}
