@@ -12,6 +12,8 @@ namespace Mklinker.Commands {
 		public void ExecuteCommand(string[] args) {
 			Console.WriteLine("Creating links based on config...");
 
+			int successes = 0;
+
 			foreach (ConfigLink linkTask in Program.config.linkList) {
 				if (!File.Exists(linkTask.sourcePath) && !Directory.Exists(linkTask.sourcePath)) {
 					Console.WriteLine(String.Format("Path '{0}' does not exist!", linkTask.sourcePath));
@@ -21,7 +23,12 @@ namespace Mklinker.Commands {
 				Process mklinkProcess = Process.Start(GetProcessInfo(linkTask));
 				
 				while (!mklinkProcess.StandardOutput.EndOfStream) {
-					Console.WriteLine(mklinkProcess.StandardOutput.ReadLine());
+					string output = mklinkProcess.StandardOutput.ReadLine();
+
+					if (output.ToLower().Contains("created"))
+						successes++;
+
+					Console.WriteLine(output);
 				}
 
 				while (!mklinkProcess.StandardError.EndOfStream) {
@@ -29,7 +36,7 @@ namespace Mklinker.Commands {
 				}
 			}
 
-			Console.WriteLine("Finished");
+			Console.WriteLine("Finished! Created {0} out of {1} links", successes, Program.config.linkList.Count);
 		}
 
 		public string GetName() {
