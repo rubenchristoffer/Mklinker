@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
-using LinkType = Mklinker.Config.LinkType;
 
 namespace Mklinker {
 
@@ -16,6 +15,13 @@ namespace Mklinker {
 
 		[XmlAttribute ("Type")]
 		public LinkType linkType;
+
+		public enum LinkType {
+			None,
+			Junction,
+			Symbolic,
+			Hard
+		}
 
 		public ConfigLink(string sourcePath, string targetPath, LinkType linkType) {
 			this.sourcePath = sourcePath;

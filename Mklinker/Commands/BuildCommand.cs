@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 using System.IO;
-using LinkType = Mklinker.Config.LinkType;
+using LinkType = Mklinker.ConfigLink.LinkType;
 
 namespace Mklinker.Commands {
 
@@ -36,7 +36,7 @@ namespace Mklinker.Commands {
 				}
 			}
 
-			Console.WriteLine("Finished! Created {0} out of {1} links", successes, Program.config.linkList.Count);
+			Console.WriteLine("Finished! Created {0} / {1} links", successes, Program.config.linkList.Count);
 		}
 
 		public string GetName() {

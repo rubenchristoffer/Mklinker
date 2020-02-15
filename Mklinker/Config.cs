@@ -17,12 +17,6 @@ namespace Mklinker {
 		[XmlArray("LinkList")]
 		[XmlArrayItem("Link")]
 		public List<ConfigLink> linkList { get; private set; }
-
-		public enum LinkType {
-			Junction,
-			Symbolic,
-			Hard
-		}
 		
 		public Config () {
 			linkList = new List<ConfigLink>();
