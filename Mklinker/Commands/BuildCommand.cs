@@ -13,6 +13,11 @@ namespace Mklinker.Commands {
 			Console.WriteLine("Creating links based on config...");
 
 			foreach (ConfigLink linkTask in Program.config.linkList) {
+				if (!File.Exists(linkTask.sourcePath) && !Directory.Exists(linkTask.sourcePath)) {
+					Console.WriteLine(String.Format("Path '{0}' does not exist!", linkTask.sourcePath));
+					continue;
+				}
+
 				Process mklinkProcess = Process.Start(GetProcessInfo(linkTask));
 				
 				while (!mklinkProcess.StandardOutput.EndOfStream) {
