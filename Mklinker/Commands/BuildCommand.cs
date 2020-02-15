@@ -12,9 +12,17 @@ namespace Mklinker.Commands {
 		public void ExecuteCommand(string[] args) {
 			Console.WriteLine("Creating links based on config...");
 
-			/*foreach (string task in Program.config) {
-				Process mklinkProcess = Process.Start(GetProcessInfo(LinkType.Symbolic, args[1], args[2]));
-			}*/
+			foreach (ConfigLink linkTask in Program.config.linkList) {
+				Process mklinkProcess = Process.Start(GetProcessInfo(linkTask));
+				
+				while (!mklinkProcess.StandardOutput.EndOfStream) {
+					Console.WriteLine(mklinkProcess.StandardOutput.ReadLine());
+				}
+
+				while (!mklinkProcess.StandardError.EndOfStream) {
+					Console.WriteLine(mklinkProcess.StandardError.ReadLine());
+				}
+			}
 
 			Console.WriteLine("Finished");
 		}
@@ -23,10 +31,10 @@ namespace Mklinker.Commands {
 			return "Build";
 		}
 
-		private ProcessStartInfo GetProcessInfo(LinkType linkType, string targetPath, string sourcePath) {
+		private ProcessStartInfo GetProcessInfo(ConfigLink configLink) {
 			return new ProcessStartInfo {
-				FileName = "mklink",
-				Arguments = string.Format("{0} {1} {2}", GetLinkTypeArgument(linkType, sourcePath), targetPath, sourcePath),
+				FileName = "cmd.exe",
+				Arguments = string.Format("/c mklink{0} {1} {2}", GetLinkTypeArgument(configLink.linkType, configLink.sourcePath), configLink.targetPath, configLink.sourcePath),
 				RedirectStandardOutput = true,
 				RedirectStandardError = true
 			};

@@ -28,10 +28,6 @@ namespace Mklinker {
 			linkList = new List<ConfigLink>();
 		}
 
-		public ConfigLink[] GetElements () {
-			return linkList.ToArray();
-		}
-
 		public string Serialize () {
 			XmlSerializer serializer = new XmlSerializer(GetType());
 

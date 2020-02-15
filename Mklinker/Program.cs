@@ -28,10 +28,6 @@ namespace Mklinker {
 			config = Config.Deserialize(File.ReadAllText(Config.configFile));
 			ParseCommands(args);
 			ExecuteCommands();
-
-			config.linkList.Add(new ConfigLink("path1", "path2", Config.LinkType.Junction));
-
-			SaveConfig();
 		}
 
 		public static bool IsCommand (string str) {
