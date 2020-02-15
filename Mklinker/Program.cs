@@ -29,9 +29,7 @@ namespace Mklinker {
 			ParseCommands(args);
 			ExecuteCommands();
 
-			config.elements.Add(new ConfigElement("targetdir", "sourcedir", Config.LinkType.Junction));
-
-			Console.WriteLine(config);
+			config.linkList.Add(new ConfigLink("path1", "path2", Config.LinkType.Junction));
 
 			SaveConfig();
 		}

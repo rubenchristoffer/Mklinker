@@ -14,9 +14,9 @@ namespace Mklinker {
 
 		public const string configFile = "linker.config";
 
-		[XmlArray("Elements")]
-		[XmlArrayItem("Element")]
-		public List<ConfigElement> elements { get; private set; }
+		[XmlArray("LinkList")]
+		[XmlArrayItem("Link")]
+		public List<ConfigLink> linkList { get; private set; }
 
 		public enum LinkType {
 			Junction,
@@ -25,11 +25,11 @@ namespace Mklinker {
 		}
 		
 		public Config () {
-			elements = new List<ConfigElement>();
+			linkList = new List<ConfigLink>();
 		}
 
-		public ConfigElement[] GetElements () {
-			return elements.ToArray();
+		public ConfigLink[] GetElements () {
+			return linkList.ToArray();
 		}
 
 		public string Serialize () {
