@@ -2,7 +2,7 @@
   "profiles": {
     "Mklinker": {
       "commandName": "Project",
-      "commandLineArgs": "build"
+      "commandLineArgs": "addlink targetPath sourcePath s"
     }
   }
 }

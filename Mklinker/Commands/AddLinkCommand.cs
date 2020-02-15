@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Linq;
 
 namespace Mklinker.Commands {
 
@@ -10,12 +11,25 @@ namespace Mklinker.Commands {
 		public void ExecuteCommand(string[] args) {
 			if (args.Length < 2) {
 				Console.WriteLine("At least 2 arguments are required this command");
+				Console.WriteLine("Syntax: addlink [target] [source] <link type>");
+				Console.WriteLine("Link Types: j (junction), s (symbolic), h (hard)");
+				Console.WriteLine("Example: addlink myTargetFolder mySourceFolder j");
 				return;
 			}
 
 			string targetPath = args[0];
 			string sourcePath = args[1];
 			ConfigLink.LinkType linkType = ConfigLink.LinkType.None;
+
+			if (!File.Exists(targetPath) && !Directory.Exists(targetPath)) {
+				Console.WriteLine(String.Format("The targetPath '{0}' is invalid because it does not exist", targetPath));
+				return;
+			}
+
+			if (Program.config.linkList.Any (link => link.targetPath.Equals(targetPath))) {
+				Console.WriteLine(String.Format("The targetPath '{0}' is invalid because it already exists in config file", targetPath));
+				return;
+			}
 
 			// Check if explicit link type is provided
 			if (args.Length > 2) {
@@ -38,7 +52,9 @@ namespace Mklinker.Commands {
 			}
 
 			Program.config.linkList.Add(new ConfigLink(sourcePath, targetPath, linkType));
-			Console.WriteLine(String.Format("Added new {0} link to config file", linkType.ToString()));
+			Program.SaveConfig();
+
+			Console.WriteLine(String.Format("Added new {0} link to config file: \nTarget: '{1}'\nSource: '{2}'", linkType.ToString(), targetPath, sourcePath));
 		}
 
 		public string GetName() {
