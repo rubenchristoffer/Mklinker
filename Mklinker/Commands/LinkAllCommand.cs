@@ -46,7 +46,7 @@ namespace Mklinker.Commands {
 		private ProcessStartInfo GetProcessInfo(ConfigLink configLink) {
 			return new ProcessStartInfo {
 				FileName = "cmd.exe",
-				Arguments = string.Format("/c mklink{0} {1} {2}", GetLinkTypeArgument(configLink.linkType, configLink.sourcePath), configLink.targetPath, configLink.sourcePath),
+				Arguments = string.Format("/c mklink{0} {1} {2}", GetLinkTypeArgument(configLink.linkType, configLink.sourcePath), Path.GetFullPath(configLink.targetPath), Path.GetFullPath(configLink.sourcePath)),
 				RedirectStandardOutput = true,
 				RedirectStandardError = true,
 				UseShellExecute = false
