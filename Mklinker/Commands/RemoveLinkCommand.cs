@@ -9,7 +9,7 @@ namespace Mklinker.Commands {
 
 		public void ExecuteCommand(string[] args) {
 			if (args.Length != 1) {
-				Console.WriteLine("RemoveLink command only takes 1 argument");
+				Console.WriteLine("\nRemoveLink command only takes 1 argument");
 				Console.WriteLine("Syntax: RemoveLink [targetPath]");
 				return;
 			}
@@ -18,9 +18,9 @@ namespace Mklinker.Commands {
 
 			if (configLink != null) {
 				Program.config.linkList.Remove(configLink);
-				Console.WriteLine("Successfully removed link with targetPath '{0}'", args[0]);
+				Console.WriteLine("\nSuccessfully removed link with targetPath '{0}'", args[0]);
 			} else {
-				Console.WriteLine(String.Format("The targetPath '{0}' is invalid because it does not exist in config", args[0]));
+				Console.WriteLine(String.Format("\nThe targetPath '{0}' is invalid because it does not exist in config", args[0]));
 			}
 		}
 

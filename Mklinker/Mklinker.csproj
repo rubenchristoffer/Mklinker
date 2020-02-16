@@ -43,7 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\AddLinkCommand.cs" />
-    <Compile Include="Commands\BuildCommand.cs" />
+    <Compile Include="Commands\LinkAllCommand.cs" />
     <Compile Include="Commands\ListCommand.cs" />
     <Compile Include="Commands\RemoveLinkCommand.cs" />
     <Compile Include="CommandTask.cs" />

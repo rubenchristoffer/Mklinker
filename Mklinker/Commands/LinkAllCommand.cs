@@ -7,10 +7,10 @@ using LinkType = Mklinker.ConfigLink.LinkType;
 
 namespace Mklinker.Commands {
 
-	public class BuildCommand : ICommand {
+	public class LinkAllCommand : ICommand {
 
 		public void ExecuteCommand(string[] args) {
-			Console.WriteLine("Creating links based on config...");
+			Console.WriteLine("\nCreating links based on config...");
 
 			int successes = 0;
 
@@ -36,11 +36,11 @@ namespace Mklinker.Commands {
 				}
 			}
 
-			Console.WriteLine("Finished! Created {0} / {1} links", successes, Program.config.linkList.Count);
+			Console.WriteLine("\n### Finished! Created {0} / {1} links ###", successes, Program.config.linkList.Count);
 		}
 
 		public string GetName() {
-			return "Build";
+			return "LinkAll";
 		}
 
 		private ProcessStartInfo GetProcessInfo(ConfigLink configLink) {
@@ -48,7 +48,8 @@ namespace Mklinker.Commands {
 				FileName = "cmd.exe",
 				Arguments = string.Format("/c mklink{0} {1} {2}", GetLinkTypeArgument(configLink.linkType, configLink.sourcePath), configLink.targetPath, configLink.sourcePath),
 				RedirectStandardOutput = true,
-				RedirectStandardError = true
+				RedirectStandardError = true,
+				UseShellExecute = false
 			};
 		}
 

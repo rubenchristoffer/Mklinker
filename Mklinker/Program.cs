@@ -13,7 +13,7 @@ namespace Mklinker {
 		private static List<CommandTask> commandTasks = new List<CommandTask>();
 
 		private static ICommand[] availableCommands = new ICommand[] {
-			new BuildCommand(),
+			new LinkAllCommand(),
 			new AddLinkCommand(),
 			new RemoveLinkCommand(),
 			new ListCommand()
@@ -21,10 +21,10 @@ namespace Mklinker {
 
 		public static void Main(string[] args) {
 			if (!File.Exists(Config.configFile)) {
-				Console.WriteLine("Creating config file 'linker.config' since it does not exist");
+				Console.WriteLine("\nCreating config file 'linker.config' since it does not exist");
 				File.Create(Config.configFile).Close();
 			} else if (args.Length == 0) {
-				Console.WriteLine("No valid arguments are provided and config file already exists");
+				Console.WriteLine("\nNo valid arguments are provided and config file already exists");
 			}
 
 			config = Config.Deserialize(File.ReadAllText(Config.configFile));
@@ -32,7 +32,7 @@ namespace Mklinker {
 			ExecuteCommands();
 
 			if (commandTasks.Count == 0) {
-				Console.WriteLine("Here are the available commands:\n");
+				Console.WriteLine("\nHere are the available commands:\n");
 
 				foreach (ICommand command in availableCommands) {
 					Console.WriteLine(command.GetName());
