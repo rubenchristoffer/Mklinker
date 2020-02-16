@@ -14,7 +14,8 @@ namespace Mklinker {
 
 		private static ICommand[] availableCommands = new ICommand[] {
 			new BuildCommand(),
-			new AddLinkCommand()
+			new AddLinkCommand(),
+			new RemoveLinkCommand()
 		};
 
 		public static void Main(string[] args) {

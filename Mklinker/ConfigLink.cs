@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 
 namespace Mklinker {
 
-	public struct ConfigLink {
+	public class ConfigLink {
 
 		[XmlElement("SourcePath")]
 		public string sourcePath;
