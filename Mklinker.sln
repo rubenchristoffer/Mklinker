@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mklinker", "Mklinker\Mklinker.csproj", "{9FA7E595-76C5-46D2-96DC-2B33FE38ACAE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mklinker", "Mklinker\Mklinker.csproj", "{6D16D281-A575-48DF-A73E-2B0197EE2F09}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9FA7E595-76C5-46D2-96DC-2B33FE38ACAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9FA7E595-76C5-46D2-96DC-2B33FE38ACAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9FA7E595-76C5-46D2-96DC-2B33FE38ACAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9FA7E595-76C5-46D2-96DC-2B33FE38ACAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D16D281-A575-48DF-A73E-2B0197EE2F09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D16D281-A575-48DF-A73E-2B0197EE2F09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D16D281-A575-48DF-A73E-2B0197EE2F09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D16D281-A575-48DF-A73E-2B0197EE2F09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {F11CF316-E723-4F65-9204-9C1F1DCE3DE8}
+		SolutionGuid = {F8EF171C-1CD5-426C-AFFA-3B6EBE72065B}
 	EndGlobalSection
 EndGlobal

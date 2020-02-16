@@ -23,6 +23,8 @@ namespace Mklinker {
 			Hard
 		}
 
+		public ConfigLink () {}
+
 		public ConfigLink(string sourcePath, string targetPath, LinkType linkType) {
 			this.sourcePath = sourcePath;
 			this.targetPath = targetPath;
