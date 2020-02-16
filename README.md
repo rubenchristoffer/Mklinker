@@ -5,6 +5,10 @@ Mklinker is a console utility that let's you create multiple symbolic / junction
 - With Mklinker you can keep the config file around and if you for example re-install your operating system you can just use Mklinker and restore all the various links you had before.
 - With Mklinker you can send someone the config file and they can easily create all the links. 
 
+## Features
+- Mklinker supports symbolic, junction and hard links on Windows platforms.
+- Supports relative paths in config file, but will turn them into absolute paths when running mklink commands.
+
 ## Commands
 LinkAll - Runs mklink commands for each link element in the config file.  
 AddLink - Adds a new link to the config file.  
