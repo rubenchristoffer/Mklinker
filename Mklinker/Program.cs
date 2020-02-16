@@ -20,14 +20,22 @@ namespace Mklinker {
 		public static void Main(string[] args) {
 			if (!File.Exists(Config.configFile)) {
 				Console.WriteLine("Creating config file 'linker.config' since it does not exist");
-				File.Create(Config.configFile);
+				File.Create(Config.configFile).Close();
 			} else if (args.Length == 0) {
-				Console.WriteLine("No arguments are provided and config file already exists");
+				Console.WriteLine("No valid arguments are provided and config file already exists");
 			}
 
 			config = Config.Deserialize(File.ReadAllText(Config.configFile));
 			ParseCommands(args);
 			ExecuteCommands();
+
+			if (commandTasks.Count == 0) {
+				Console.WriteLine("Here are the available commands:\n");
+
+				foreach (ICommand command in availableCommands) {
+					Console.WriteLine(command.GetName());
+				}
+			}
 		}
 
 		public static bool IsCommand (string str) {

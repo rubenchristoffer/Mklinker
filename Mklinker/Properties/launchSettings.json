@@ -1,8 +1,7 @@
 {
   "profiles": {
     "Mklinker": {
-      "commandName": "Project",
-      "commandLineArgs": "addlink targetPath sourcePath s"
+      "commandName": "Project"
     }
   }
 }
