@@ -21,8 +21,8 @@ namespace Mklinker.Commands {
 			string sourcePath = args[1];
 			ConfigLink.LinkType linkType = ConfigLink.LinkType.None;
 
-			if (!File.Exists(targetPath) && !Directory.Exists(targetPath)) {
-				Console.WriteLine(String.Format("The targetPath '{0}' is invalid because it does not exist", targetPath));
+			if (!File.Exists(sourcePath) && !Directory.Exists(sourcePath)) {
+				Console.WriteLine(String.Format("The sourcePath '{0}' is invalid because it does not exist", sourcePath));
 				return;
 			}
 
