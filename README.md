@@ -10,7 +10,7 @@ Mklinker is a console utility that let's you create multiple symbolic / junction
 - Supports relative paths in config file, but will turn them into absolute paths when running mklink commands.
 
 ## Commands
-LinkAll - Runs mklink commands for each link element in the config file.  
-AddLink - Adds a new link to the config file.  
-RemoveLink - Removes a link in the config file.  
-List - Lists all the link elements in the config file.  
+**LinkAll**:    Runs mklink commands for each link element in the config file.  
+**AddLink**:    Adds a new link to the config file.  
+**RemoveLink**: Removes a link in the config file.  
+**List**:       Lists all the link elements in the config file.  
