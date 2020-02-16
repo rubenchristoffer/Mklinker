@@ -6,7 +6,7 @@ Mklinker is a console utility that let's you create multiple symbolic / junction
 - With Mklinker you can send someone the config file and they can easily create all the links. 
 
 ## Commands
-LinkAll - Runs mklink commands for each link element in the config file.
-AddLink - Adds a new link to the config file.
-RemoveLink - Removes a link in the config file.
-List - Lists all the link elements in the config file.
+LinkAll - Runs mklink commands for each link element in the config file.  
+AddLink - Adds a new link to the config file.  
+RemoveLink - Removes a link in the config file.  
+List - Lists all the link elements in the config file.  
