@@ -46,6 +46,7 @@
     <Compile Include="Commands\LinkAllCommand.cs" />
     <Compile Include="Commands\ListCommand.cs" />
     <Compile Include="Commands\RemoveLinkCommand.cs" />
+    <Compile Include="Commands\ValidateCommand.cs" />
     <Compile Include="CommandTask.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="ConfigLink.cs" />
