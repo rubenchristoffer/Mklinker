@@ -14,4 +14,4 @@ Mklinker is a console utility that let's you create multiple symbolic / junction
 **AddLink**:    Adds a new link to the config file.  
 **RemoveLink**: Removes a link in the config file.  
 **List**:       Lists all the link elements in the config file.  
-**Validate**:	Validates all link elements to see if it has an incorrect configuration or if source path does not exist.  
+**Validate**:	Validates all link elements to see if it has an incorrect configuration or if source path does not exist. By default it only shows the link elements that are incorrect, but you can add the "all" argument to display all config elements regardless of validation outcome.  
