@@ -14,6 +14,9 @@ namespace Mklinker {
 
 		public const string configFile = "linker.config";
 
+		[XmlAttribute("Version")]
+		public string version;
+
 		[XmlArray("LinkList")]
 		[XmlArrayItem("Link")]
 		public List<ConfigLink> linkList { get; private set; }

@@ -8,6 +8,8 @@ namespace Mklinker {
 
 	public class Program {
 
+		public const string VERSION = "v1.1.1";
+
 		public static Config config { get; private set; }
 
 		private static List<CommandTask> commandTasks = new List<CommandTask>();
@@ -39,6 +41,8 @@ namespace Mklinker {
 					Console.WriteLine(command.GetName());
 				}
 			}
+
+			SaveConfig();
 		}
 
 		public static bool IsCommand (string str) {
@@ -79,6 +83,7 @@ namespace Mklinker {
 		}
 
 		public static void SaveConfig () {
+			config.version = VERSION;
 			File.WriteAllText(Config.configFile, config.Serialize());
 		}
 
