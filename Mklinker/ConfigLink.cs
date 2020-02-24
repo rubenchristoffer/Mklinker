@@ -31,6 +31,10 @@ namespace Mklinker {
 			this.linkType = linkType;
 		}
 
+		public override string ToString() {
+			return String.Format("{0} link:\n\t- Target: {1}\n\t- Source: {2}", linkType.ToString(), targetPath, sourcePath);
+		}
+
 	}
 
 }
