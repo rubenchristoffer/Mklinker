@@ -16,7 +16,8 @@ namespace Mklinker {
 			new LinkAllCommand(),
 			new AddLinkCommand(),
 			new RemoveLinkCommand(),
-			new ListCommand()
+			new ListCommand(),
+			new ValidateCommand()
 		};
 
 		public static void Main(string[] args) {
