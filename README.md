@@ -1,5 +1,5 @@
 # Mklinker
-<p align="center">
+<p align="left">
 	<a href="../../releases/latest">
 		<img src="https://img.shields.io/github/v/release/rubenchristoffer/Mklinker.svg?style=flat" />
 	</a>
