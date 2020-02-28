@@ -1,7 +1,15 @@
 # Mklinker
-<a href="../../releases/latest">
-	<img src="https://travis-ci.org/rubenchristoffer/Mklinker.svg?branch=master" />
-</a>
+<p align="center">
+	<a href="../../releases/latest">
+		<img src="https://img.shields.io/github/v/release/rubenchristoffer/Mklinker.svg?style=flat" />
+	</a>
+	<a href="https://travis-ci.org/rubenchristoffer/Mklinker">
+		<img src="https://travis-ci.org/rubenchristoffer/Mklinker.svg?branch=master" />
+	</a>
+	<a href="../../blob/master/LICENSE">
+		<img src="https://img.shields.io/github/license/rubenchristoffer/Mklinker.svg?style=flat" />
+	</a>
+</p>
 
 Mklinker is a console utility that let's you create multiple symbolic / junction / hard links at once based on a single config file. Just copy the Mklinker.exe binary and run "mklinker" in a console window in order to create the config file 'linker.config' and use the commands below to setup links.
 
