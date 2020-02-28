@@ -1,10 +1,10 @@
 # Mklinker
 <p align="left">
-	<a href="../../releases/latest">
-		<img src="https://img.shields.io/github/v/release/rubenchristoffer/Mklinker.svg?style=flat" />
-	</a>
 	<a href="https://travis-ci.org/rubenchristoffer/Mklinker">
 		<img src="https://travis-ci.org/rubenchristoffer/Mklinker.svg?branch=master" />
+	</a>
+	<a href="../../releases/latest">
+		<img src="https://img.shields.io/github/v/release/rubenchristoffer/Mklinker.svg?style=flat" />
 	</a>
 	<a href="../../blob/master/LICENSE.md">
 		<img src="https://img.shields.io/github/license/rubenchristoffer/Mklinker.svg?style=flat" />
