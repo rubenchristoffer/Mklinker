@@ -6,7 +6,7 @@
 	<a href="https://travis-ci.org/rubenchristoffer/Mklinker">
 		<img src="https://travis-ci.org/rubenchristoffer/Mklinker.svg?branch=master" />
 	</a>
-	<a href="../../blob/master/LICENSE">
+	<a href="../../blob/master/LICENSE.md">
 		<img src="https://img.shields.io/github/license/rubenchristoffer/Mklinker.svg?style=flat" />
 	</a>
 </p>
