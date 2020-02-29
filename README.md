@@ -6,7 +6,7 @@
 	<a href="../../releases/latest">
 		<img src="https://img.shields.io/github/v/release/rubenchristoffer/Mklinker.svg?style=flat" />
 	</a>
-	<a href="../../blob/master/LICENSE.md">
+	<a href="../../blob/master/LICENSE">
 		<img src="https://img.shields.io/github/license/rubenchristoffer/Mklinker.svg?style=flat" />
 	</a>
 </p>
