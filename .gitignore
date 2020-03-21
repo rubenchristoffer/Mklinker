@@ -2,3 +2,7 @@
 obj/
 bin/
 .vs/
+
+# NuGet ignores
+/packages/
+!packages/repositories.config
