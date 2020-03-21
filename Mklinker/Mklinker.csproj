@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommandLine, Version=2.7.82.0, Culture=neutral, PublicKeyToken=5a870481e358d379, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommandLineParser.2.7.82\lib\net45\CommandLine.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,19 +46,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\AddLinkCommand.cs" />
+    <Compile Include="Commands\AddVariableCommand.cs" />
+    <Compile Include="Commands\EvaluateCommand.cs" />
     <Compile Include="Commands\LinkAllCommand.cs" />
     <Compile Include="Commands\ListCommand.cs" />
     <Compile Include="Commands\RemoveLinkCommand.cs" />
     <Compile Include="Commands\ValidateCommand.cs" />
-    <Compile Include="CommandTask.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="ConfigLink.cs" />
-    <Compile Include="ICommand.cs" />
+    <Compile Include="IDefaultAction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Variable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

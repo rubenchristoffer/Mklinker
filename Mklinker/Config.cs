@@ -17,11 +17,15 @@ namespace Mklinker {
 		[XmlAttribute("Version")]
 		public string version;
 
+		[XmlArray("Variables")]
+		public List<Variable> variables { get; private set; }
+
 		[XmlArray("LinkList")]
 		[XmlArrayItem("Link")]
 		public List<ConfigLink> linkList { get; private set; }
 		
 		public Config () {
+			variables = new List<Variable>();
 			linkList = new List<ConfigLink>();
 		}
 

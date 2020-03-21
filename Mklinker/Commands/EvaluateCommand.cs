@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Mklinker.Commands {
 
-	public class ListCommand {
+	public class EvaluateCommand {
 
-		public void ExecuteCommand (string[] args) {
-			Program.config.linkList.ForEach(link => Console.WriteLine("\n" + link.ToString()));
+		public void ExecuteCommand(string[] args) {
+
 		}
 
 		public string GetName() {
-			return "List";
+			return "Evaluate";
 		}
 
 	}

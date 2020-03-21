@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Mklinker.Commands {
 
-	public class RemoveLinkCommand : ICommand {
+	public class RemoveLinkCommand {
 
 		public void ExecuteCommand(string[] args) {
 			if (args.Length != 1) {

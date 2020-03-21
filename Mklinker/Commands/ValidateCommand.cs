@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Mklinker.Commands {
 
-    public class ValidateCommand : ICommand {
+    public class ValidateCommand {
 
         public void ExecuteCommand(string[] args) {
             bool displayAll = args.Any(arg => arg.ToLower().Equals("all"));

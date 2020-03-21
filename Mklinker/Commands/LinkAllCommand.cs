@@ -7,7 +7,7 @@ using LinkType = Mklinker.ConfigLink.LinkType;
 
 namespace Mklinker.Commands {
 
-	public class LinkAllCommand : ICommand {
+	public class LinkAllCommand {
 
 		public void ExecuteCommand(string[] args) {
 			Console.WriteLine("\nCreating links based on config...");
