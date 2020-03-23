@@ -4,6 +4,6 @@
     <ProjectView>ProjectFiles</ProjectView>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>help validate</StartArguments>
+    <StartArguments>interactive</StartArguments>
   </PropertyGroup>
 </Project>

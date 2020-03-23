@@ -25,13 +25,12 @@ namespace Mklinker {
 			config = Config.Deserialize(File.ReadAllText(Config.configFile));
 
 			ParseAndExecute(args);
-			Console.ReadLine();
 		}
 
-		private static void ParseAndExecute (string[] args) {
+		public static void ParseAndExecute (string[] args) {
 			// Parse commands
 			var parser = new Parser(with => with.HelpWriter = Console.Out);
-			var parserResult = parser.ParseArguments<AddLinkCommand, LinkAllCommand, ListCommand, RemoveLinkCommand, ValidateCommand>(args);
+			var parserResult = parser.ParseArguments<AddLinkCommand, LinkAllCommand, ListCommand, RemoveLinkCommand, ValidateCommand, InteractiveCommand>(args);
 
 			parserResult.WithParsed<IDefaultAction>(flag => flag.Execute());
 		}
