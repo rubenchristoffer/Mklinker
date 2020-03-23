@@ -10,7 +10,7 @@ using System.Diagnostics;
 
 namespace Mklinker {
 
-	public class Program {
+	public static class Program {
 
 		public static Config config { get; private set; }
 
@@ -35,9 +35,9 @@ namespace Mklinker {
 			config = Config.Deserialize(File.ReadAllText(pathToConfigFile));
 		}
 
-		public static void SaveConfig () {
+		public static void SaveConfig (string pathToConfigFile) {
 			config.version = GetVersion();
-			File.WriteAllText(Config.DEFAULT_CONFIG_FILE, config.Serialize());
+			File.WriteAllText(pathToConfigFile, config.Serialize());
 		}
 
 		public static string GetVersion() {

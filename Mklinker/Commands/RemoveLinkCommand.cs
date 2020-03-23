@@ -21,7 +21,7 @@ namespace Mklinker.Commands {
 				Program.config.linkList.Remove(configLink);
 				Console.WriteLine("\nSuccessfully removed link with targetPath '{0}'", targetPath);
 
-				Program.SaveConfig();
+				Program.SaveConfig(path);
 			} else {
 				Console.WriteLine(String.Format("\nThe targetPath '{0}' is invalid because it does not exist in config", targetPath));
 			}

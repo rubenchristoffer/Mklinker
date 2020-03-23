@@ -41,7 +41,7 @@ namespace Mklinker.Commands {
 
 			Program.LoadConfig(path);
 			Program.config.linkList.Add(new ConfigLink(sourcePath, targetPath, linkType));
-			Program.SaveConfig();
+			Program.SaveConfig(path);
 
 			Console.WriteLine(String.Format("\nAdded new {0} link to config file: \nTarget: '{1}'\nSource: '{2}'", linkType.ToString(), targetPath, sourcePath));
 		}

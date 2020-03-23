@@ -25,7 +25,7 @@ namespace Mklinker.Commands {
 					Console.WriteLine("Creating config file '{0}'", path);
 
 					Program.CreateNewConfig();
-					Program.SaveConfig();
+					Program.SaveConfig(path);
 				}
 			} else if (delete) {
 				if (File.Exists(path)) {
