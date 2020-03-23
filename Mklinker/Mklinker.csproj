@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\AddLinkCommand.cs" />
+    <Compile Include="Commands\ConfigCommand.cs" />
     <Compile Include="Commands\InteractiveCommand.cs" />
     <Compile Include="Commands\LinkAllCommand.cs" />
     <Compile Include="Commands\ListCommand.cs" />
