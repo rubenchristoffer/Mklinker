@@ -12,7 +12,7 @@ namespace Mklinker {
 	[XmlRoot("Config")]
 	public class Config {
 
-		public const string configFile = "linker.config";
+		public const string DEFAULT_CONFIG_FILE = "linker.config";
 
 		[XmlAttribute("Version")]
 		public string version;

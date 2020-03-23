@@ -15,14 +15,6 @@ namespace Mklinker {
 		public static Config config { get; private set; }
 
 		public static void Main(string[] args) {
-			if (!File.Exists(Config.configFile)) {
-				Console.WriteLine("\nCreating config file 'linker.config' since it does not exist");
-				File.Create(Config.configFile).Close();
-			} else if (args.Length == 0) {
-				Console.WriteLine("\nNo valid arguments are provided and config file already exists");
-			}
-
-			config = Config.Deserialize(File.ReadAllText(Config.configFile));
 			ParseAndExecute(args);
 		}
 
@@ -34,9 +26,18 @@ namespace Mklinker {
 			parserResult.WithParsed<IDefaultAction>(flag => flag.Execute());
 		}
 
+		public static void CreateNewConfig () {
+			config = new Config();
+			config.version = GetVersion();
+		}
+
+		public static void LoadConfig (string pathToConfigFile) {
+			config = Config.Deserialize(File.ReadAllText(pathToConfigFile));
+		}
+
 		public static void SaveConfig () {
 			config.version = GetVersion();
-			File.WriteAllText(Config.configFile, config.Serialize());
+			File.WriteAllText(Config.DEFAULT_CONFIG_FILE, config.Serialize());
 		}
 
 		public static string GetVersion() {
