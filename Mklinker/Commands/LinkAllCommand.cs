@@ -9,16 +9,18 @@ using LinkType = Mklinker.ConfigLink.LinkType;
 namespace Mklinker.Commands {
 
 	[Verb ("linkall", HelpText = "Generates all links from config")]
-	public class LinkAllCommand : IDefaultAction {
+	public class LinkAllCommand : GlobalOptions, IDefaultAction {
 
 		public void Execute() {
+			Program.LoadConfig(path);
+
 			Console.WriteLine("\nCreating links based on config...");
 
 			int successes = 0;
 
 			foreach (ConfigLink linkTask in Program.config.linkList) {
 				if (!File.Exists(linkTask.sourcePath) && !Directory.Exists(linkTask.sourcePath)) {
-					Console.WriteLine(String.Format("Path '{0}' does not exist!", linkTask.sourcePath));
+					Console.WriteLine("Path '{0}' does not exist!", linkTask.sourcePath);
 					continue;
 				}
 

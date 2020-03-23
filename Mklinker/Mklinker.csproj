@@ -54,6 +54,7 @@
     <Compile Include="Commands\ValidateCommand.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="ConfigLink.cs" />
+    <Compile Include="GlobalOptions.cs" />
     <Compile Include="IDefaultAction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -9,12 +9,14 @@ using CommandLine;
 namespace Mklinker.Commands {
 
     [Verb ("validate", HelpText = "This will validate the config file to see if it is valid")]
-    public class ValidateCommand : IDefaultAction {
+    public class ValidateCommand : GlobalOptions, IDefaultAction {
 
         [Option ("all", HelpText = "This will list all entries in config and not just the ones that didn't pass validation")]
         public bool displayAll { get; private set; }
 
         public void Execute() {
+            Program.LoadConfig(path);
+
             foreach (ConfigLink configLink in Program.config.linkList) {
                 bool validation1 = ValidateExistence (configLink);
                 bool validation2 = ValidateLinkType(configLink);

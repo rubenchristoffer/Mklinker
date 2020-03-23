@@ -8,9 +8,10 @@ using CommandLine;
 namespace Mklinker.Commands {
 
 	[Verb ("list", HelpText = "Lists all the links in the config")]
-	public class ListCommand : IDefaultAction {
+	public class ListCommand : GlobalOptions, IDefaultAction {
 
 		public void Execute () {
+			Program.LoadConfig(path);
 			Program.config.linkList.ForEach(link => Console.WriteLine("\n" + link.ToString()));
 		}
 

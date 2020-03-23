@@ -8,7 +8,7 @@ using CommandLine;
 namespace Mklinker.Commands {
 
 	[Verb("addlink", HelpText = "Adds a new link to config file")]
-	public class AddLinkCommand : IDefaultAction {
+	public class AddLinkCommand : GlobalOptions, IDefaultAction {
 
 		[Value(0, HelpText = "The path to new link file", Required = true)]
 		public string targetPath { get; private set; }
@@ -39,6 +39,7 @@ namespace Mklinker.Commands {
 				}
 			}
 
+			Program.LoadConfig(path);
 			Program.config.linkList.Add(new ConfigLink(sourcePath, targetPath, linkType));
 			Program.SaveConfig();
 
