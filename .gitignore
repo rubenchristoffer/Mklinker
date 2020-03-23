@@ -6,3 +6,6 @@ bin/
 # NuGet ignores
 /packages/
 !packages/repositories.config
+
+# Unknown
+backup/
