@@ -8,7 +8,7 @@ using CommandLine;
 namespace Mklinker.Commands {
 
 	[Verb("addlink", HelpText = "Adds a new link to config file")]
-	public class AddLinkCommand : Program.GlobalOptions, IDefaultAction {
+	public class AddLinkCommand : IDefaultAction {
 
 		[Value(0, HelpText = "The path to new link file", Required = true)]
 		public string targetPath { get; private set; }
@@ -16,13 +16,10 @@ namespace Mklinker.Commands {
 		[Value(1, HelpText = "The path to the source file", Required = true)]
 		public string sourcePath { get; private set; }
 
-		[Value(2, Default = ConfigLink.LinkType.None, HelpText = "The type of link you want to create")]
+		[Value(2, Default = ConfigLink.LinkType.Default, HelpText = "The type of link you want to create. Default is Symbolic for files and Junction for directories")]
 		public ConfigLink.LinkType linkType { get; private set; }
 
 		public void Execute() {
-			Console.WriteLine("execute: " + Program.GlobalOptions.InteractiveFlag);
-			return;
-
 			if (!File.Exists(sourcePath) && !Directory.Exists(sourcePath)) {
 				Console.WriteLine(String.Format("\nThe sourcePath '{0}' is invalid because it does not exist", sourcePath));
 				return;
@@ -34,7 +31,7 @@ namespace Mklinker.Commands {
 			}
 
 			// Set default link type if type is not provided
-			if (linkType == ConfigLink.LinkType.None) {
+			if (linkType == ConfigLink.LinkType.Default) {
 				if (File.Exists(sourcePath)) {
 					linkType = ConfigLink.LinkType.Symbolic;
 				} else {

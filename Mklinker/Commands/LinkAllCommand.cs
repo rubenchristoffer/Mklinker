@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 using System.IO;
+using CommandLine;
 using LinkType = Mklinker.ConfigLink.LinkType;
 
 namespace Mklinker.Commands {
 
-	public class LinkAllCommand {
+	[Verb ("linkall", HelpText = "Generates all links from config")]
+	public class LinkAllCommand : IDefaultAction {
 
-		public void ExecuteCommand(string[] args) {
+		public void Execute() {
 			Console.WriteLine("\nCreating links based on config...");
 
 			int successes = 0;
@@ -21,7 +23,7 @@ namespace Mklinker.Commands {
 				}
 
 				Process mklinkProcess = Process.Start(GetProcessInfo(linkTask));
-				
+
 				while (!mklinkProcess.StandardOutput.EndOfStream) {
 					string output = mklinkProcess.StandardOutput.ReadLine();
 
@@ -37,10 +39,6 @@ namespace Mklinker.Commands {
 			}
 
 			Console.WriteLine("\n### Finished! Created {0} / {1} links ###", successes, Program.config.linkList.Count);
-		}
-
-		public string GetName() {
-			return "LinkAll";
 		}
 
 		private ProcessStartInfo GetProcessInfo(ConfigLink configLink) {

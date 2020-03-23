@@ -4,14 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using CommandLine;
 
 namespace Mklinker.Commands {
 
-    public class ValidateCommand {
+    [Verb ("validate", HelpText = "This will validate the config file to see if it is valid")]
+    public class ValidateCommand : IDefaultAction {
 
-        public void ExecuteCommand(string[] args) {
-            bool displayAll = args.Any(arg => arg.ToLower().Equals("all"));
+        [Option ("all", HelpText = "This will list all entries in config and not just the ones that didn't pass validation")]
+        public bool displayAll { get; private set; }
 
+        public void Execute() {
             foreach (ConfigLink configLink in Program.config.linkList) {
                 bool validation1 = ValidateExistence (configLink);
                 bool validation2 = ValidateLinkType(configLink);
@@ -21,11 +24,11 @@ namespace Mklinker.Commands {
             }
         }
 
-        public bool ValidateExistence (ConfigLink configLink) {
+        private bool ValidateExistence (ConfigLink configLink) {
             return File.Exists(configLink.sourcePath) || Directory.Exists(configLink.sourcePath);
         }
 
-        public bool ValidateLinkType (ConfigLink configLink) {
+        private bool ValidateLinkType (ConfigLink configLink) {
             if (File.Exists(configLink.sourcePath)) {
                 return configLink.linkType == ConfigLink.LinkType.Symbolic || configLink.linkType == ConfigLink.LinkType.Hard;
             }
@@ -35,10 +38,6 @@ namespace Mklinker.Commands {
             }
 
             return false;
-        }
-
-        public string GetName() {
-            return "Validate";
         }
 
     }

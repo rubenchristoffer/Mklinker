@@ -17,7 +17,7 @@ namespace Mklinker {
 		public LinkType linkType;
 
 		public enum LinkType {
-			None,
+			Default,
 			Junction,
 			Symbolic,
 			Hard
