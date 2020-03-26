@@ -15,16 +15,16 @@ namespace Mklinker.Tests {
 		private const string CONFIG_FILE = "test.linker";
 
 		[SetUp]
-		public void Reset () {
+		public void Reset() {
 			typeof(Program).GetProperty("config", BindingFlags.Static | BindingFlags.Public).SetValue(null, null);
 			Assert.IsNull(Program.config);
 
-			File.Delete (CONFIG_FILE);
+			File.Delete(CONFIG_FILE);
 			Assert.IsTrue(!File.Exists(CONFIG_FILE));
 		}
 
 		[Test]
-		public void CreateNewConfig () {
+		public void CreateNewConfig() {
 			Assert.DoesNotThrow(() => Program.CreateNewConfig());
 
 			Assert.IsNotNull(Program.config);
@@ -39,7 +39,7 @@ namespace Mklinker.Tests {
 		}
 
 		[Test]
-		public void LoadConfig () {
+		public void LoadConfig() {
 			SaveConfig();
 
 			Assert.DoesNotThrow(() => Program.LoadConfig(CONFIG_FILE));
