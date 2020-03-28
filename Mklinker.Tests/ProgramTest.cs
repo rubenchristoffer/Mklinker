@@ -10,17 +10,15 @@ using NUnit.Framework;
 namespace Mklinker.Tests {
 
 	[TestFixture]
-	class ProgramTest {
+	class ProgramTest : TestBase {
 
-		private const string CONFIG_FILE = "test.linker";
+		private const string TEST_CONFIG_FILE = "test.linker";
 
 		[SetUp]
-		public void Reset() {
-			typeof(Program).GetProperty("config", BindingFlags.Static | BindingFlags.Public).SetValue(null, null);
-			Assert.IsNull(Program.config);
-
-			File.Delete(CONFIG_FILE);
-			Assert.IsTrue(!File.Exists(CONFIG_FILE));
+		[TearDown]
+		public void Reset () {
+			File.Delete(TEST_CONFIG_FILE);
+			Assert.IsTrue(!File.Exists(TEST_CONFIG_FILE));
 		}
 
 		[Test]
@@ -51,15 +49,15 @@ namespace Mklinker.Tests {
 		public void SaveConfig() {
 			CreateNewConfig();
 
-			Assert.DoesNotThrow(() => Program.SaveConfig(CONFIG_FILE));
-			Assert.IsTrue(File.Exists(CONFIG_FILE));
+			Assert.DoesNotThrow(() => Program.SaveConfig(TEST_CONFIG_FILE));
+			Assert.IsTrue(File.Exists(TEST_CONFIG_FILE));
 		}
 
 		[Test]
 		public void LoadConfig() {
 			SaveConfig();
 
-			Assert.DoesNotThrow(() => Program.LoadConfig(CONFIG_FILE));
+			Assert.DoesNotThrow(() => Program.LoadConfig(TEST_CONFIG_FILE));
 			Assert.AreEqual(Program.GetVersion(), Program.config.version);
 		}
 
