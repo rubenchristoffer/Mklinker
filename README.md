@@ -1,13 +1,16 @@
 # Mklinker
 <p align="left">
 	<a href="https://travis-ci.org/rubenchristoffer/Mklinker">
-		<img src="https://travis-ci.org/rubenchristoffer/Mklinker.svg?branch=master" />
+		<img src="https://travis-ci.org/rubenchristoffer/Mklinker.svg?branch=master" alt="Build" />
+	</a>
+	<a href="https://coveralls.io/github/rubenchristoffer/Mklinker?branch=master">
+		<img src="https://coveralls.io/repos/github/rubenchristoffer/Mklinker/badge.svg?branch=master" alt="Coverage Status" />
 	</a>
 	<a href="../../releases/latest">
-		<img src="https://img.shields.io/github/v/release/rubenchristoffer/Mklinker.svg?style=flat" />
+		<img src="https://img.shields.io/github/v/release/rubenchristoffer/Mklinker.svg?style=flat" alt="Release" />
 	</a>
 	<a href="../../blob/master/LICENSE">
-		<img src="https://img.shields.io/github/license/rubenchristoffer/Mklinker.svg?style=flat" />
+		<img src="https://img.shields.io/github/license/rubenchristoffer/Mklinker.svg?style=flat" alt="License" />
 	</a>
 </p>
 
@@ -18,12 +21,5 @@ Mklinker is a console utility that let's you create multiple symbolic / junction
 - With Mklinker you can send someone the config file and they can easily create all the links. 
 
 ## Features
-- Mklinker supports symbolic, junction and hard links on Windows platforms.
+- Mklinker supports symbolic, junction and hard links on Windows platform (linux / mac support is planned)
 - Supports relative paths in config file, but will turn them into absolute paths when running mklink commands.
-
-## Commands
-**LinkAll**:    Runs mklink commands for each link element in the config file.  
-**AddLink**:    Adds a new link to the config file.  
-**RemoveLink**: Removes a link in the config file.  
-**List**:       Lists all the link elements in the config file.  
-**Validate**:	Validates all link elements to see if it has an incorrect configuration or if source path does not exist. By default it only shows the link elements that are incorrect, but you can add the "all" argument to display all config elements regardless of validation outcome.  
