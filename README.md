@@ -3,6 +3,12 @@
 	<a href="https://travis-ci.org/rubenchristoffer/Mklinker">
 		<img src="https://travis-ci.org/rubenchristoffer/Mklinker.svg?branch=master" alt="Build" />
 	</a>
+	<a href="https://ci.appveyor.com/project/rubenchristoffer/Mklinker">
+		<img src="https://ci.appveyor.com/api/projects/status/dc9ohkt96solg9cj?svg=true" alt="AppVeyor Build" />
+	</a>
+	<a href="https://ci.appveyor.com/project/rubenchristoffer/Mklinker/build/tests">
+		<img src="https://img.shields.io/appveyor/tests/rubenchristoffer/Mklinker.svg" alt="AppVeyor Tests">
+	</a>
 	<a href="https://coveralls.io/github/rubenchristoffer/Mklinker?branch=master">
 		<img src="https://coveralls.io/repos/github/rubenchristoffer/Mklinker/badge.svg?branch=master" alt="Coverage Status" />
 	</a>

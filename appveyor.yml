@@ -1,0 +1,9 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+install:
+- ps: >-
+    dotnet restore
+
+    dotnet add Mklinker.Tests package Appveyor.TestLogger --version 2.0.0
+build:
+  verbosity: minimal
