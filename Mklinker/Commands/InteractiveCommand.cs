@@ -21,11 +21,7 @@ namespace Mklinker.Commands {
 				if (input.ToLower().Equals("exit")) {
 					finished = true;
 				} else {
-					string[] args = input.Split('"')
-						.Select((element, index) => index % 2 == 0 ? element.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries) : new string[] { element })
-						.SelectMany(element => element).ToArray();
-
-					Program.ParseAndExecute(args);
+					Program.ParseAndExecute(Program.ParseStringToArguments(input));
 				}
 			}
 		}

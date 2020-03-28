@@ -26,6 +26,12 @@ namespace Mklinker {
 			parserResult.WithParsed<IDefaultAction>(flag => flag.Execute());
 		}
 
+		public static string[] ParseStringToArguments(string input) {
+			return input.Split('"')
+				.Select((element, index) => index % 2 == 0 ? element.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries) : new string[] { element })
+				.SelectMany(element => element).ToArray();
+		}
+
 		public static void CreateNewConfig () {
 			config = new Config();
 			config.version = GetVersion();
