@@ -17,6 +17,8 @@ namespace Mklinker.Tests {
 			TestBase_Cleanup();
 
 			Assert.IsTrue(!File.Exists(Config.DEFAULT_CONFIG_FILE));
+
+			AfterBaseSetup();
 		}
 
 		[TearDown]
@@ -24,6 +26,9 @@ namespace Mklinker.Tests {
 			if (File.Exists(Config.DEFAULT_CONFIG_FILE))
 				File.Delete(Config.DEFAULT_CONFIG_FILE);
 		}
+
+		// To ensure that it doesn't conflict with TestBase_Setup
+		protected virtual void AfterBaseSetup() {}
 
 	}
 
