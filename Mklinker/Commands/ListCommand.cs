@@ -13,6 +13,9 @@ namespace Mklinker.Commands {
 		public void Execute () {
 			Program.LoadConfig(path);
 			Program.config.linkList.ForEach(link => Console.WriteLine("\n" + link.ToString()));
+
+			if (Program.config.linkList.Count == 0)
+				Console.WriteLine("Config is empty");
 		}
 
 	}
