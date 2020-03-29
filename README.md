@@ -1,7 +1,7 @@
 # Mklinker
 <p align="left">
-	<a href="https://travis-ci.org/rubenchristoffer/Mklinker">
-		<img src="https://travis-ci.org/rubenchristoffer/Mklinker.svg?branch=master" alt="Build" />
+	<a href="https://travis-ci.com/rubenchristoffer/Mklinker">
+		<img src="https://travis-ci.com/rubenchristoffer/Mklinker.svg?branch=master" alt="Build" />
 	</a>
 	<a href="https://ci.appveyor.com/project/rubenchristoffer/Mklinker">
 		<img src="https://ci.appveyor.com/api/projects/status/dc9ohkt96solg9cj?svg=true" alt="AppVeyor Build" />
