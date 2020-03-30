@@ -4,12 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommandLine;
-using System.IO;
+using System.IO.Abstractions;
 
 namespace Mklinker.Commands {
 
 	[Verb("config", HelpText = "Displays information about config file by default, but can create / delete / modify config file")]
 	public class ConfigCommand : GlobalOptions, IDefaultAction {
+
+		readonly IFileSystem _fileSystem;
+
+		IFile File {
+			get => _fileSystem.File;
+		}
+
+		public ConfigCommand () {}
+		public ConfigCommand(IFileSystem fileSystem) { _fileSystem = fileSystem; }
 
 		[Option ('c', "create", HelpText = "Creates a new config file if it does not exist", SetName = "Create")]
 		public bool create { get; private set; }

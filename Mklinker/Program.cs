@@ -7,14 +7,22 @@ using CommandLine;
 using CommandLine.Text;
 using System.Reflection;
 using System.Diagnostics;
+using Autofac;
+using System.IO.Abstractions;
 
 namespace Mklinker {
 
 	public static class Program {
 
+		private static IContainer Container { get; set; }
+
 		public static Config config { get; private set; }
 
 		public static void Main(string[] args) {
+			var builder = new ContainerBuilder();
+			builder.RegisterType<FileSystem>().As<IFileSystem>();
+			Container = builder.Build();
+
 			ParseAndExecute(args);
 		}
 
@@ -23,7 +31,9 @@ namespace Mklinker {
 			var parser = new Parser(with => with.HelpWriter = Console.Out);
 			var parserResult = parser.ParseArguments<AddLinkCommand, LinkAllCommand, ListCommand, RemoveLinkCommand, ValidateCommand, InteractiveCommand, ConfigCommand>(args);
 
-			parserResult.WithParsed<IDefaultAction>(flag => flag.Execute());
+			using (var scope = Container.BeginLifetimeScope ()) {
+				parserResult.WithParsed<IDefaultAction>(flag => flag.Execute());
+			}
 		}
 
 		public static string[] ParseStringToArguments(string input) {
