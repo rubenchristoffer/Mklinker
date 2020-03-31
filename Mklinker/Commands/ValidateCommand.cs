@@ -6,12 +6,12 @@ using Mklinker.Abstractions;
 namespace Mklinker.Commands {
 
     [Verb ("validate", HelpText = "This will validate the config file to see if it is valid")]
-    class ValidateCommand : GlobalOptions, IDefaultAction {
+    class ValidateCommand : GlobalOptions, IDefaultCommandHandler {
 
         [Option ("all", HelpText = "This will list all entries in config and not just the ones that didn't pass validation")]
         public bool displayAll { get; private set; }
 
-        void IDefaultAction.Execute(IConfigHandler configHandler, IFileSystem fileSystem) {
+        void IDefaultCommandHandler.Execute(IConfigHandler configHandler, IFileSystem fileSystem) {
             IConfig config = configHandler.LoadConfig(path);
 
             foreach (ConfigLink configLink in config.LinkList) {
@@ -23,11 +23,11 @@ namespace Mklinker.Commands {
             }
         }
 
-        private bool ValidateExistence (IFileSystem fileSystem, ConfigLink configLink) {
+        bool ValidateExistence (IFileSystem fileSystem, ConfigLink configLink) {
             return fileSystem.File.Exists(configLink.sourcePath) || fileSystem.Directory.Exists(configLink.sourcePath);
         }
 
-        private bool ValidateLinkType (IFileSystem fileSystem, ConfigLink configLink) {
+        bool ValidateLinkType (IFileSystem fileSystem, ConfigLink configLink) {
             if (fileSystem.File.Exists(configLink.sourcePath)) {
                 return configLink.linkType == ConfigLink.LinkType.Symbolic || configLink.linkType == ConfigLink.LinkType.Hard;
             }

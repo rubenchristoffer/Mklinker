@@ -3,7 +3,7 @@ using Mklinker.Abstractions;
 
 namespace Mklinker {
 
-	interface IDefaultAction {
+	interface IDefaultCommandHandler {
 
 		void Execute(IConfigHandler configHandler, IFileSystem fileSystem);
 

@@ -28,7 +28,7 @@ namespace Mklinker {
 			var parserResult = parser.ParseArguments<AddLinkCommand, LinkAllCommand, ListCommand, RemoveLinkCommand, ValidateCommand, InteractiveCommand, ConfigCommand>(args);
 
 			parserResult
-				.WithParsed<IDefaultAction>(flag => flag.Execute(configHandler, fileSystem))
+				.WithParsed<IDefaultCommandHandler>(flag => flag.Execute(configHandler, fileSystem))
 				.WithParsed<ConfigCommand>(cmd => cmd.Execute(configHandler, fileSystem, defaultConfig))
 				.WithParsed<InteractiveCommand>(cmd => cmd.Execute (configHandler, fileSystem, defaultConfig, argumentHandler, this))
 				.WithParsed<LinkAllCommand>(cmd => cmd.Execute (configHandler, fileSystem, linker));

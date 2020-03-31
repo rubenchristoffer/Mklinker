@@ -7,12 +7,12 @@ using Mklinker.Abstractions;
 namespace Mklinker.Commands {
 
 	[Verb("removelink", HelpText = "Removes link from config")]
-	class RemoveLinkCommand : GlobalOptions, IDefaultAction {
+	class RemoveLinkCommand : GlobalOptions, IDefaultCommandHandler {
 
 		[Value(0, HelpText = "The targetPath matching entry you want to delete from config.", MetaName = "targetPath", Required = true)]
 		public string targetPath { get; private set; }
 
-		void IDefaultAction.Execute(IConfigHandler configHandler, IFileSystem fileSystem) {
+		void IDefaultCommandHandler.Execute(IConfigHandler configHandler, IFileSystem fileSystem) {
 			IConfig config = configHandler.LoadConfig(path);
 			ConfigLink configLink = config.LinkList.FirstOrDefault(link => fileSystem.Path.GetFullPath(link.targetPath).Equals(fileSystem.Path.GetFullPath(targetPath)));
 

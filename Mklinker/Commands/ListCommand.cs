@@ -6,9 +6,9 @@ using Mklinker.Abstractions;
 namespace Mklinker.Commands {
 
 	[Verb ("list", HelpText = "Lists all the links in the config")]
-	class ListCommand : GlobalOptions, IDefaultAction {
+	class ListCommand : GlobalOptions, IDefaultCommandHandler {
 
-		void IDefaultAction.Execute(IConfigHandler configHandler, IFileSystem fileSystem) {
+		void IDefaultCommandHandler.Execute(IConfigHandler configHandler, IFileSystem fileSystem) {
 			IConfig config = configHandler.LoadConfig(path);
 			config.LinkList.ForEach(link => Console.WriteLine("\n" + link.ToString()));
 

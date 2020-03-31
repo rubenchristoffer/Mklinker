@@ -7,7 +7,7 @@ using Mklinker.Abstractions;
 namespace Mklinker.Commands {
 
 	[Verb("addlink", HelpText = "Adds a new link to config file")]
-	class AddLinkCommand : GlobalOptions, IDefaultAction {
+	class AddLinkCommand : GlobalOptions, IDefaultCommandHandler {
 
 		[Value(0, HelpText = "The path to new link file", Required = true)]
 		public string targetPath { get; private set; }
@@ -18,7 +18,7 @@ namespace Mklinker.Commands {
 		[Value(2, Default = ConfigLink.LinkType.Default, HelpText = "The type of link you want to create. Default is Symbolic for files and Junction for directories")]
 		public ConfigLink.LinkType linkType { get; private set; }
 
-		void IDefaultAction.Execute(IConfigHandler configHandler, IFileSystem fileSystem) {
+		void IDefaultCommandHandler.Execute(IConfigHandler configHandler, IFileSystem fileSystem) {
 			if (!fileSystem.File.Exists(sourcePath) && !fileSystem.Directory.Exists(sourcePath)) {
 				Console.WriteLine(String.Format("\nThe sourcePath '{0}' is invalid because it does not exist", sourcePath));
 				return;
