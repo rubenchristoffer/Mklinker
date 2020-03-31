@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 namespace Mklinker {
 
 	[Serializable]
-	class Variable {
+	public class Variable {
 
 		[XmlAttribute("Name")]
 		public string name;

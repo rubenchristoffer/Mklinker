@@ -7,7 +7,7 @@ using Mklinker.Abstractions;
 namespace Mklinker {
 
 	[XmlRoot("Config")]
-	class Config : IConfig {
+	public class Config : IConfig {
 
 		[XmlAttribute("Version")]
 		public string Version { get; set; }
@@ -27,7 +27,7 @@ namespace Mklinker {
 			Version = version;
 		}
 
-		public string Serialize() {
+		string IConfig.Serialize() {
 			XmlSerializer serializer = new XmlSerializer(GetType());
 
 			using (StringWriter writer = new StringWriter()) {
@@ -36,7 +36,7 @@ namespace Mklinker {
 			}
 		}
 
-		public IConfig Deserialize(string xml) {
+		IConfig IConfig.Deserialize(string xml) {
 			if (xml.Length == 0)
 				return new Config();
 

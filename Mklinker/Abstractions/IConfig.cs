@@ -9,7 +9,7 @@ namespace Mklinker.Abstractions {
 		List<ConfigLink> LinkList { get; }
 		List<Variable> Variables { get; }
 
-		IConfig Deserialize(string xml);
+		IConfig Deserialize(string serializedString); 
 		string Serialize();
 
 	}

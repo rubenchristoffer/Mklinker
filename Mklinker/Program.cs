@@ -15,9 +15,10 @@ namespace Mklinker {
 		public static void Main(string[] args) {
 			var builder = new ContainerBuilder();
 
+			builder.RegisterInstance<Config>(new Config(Program.GetVersion())).As<IConfig>();
+
 			builder.RegisterType<FileSystem>().As<IFileSystem>();
 			builder.RegisterType<ConfigHandler>().As<IConfigHandler>();
-			builder.RegisterType<Config>().As<IConfig>();
 			builder.RegisterType<ArgumentParser>().As<IArgumentParser>();
 			builder.RegisterType<CommandExecutor>().As<ICommandExecutor>();
 
