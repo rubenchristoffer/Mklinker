@@ -23,16 +23,12 @@ namespace Mklinker {
 			builder.RegisterType<ConfigHandler>().As<IConfigHandler>();
 			builder.RegisterType<Config>().As<IConfig>();
 			builder.RegisterType<ArgumentHandler>().As<IArgumentHandler>();
+			builder.RegisterType<CommandExecutor>().As<ICommandExecutor>();
 
 			Container = builder.Build();
 
-			// Parse commands
-			var parser = new Parser(with => with.HelpWriter = Console.Out);
-			var parserResult = parser.ParseArguments<AddLinkCommand, LinkAllCommand, ListCommand, RemoveLinkCommand, ValidateCommand, InteractiveCommand, ConfigCommand>(args);
-
 			using (var scope = Container.BeginLifetimeScope()) {
-				ICommandExecutor executor = new CommandExecutor (scope.Resolve<IConfigHandler>(), scope.Resolve<IFileSystem>(), scope.Resolve<IConfig>(), scope.Resolve<IArgumentHandler>());
-				executor.Execute(args);
+				scope.Resolve<ICommandExecutor>().Execute(args);
 			}
 		}
 

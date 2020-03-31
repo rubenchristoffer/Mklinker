@@ -12,7 +12,7 @@ namespace Mklinker {
 		readonly IConfig defaultConfig;
 		readonly IArgumentHandler argumentHandler;
 
-		internal CommandExecutor (IConfigHandler configHandler, IFileSystem fileSystem, IConfig defaultConfig, IArgumentHandler argumentHandler) {
+		public CommandExecutor (IConfigHandler configHandler, IFileSystem fileSystem, IConfig defaultConfig, IArgumentHandler argumentHandler) {
 			this.configHandler = configHandler;
 			this.fileSystem = fileSystem;
 			this.defaultConfig = defaultConfig;
