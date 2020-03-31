@@ -10,11 +10,10 @@ using CommandLine;
 namespace Mklinker.Commands {
 
 	[Verb("interactive", HelpText = "Starts an interactive session where you can run multiple commands without 'Mklinker' in front. Use 'exit' to exit from interactive session")]
-	public class InteractiveCommand : IDefaultAction {
+	class InteractiveCommand {
 
-		void IDefaultAction.Execute(IConfigHandler configHandler, IFileSystem fileSystem) {
-			Console.WriteLine("Interactive mode does not work yet!");
-			/*bool finished = false;
+		internal void Execute(IConfigHandler configHandler, IFileSystem fileSystem, IConfig defaultConfig, IArgumentHandler argumentHandler, ICommandExecutor commandExecutor) {
+			bool finished = false;
 
 			while (!finished) {
 				Console.Write("> ");
@@ -23,9 +22,9 @@ namespace Mklinker.Commands {
 				if (input.ToLower().Equals("exit")) {
 					finished = true;
 				} else {
-					Program.ParseAndExecute(Program.ParseStringToArguments(input));
+					commandExecutor.Execute(argumentHandler.ParseStringToArguments(input), configHandler, fileSystem, defaultConfig, argumentHandler);
 				}
-			}*/
+			}
 		}
 
 	}

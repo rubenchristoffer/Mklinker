@@ -22,6 +22,7 @@ namespace Mklinker {
 			builder.RegisterType<FileSystem>().As<IFileSystem>();
 			builder.RegisterType<ConfigHandler>().As<IConfigHandler>();
 			builder.RegisterType<Config>().As<IConfig>();
+			builder.RegisterType<ArgumentHandler>().As<IArgumentHandler>();
 
 			Container = builder.Build();
 
@@ -30,9 +31,8 @@ namespace Mklinker {
 			var parserResult = parser.ParseArguments<AddLinkCommand, LinkAllCommand, ListCommand, RemoveLinkCommand, ValidateCommand, InteractiveCommand, ConfigCommand>(args);
 
 			using (var scope = Container.BeginLifetimeScope()) {
-				parserResult
-					.WithParsed<IDefaultAction>(flag => flag.Execute(scope.Resolve<IConfigHandler>(), scope.Resolve<IFileSystem>()))
-					.WithParsed<ConfigCommand>(cmd => cmd.Execute (scope.Resolve<IConfigHandler>(), scope.Resolve<IFileSystem>(), scope.Resolve<IConfig>()));
+				ICommandExecutor executor = new CommandExecutor ();
+				executor.Execute(args, scope.Resolve<IConfigHandler>(), scope.Resolve<IFileSystem>(), scope.Resolve<IConfig>(), scope.Resolve<IArgumentHandler>());
 			}
 		}
 
