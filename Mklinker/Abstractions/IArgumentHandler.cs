@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Mklinker {
+namespace Mklinker.Abstractions {
 
 	interface IArgumentParser {
 

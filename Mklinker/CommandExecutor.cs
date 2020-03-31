@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO.Abstractions;
 using CommandLine;
+using Mklinker.Abstractions;
 using Mklinker.Commands;
 
 namespace Mklinker {

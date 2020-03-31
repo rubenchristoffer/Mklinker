@@ -2,6 +2,7 @@
 using System.IO.Abstractions;
 using System.Diagnostics;
 using CommandLine;
+using Mklinker.Abstractions;
 using LinkType = Mklinker.ConfigLink.LinkType;
 
 namespace Mklinker.Commands {

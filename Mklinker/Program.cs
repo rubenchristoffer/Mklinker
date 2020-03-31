@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO.Abstractions;
 using Autofac;
+using Mklinker.Abstractions;
 
 namespace Mklinker {
 

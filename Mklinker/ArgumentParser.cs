@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Mklinker.Abstractions;
 
 namespace Mklinker {
 

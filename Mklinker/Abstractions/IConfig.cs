@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Mklinker {
+namespace Mklinker.Abstractions {
 
 	interface IConfig {
 

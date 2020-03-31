@@ -2,6 +2,7 @@
 using System.Linq;
 using System.IO.Abstractions;
 using CommandLine;
+using Mklinker.Abstractions;
 
 namespace Mklinker.Commands {
 
