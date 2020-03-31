@@ -22,7 +22,7 @@ namespace Mklinker.Commands {
 				if (input.ToLower().Equals("exit")) {
 					finished = true;
 				} else {
-					commandExecutor.Execute(argumentHandler.ParseStringToArguments(input), configHandler, fileSystem, defaultConfig, argumentHandler);
+					commandExecutor.Execute(argumentHandler.ParseStringToArguments(input));
 				}
 			}
 		}

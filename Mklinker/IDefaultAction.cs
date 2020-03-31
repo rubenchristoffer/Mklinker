@@ -3,7 +3,9 @@
 namespace Mklinker {
 
 	interface IDefaultAction {
+
 		void Execute(IConfigHandler configHandler, IFileSystem fileSystem);
+
 	}
 
 }

@@ -31,8 +31,8 @@ namespace Mklinker {
 			var parserResult = parser.ParseArguments<AddLinkCommand, LinkAllCommand, ListCommand, RemoveLinkCommand, ValidateCommand, InteractiveCommand, ConfigCommand>(args);
 
 			using (var scope = Container.BeginLifetimeScope()) {
-				ICommandExecutor executor = new CommandExecutor ();
-				executor.Execute(args, scope.Resolve<IConfigHandler>(), scope.Resolve<IFileSystem>(), scope.Resolve<IConfig>(), scope.Resolve<IArgumentHandler>());
+				ICommandExecutor executor = new CommandExecutor (scope.Resolve<IConfigHandler>(), scope.Resolve<IFileSystem>(), scope.Resolve<IConfig>(), scope.Resolve<IArgumentHandler>());
+				executor.Execute(args);
 			}
 		}
 

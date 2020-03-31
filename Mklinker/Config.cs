@@ -13,7 +13,7 @@ namespace Mklinker {
 	public class Config : IConfig {
 
 		[XmlAttribute("Version")]
-		public string Version { get; private set; }
+		public string Version { get; set; }
 
 		[XmlArray("Variables")]
 		public List<Variable> Variables { get; private set; }
@@ -22,9 +22,12 @@ namespace Mklinker {
 		[XmlArrayItem("Link")]
 		public List<ConfigLink> LinkList { get; private set; }
 
-		public Config(string version = "Undefined") {
+		public Config() : this("Undefined") {}
+
+		public Config(string version) {
 			Variables = new List<Variable>();
 			LinkList = new List<ConfigLink>();
+			Version = version;
 		}
 
 		public string Serialize() {

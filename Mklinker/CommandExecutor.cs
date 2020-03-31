@@ -7,7 +7,19 @@ namespace Mklinker {
 
 	class CommandExecutor : ICommandExecutor {
 
-		void ICommandExecutor.Execute(string[] args, IConfigHandler configHandler, IFileSystem fileSystem, IConfig defaultConfig, IArgumentHandler argumentHandler) {
+		readonly IConfigHandler configHandler;
+		readonly IFileSystem fileSystem;
+		readonly IConfig defaultConfig;
+		readonly IArgumentHandler argumentHandler;
+
+		internal CommandExecutor (IConfigHandler configHandler, IFileSystem fileSystem, IConfig defaultConfig, IArgumentHandler argumentHandler) {
+			this.configHandler = configHandler;
+			this.fileSystem = fileSystem;
+			this.defaultConfig = defaultConfig;
+			this.argumentHandler = argumentHandler;
+		}
+
+		void ICommandExecutor.Execute(string[] args) {
 			// Parse commands
 			var parser = new Parser(with => with.HelpWriter = Console.Out);
 			var parserResult = parser.ParseArguments<AddLinkCommand, LinkAllCommand, ListCommand, RemoveLinkCommand, ValidateCommand, InteractiveCommand, ConfigCommand>(args);

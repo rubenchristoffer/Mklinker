@@ -7,7 +7,7 @@ namespace Mklinker {
 
 	interface ICommandExecutor {
 
-		void Execute(string[] args, IConfigHandler configHandler, IFileSystem fileSystem, IConfig defaultConfig, IArgumentHandler argumentHandler);
+		void Execute(string[] args);
 
 	}
 
