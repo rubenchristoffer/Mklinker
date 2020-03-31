@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -11,8 +12,9 @@ namespace Mklinker.Commands {
 	[Verb("interactive", HelpText = "Starts an interactive session where you can run multiple commands without 'Mklinker' in front. Use 'exit' to exit from interactive session")]
 	public class InteractiveCommand : IDefaultAction {
 
-		public void Execute() {
-			bool finished = false;
+		void IDefaultAction.Execute(IConfigHandler configHandler, IFileSystem fileSystem) {
+			Console.WriteLine("Interactive mode does not work yet!");
+			/*bool finished = false;
 
 			while (!finished) {
 				Console.Write("> ");
@@ -23,7 +25,7 @@ namespace Mklinker.Commands {
 				} else {
 					Program.ParseAndExecute(Program.ParseStringToArguments(input));
 				}
-			}
+			}*/
 		}
 
 	}

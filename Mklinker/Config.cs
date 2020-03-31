@@ -10,26 +10,24 @@ using System.Xml;
 namespace Mklinker {
 
 	[XmlRoot("Config")]
-	public class Config {
-
-		public const string DEFAULT_CONFIG_FILE = "linker.config";
+	public class Config : IConfig {
 
 		[XmlAttribute("Version")]
-		public string version;
+		public string Version { get; private set; }
 
 		[XmlArray("Variables")]
-		public List<Variable> variables { get; private set; }
+		public List<Variable> Variables { get; private set; }
 
 		[XmlArray("LinkList")]
 		[XmlArrayItem("Link")]
-		public List<ConfigLink> linkList { get; private set; }
-		
-		public Config () {
-			variables = new List<Variable>();
-			linkList = new List<ConfigLink>();
+		public List<ConfigLink> LinkList { get; private set; }
+
+		public Config(string version = "Undefined") {
+			Variables = new List<Variable>();
+			LinkList = new List<ConfigLink>();
 		}
 
-		public string Serialize () {
+		public string Serialize() {
 			XmlSerializer serializer = new XmlSerializer(GetType());
 
 			using (StringWriter writer = new StringWriter()) {
@@ -38,14 +36,14 @@ namespace Mklinker {
 			}
 		}
 
-		public static Config Deserialize (string xml) {
+		public IConfig Deserialize(string xml) {
 			if (xml.Length == 0)
 				return new Config();
 
 			XmlSerializer serializer = new XmlSerializer(typeof(Config));
 
 			using (StringReader reader = new StringReader(xml)) {
-				return (Config) serializer.Deserialize(reader);
+				return (Config)serializer.Deserialize(reader);
 			}
 		}
 

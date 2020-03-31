@@ -12,52 +12,36 @@ using System.IO.Abstractions;
 
 namespace Mklinker {
 
-	public static class Program {
+	public class Program {
 
 		private static IContainer Container { get; set; }
 
-		public static Config config { get; private set; }
-
-		public static void Main(string[] args) {
+		Program (string[] args) {
 			var builder = new ContainerBuilder();
+
 			builder.RegisterType<FileSystem>().As<IFileSystem>();
+			builder.RegisterType<ConfigHandler>().As<IConfigHandler>();
+			builder.RegisterType<Config>().As<IConfig>();
+
 			Container = builder.Build();
 
-			ParseAndExecute(args);
-		}
-
-		public static void ParseAndExecute (string[] args) {
 			// Parse commands
 			var parser = new Parser(with => with.HelpWriter = Console.Out);
 			var parserResult = parser.ParseArguments<AddLinkCommand, LinkAllCommand, ListCommand, RemoveLinkCommand, ValidateCommand, InteractiveCommand, ConfigCommand>(args);
 
-			using (var scope = Container.BeginLifetimeScope ()) {
-				parserResult.WithParsed<IDefaultAction>(flag => flag.Execute());
+			using (var scope = Container.BeginLifetimeScope()) {
+				parserResult
+					.WithParsed<IDefaultAction>(flag => flag.Execute(scope.Resolve<IConfigHandler>(), scope.Resolve<IFileSystem>()))
+					.WithParsed<ConfigCommand>(cmd => cmd.Execute (scope.Resolve<IConfigHandler>(), scope.Resolve<IFileSystem>(), scope.Resolve<IConfig>()));
 			}
-		}
-
-		public static string[] ParseStringToArguments(string input) {
-			return input.Split('"')
-				.Select((element, index) => index % 2 == 0 ? element.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries) : new string[] { element })
-				.SelectMany(element => element).ToArray();
-		}
-
-		public static void CreateNewConfig () {
-			config = new Config();
-			config.version = GetVersion();
-		}
-
-		public static void LoadConfig (string pathToConfigFile) {
-			config = Config.Deserialize(File.ReadAllText(pathToConfigFile));
-		}
-
-		public static void SaveConfig (string pathToConfigFile) {
-			config.version = GetVersion();
-			File.WriteAllText(pathToConfigFile, config.Serialize());
 		}
 
 		public static string GetVersion() {
 			return FileVersionInfo.GetVersionInfo(Assembly.GetAssembly(typeof (Program)).Location).ProductVersion;
+		}
+
+		public static void Main(string[] args) {
+			new Program(args);
 		}
 
 	}
