@@ -12,12 +12,14 @@ namespace Mklinker {
 		readonly IFileSystem fileSystem;
 		readonly IConfig defaultConfig;
 		readonly IArgumentParser argumentHandler;
+		readonly ILinker linker;
 
-		public CommandExecutor (IConfigHandler configHandler, IFileSystem fileSystem, IConfig defaultConfig, IArgumentParser argumentHandler) {
+		public CommandExecutor (IConfigHandler configHandler, IFileSystem fileSystem, IConfig defaultConfig, IArgumentParser argumentHandler, ILinker linker) {
 			this.configHandler = configHandler;
 			this.fileSystem = fileSystem;
 			this.defaultConfig = defaultConfig;
 			this.argumentHandler = argumentHandler;
+			this.linker = linker;
 		}
 
 		void ICommandExecutor.Execute(string[] args) {
@@ -28,7 +30,8 @@ namespace Mklinker {
 			parserResult
 				.WithParsed<IDefaultAction>(flag => flag.Execute(configHandler, fileSystem))
 				.WithParsed<ConfigCommand>(cmd => cmd.Execute(configHandler, fileSystem, defaultConfig))
-				.WithParsed<InteractiveCommand>(cmd => cmd.Execute (configHandler, fileSystem, defaultConfig, argumentHandler, this));
+				.WithParsed<InteractiveCommand>(cmd => cmd.Execute (configHandler, fileSystem, defaultConfig, argumentHandler, this))
+				.WithParsed<LinkAllCommand>(cmd => cmd.Execute (configHandler, fileSystem, linker));
 		}
 
 	}

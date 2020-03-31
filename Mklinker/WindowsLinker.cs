@@ -10,16 +10,23 @@ namespace Mklinker {
 
 		readonly IConfigHandler configHandler;
 		readonly IFileSystem fileSystem;
+		readonly IProcess process;
 
-		public WindowsLinker (IConfigHandler configHandler, IFileSystem fileSystem) {
+		public WindowsLinker (IConfigHandler configHandler, IFileSystem fileSystem, IProcess process) {
 			this.configHandler = configHandler;
 			this.fileSystem = fileSystem;
+			this.process = process;
 		}
 
 		ProcessStartInfo GetProcessInfo(IFileSystem fileSystem, ConfigLink configLink) {
 			return new ProcessStartInfo {
 				FileName = "cmd.exe",
-				Arguments = string.Format("/c mklink{0} {1} {2}", GetLinkTypeArgument(fileSystem, configLink.linkType, configLink.sourcePath), fileSystem.Path.GetFullPath(configLink.targetPath), fileSystem.Path.GetFullPath(configLink.sourcePath)),
+
+				Arguments = string.Format("/c mklink {0} \"{1}\" \"{2}\"", 
+				GetLinkTypeArgument(fileSystem, configLink.linkType, configLink.sourcePath), 
+				fileSystem.Path.GetFullPath(configLink.targetPath), 
+				fileSystem.Path.GetFullPath(configLink.sourcePath)),
+
 				RedirectStandardOutput = true,
 				RedirectStandardError = true,
 				UseShellExecute = false
@@ -28,18 +35,18 @@ namespace Mklinker {
 
 		string GetLinkTypeArgument(IFileSystem fileSystem, LinkType linkType, string sourcePath) {
 			if (fileSystem.File.Exists(sourcePath)) {
-				return linkType == LinkType.Hard ? " /H" : "";
+				return linkType == LinkType.Hard ? "/H" : "";
 			} else if (fileSystem.Directory.Exists(sourcePath)) {
-				return linkType == LinkType.Symbolic ? " /D" : " /J";
+				return linkType == LinkType.Symbolic ? "/D" : "/J";
 			}
 
 			return "";
 		}
 
 		bool ILinker.CreateLink(ConfigLink configLink) {
-			Process mklinkProcess = Process.Start(GetProcessInfo(fileSystem, configLink));
+			IProcess mklinkProcess = process.Start(GetProcessInfo(fileSystem, configLink));
 			bool success = false;
-
+			
 			while (!mklinkProcess.StandardOutput.EndOfStream) {
 				string output = mklinkProcess.StandardOutput.ReadLine();
 				success = output.ToLower().Contains("created");

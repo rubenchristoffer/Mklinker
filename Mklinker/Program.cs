@@ -21,6 +21,10 @@ namespace Mklinker {
 			builder.RegisterType<ConfigHandler>().As<IConfigHandler>();
 			builder.RegisterType<ArgumentParser>().As<IArgumentParser>();
 			builder.RegisterType<CommandExecutor>().As<ICommandExecutor>();
+			builder.RegisterType<Process>().As<IProcess>();
+
+			// Platform dependent
+			builder.RegisterType<WindowsLinker>().As<ILinker>();
 
 			using (var scope = builder.Build().BeginLifetimeScope()) {
 				scope.Resolve<ICommandExecutor>().Execute(args);
