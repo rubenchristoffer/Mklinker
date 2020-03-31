@@ -20,7 +20,15 @@ namespace Mklinker {
 		public void SaveConfig(IConfig config, string pathToConfigFile) {
 			fileSystem.File.WriteAllText(pathToConfigFile, config.Serialize());
 		}
-		
+
+		public void DeleteConfig(string pathToConfigFile) {
+			fileSystem.File.Delete(pathToConfigFile);
+		}
+
+		public bool DoesConfigExist(string pathToConfigFile) {
+			return fileSystem.File.Exists(pathToConfigFile);
+		}
+
 	}
 
 }

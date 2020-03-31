@@ -5,7 +5,7 @@ namespace Mklinker {
 	class GlobalOptions {
 
 		[Option('p', "path", HelpText = "Specifies path to config file", Default = "linker.config")]
-		public string path { get; protected set; }
+		public string path { get; internal set; }
 
 	}
 

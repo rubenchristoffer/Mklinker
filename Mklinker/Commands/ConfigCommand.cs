@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using CommandLine;
-using System.IO.Abstractions;
 using Mklinker.Abstractions;
 
 namespace Mklinker.Commands {
@@ -10,14 +9,14 @@ namespace Mklinker.Commands {
 	class ConfigCommand : GlobalOptions {
 
 		[Option ('c', "create", HelpText = "Creates a new config file if it does not exist", SetName = "Create")]
-		public bool create { get; private set; }
+		public bool create { get; internal set; }
 
 		[Option('d', "delete", HelpText = "Deleted config file if it exists", SetName = "Delete")]
-		public bool delete { get; private set; }
+		public bool delete { get; internal set; }
 
-		internal void Execute(IConfigHandler configHandler, IFileSystem fileSystem, IConfig defaultConfig) {
+		internal void Execute(IConfigHandler configHandler, IConfig defaultConfig) {
 			if (create) {
-				if (fileSystem.File.Exists(path)) {
+				if (configHandler.DoesConfigExist(path)) {
 					Console.WriteLine("Config file already exists!");
 				} else {
 					Console.WriteLine("Creating config file '{0}'", path);
@@ -25,14 +24,14 @@ namespace Mklinker.Commands {
 					configHandler.SaveConfig(defaultConfig, path);
 				}
 			} else if (delete) {
-				if (fileSystem.File.Exists(path)) {
+				if (configHandler.DoesConfigExist(path)) {
 					Console.WriteLine("Deleting config file '{0}'", path);
-					fileSystem.File.Delete(path);
+					configHandler.DeleteConfig(path);
 				} else {
 					Console.WriteLine("Config file '{0}' does not exist!", path);
 				}
 			} else {
-				if (fileSystem.File.Exists(path)) {
+				if (configHandler.DoesConfigExist(path)) {
 					IConfig config = configHandler.LoadConfig(path);
 
 					Console.WriteLine();

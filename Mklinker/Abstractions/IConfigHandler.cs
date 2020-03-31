@@ -8,6 +8,8 @@ namespace Mklinker.Abstractions {
 
 		IConfig LoadConfig(string pathToConfigFile);
 		void SaveConfig(IConfig config, string pathToConfigFile);
+		void DeleteConfig(string pathToConfigFile);
+		bool DoesConfigExist(string pathToConfigFile);
 
 	}
 

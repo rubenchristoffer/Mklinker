@@ -29,7 +29,7 @@ namespace Mklinker {
 
 			parserResult
 				.WithParsed<IDefaultCommandHandler>(flag => flag.Execute(configHandler, fileSystem))
-				.WithParsed<ConfigCommand>(cmd => cmd.Execute(configHandler, fileSystem, defaultConfig))
+				.WithParsed<ConfigCommand>(cmd => cmd.Execute(configHandler, defaultConfig))
 				.WithParsed<InteractiveCommand>(cmd => cmd.Execute (configHandler, fileSystem, defaultConfig, argumentHandler, this))
 				.WithParsed<LinkAllCommand>(cmd => cmd.Execute (configHandler, fileSystem, linker));
 		}

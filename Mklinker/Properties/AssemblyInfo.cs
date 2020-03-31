@@ -36,3 +36,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.2.0.0")]
 [assembly: AssemblyInformationalVersion("1.2.0")]
 [assembly: InternalsVisibleTo("Mklinker.Tests")]
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
