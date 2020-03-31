@@ -2,7 +2,7 @@
 
 namespace Mklinker {
 
-	public interface IConfig {
+	interface IConfig {
 
 		string Version { get; }
 

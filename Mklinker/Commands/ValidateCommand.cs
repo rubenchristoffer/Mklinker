@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommandLine;
 using System.IO.Abstractions;
+using CommandLine;
 
 namespace Mklinker.Commands {
 
     [Verb ("validate", HelpText = "This will validate the config file to see if it is valid")]
-    public class ValidateCommand : GlobalOptions, IDefaultAction {
+    class ValidateCommand : GlobalOptions, IDefaultAction {
 
         [Option ("all", HelpText = "This will list all entries in config and not just the ones that didn't pass validation")]
         public bool displayAll { get; private set; }

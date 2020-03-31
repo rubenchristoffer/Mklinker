@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO.Abstractions;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CommandLine;
 
 namespace Mklinker.Commands {
 
 	[Verb ("list", HelpText = "Lists all the links in the config")]
-	public class ListCommand : GlobalOptions, IDefaultAction {
+	class ListCommand : GlobalOptions, IDefaultAction {
 
 		void IDefaultAction.Execute(IConfigHandler configHandler, IFileSystem fileSystem) {
 			IConfig config = configHandler.LoadConfig(path);

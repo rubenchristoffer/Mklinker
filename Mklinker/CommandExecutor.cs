@@ -10,9 +10,9 @@ namespace Mklinker {
 		readonly IConfigHandler configHandler;
 		readonly IFileSystem fileSystem;
 		readonly IConfig defaultConfig;
-		readonly IArgumentHandler argumentHandler;
+		readonly IArgumentParser argumentHandler;
 
-		public CommandExecutor (IConfigHandler configHandler, IFileSystem fileSystem, IConfig defaultConfig, IArgumentHandler argumentHandler) {
+		public CommandExecutor (IConfigHandler configHandler, IFileSystem fileSystem, IConfig defaultConfig, IArgumentParser argumentHandler) {
 			this.configHandler = configHandler;
 			this.fileSystem = fileSystem;
 			this.defaultConfig = defaultConfig;

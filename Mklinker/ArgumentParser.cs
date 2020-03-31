@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.Text;
-using CommandLine;
-using Mklinker.Commands;
 
 namespace Mklinker {
 
-	class ArgumentHandler : IArgumentHandler {
+	class ArgumentParser : IArgumentParser {
 
 		public string[] ParseStringToArguments(string input) {
 			return input.Split('"')

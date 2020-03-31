@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using CommandLine;
 using System.IO.Abstractions;
@@ -8,7 +6,7 @@ using System.IO.Abstractions;
 namespace Mklinker.Commands {
 
 	[Verb("addlink", HelpText = "Adds a new link to config file")]
-	public class AddLinkCommand : GlobalOptions, IDefaultAction {
+	class AddLinkCommand : GlobalOptions, IDefaultAction {
 
 		[Value(0, HelpText = "The path to new link file", Required = true)]
 		public string targetPath { get; private set; }

@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-using CommandLine;
 using System.IO.Abstractions;
+using CommandLine;
 
 namespace Mklinker.Commands {
 
 	[Verb("removelink", HelpText = "Removes link from config")]
-	public class RemoveLinkCommand : GlobalOptions, IDefaultAction {
+	class RemoveLinkCommand : GlobalOptions, IDefaultAction {
 
 		[Value(0, HelpText = "The targetPath matching entry you want to delete from config.", MetaName = "targetPath", Required = true)]
 		public string targetPath { get; private set; }

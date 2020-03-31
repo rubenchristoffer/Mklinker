@@ -7,10 +7,10 @@ using LinkType = Mklinker.ConfigLink.LinkType;
 namespace Mklinker.Commands {
 
 	[Verb ("linkall", HelpText = "Generates all links from config")]
-	public class LinkAllCommand : GlobalOptions, IDefaultAction {
+	class LinkAllCommand : GlobalOptions, IDefaultAction {
 
 		// TODO: Abstract this
-		private ProcessStartInfo GetProcessInfo(IFileSystem fileSystem, ConfigLink configLink) {
+		ProcessStartInfo GetProcessInfo(IFileSystem fileSystem, ConfigLink configLink) {
 			return new ProcessStartInfo {
 				FileName = "cmd.exe",
 				Arguments = string.Format("/c mklink{0} {1} {2}", GetLinkTypeArgument(fileSystem, configLink.linkType, configLink.sourcePath), fileSystem.Path.GetFullPath(configLink.targetPath), fileSystem.Path.GetFullPath(configLink.sourcePath)),
@@ -20,7 +20,7 @@ namespace Mklinker.Commands {
 			};
 		}
 
-		private string GetLinkTypeArgument(IFileSystem fileSystem, LinkType linkType, string sourcePath) {
+		string GetLinkTypeArgument(IFileSystem fileSystem, LinkType linkType, string sourcePath) {
 			if (fileSystem.File.Exists(sourcePath)) {
 				return linkType == LinkType.Hard ? " /H" : "";
 			} else if (fileSystem.Directory.Exists(sourcePath)) {

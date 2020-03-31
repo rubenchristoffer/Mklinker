@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xml.Serialization;
 
 namespace Mklinker {
 
-	public class ConfigLink {
+	class ConfigLink {
 
 		[XmlElement("SourcePath")]
 		public string sourcePath;

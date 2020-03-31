@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Mklinker {
 
-	interface IArgumentHandler {
+	interface IArgumentParser {
 
 		string[] ParseStringToArguments(string input);
 

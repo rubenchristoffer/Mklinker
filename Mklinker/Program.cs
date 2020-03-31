@@ -17,7 +17,7 @@ namespace Mklinker {
 			builder.RegisterType<FileSystem>().As<IFileSystem>();
 			builder.RegisterType<ConfigHandler>().As<IConfigHandler>();
 			builder.RegisterType<Config>().As<IConfig>();
-			builder.RegisterType<ArgumentHandler>().As<IArgumentHandler>();
+			builder.RegisterType<ArgumentParser>().As<IArgumentParser>();
 			builder.RegisterType<CommandExecutor>().As<ICommandExecutor>();
 
 			using (var scope = builder.Build().BeginLifetimeScope()) {

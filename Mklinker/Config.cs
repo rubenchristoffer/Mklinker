@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.IO;
-using System.Runtime.Serialization;
-using System.Xml.Schema;
 using System.Xml;
 
 namespace Mklinker {
 
 	[XmlRoot("Config")]
-	public class Config : IConfig {
+	class Config : IConfig {
 
 		[XmlAttribute("Version")]
 		public string Version { get; set; }
