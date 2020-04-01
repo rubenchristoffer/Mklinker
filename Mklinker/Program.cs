@@ -8,6 +8,8 @@ namespace Mklinker {
 
 	public static class Program {
 
+		public const string DEFAULT_LINKER_PATH = "linker.config";
+
 		public static string GetVersion() {
 			return FileVersionInfo.GetVersionInfo(Assembly.GetAssembly(typeof (Program)).Location).ProductVersion;
 		}
