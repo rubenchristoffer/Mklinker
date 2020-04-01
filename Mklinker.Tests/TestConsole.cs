@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Mklinker.Abstractions;
+using NUnit.Framework;
 
 namespace Mklinker.Tests {
 
@@ -24,14 +25,19 @@ namespace Mklinker.Tests {
 
 		void IConsole.Write(string text) {
 			history.Append(text);
+			TestContext.Write(text);
 		}
 
 		void IConsole.WriteLine(string text) {
 			history.Append(text + "\n");
+			TestContext.WriteLine(text);
 		}
 
 		void IConsole.WriteLine(string formattedText, params object[] args) {
-			history.Append(String.Format(formattedText, args));
+			string text = String.Format(formattedText, args);
+
+			history.Append(text);
+			TestContext.Write(text);
 		}
 
 		public string GetHistory () {
