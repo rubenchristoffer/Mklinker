@@ -33,7 +33,7 @@ namespace Mklinker.Tests.Commands {
 		public void Execute_WithOnlyPathFlag_FileDoesNotExist() {
 			// Arrange
 			string testPath = testFileSystem.AllFiles.First();
-			ConfigCommand configCommand = new ConfigCommand(false, false, testPath);
+			ConfigCommand command = new ConfigCommand(false, false, testPath);
 
 			Config testConfig = new Config("1.1.1");
 			testConfig.LinkList.Add(new ConfigLink("source", "target", ConfigLink.LinkType.Default));
@@ -43,7 +43,7 @@ namespace Mklinker.Tests.Commands {
 			mockHandler.Setup(m => m.DoesConfigExist(testPath)).Returns(true);
 
 			// Act
-			configCommand.Execute(testConsole, mockHandler.Object, testDefaultConfig);
+			command.Execute(testConsole, mockHandler.Object, testDefaultConfig);
 
 			// Assert
 			Assert.IsTrue(testConsole.GetHistory().Contains("Total links: " + testConfig.LinkList.Count));

@@ -17,6 +17,14 @@ namespace Mklinker.Commands {
 		[Value(2, Default = ConfigLink.LinkType.Default, HelpText = "The type of link you want to create. Default is Symbolic for files and Junction for directories")]
 		public ConfigLink.LinkType linkType { get; private set; }
 
+		public AddLinkCommand() {}
+
+		public AddLinkCommand(string targetPath, string sourcePath, ConfigLink.LinkType linkType, string path) : base(path) {
+			this.targetPath = targetPath;
+			this.sourcePath = sourcePath;
+			this.linkType = linkType;
+		}
+
 		void IDefaultCommandHandler.Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem) {
 			if (!fileSystem.File.Exists(sourcePath) && !fileSystem.Directory.Exists(sourcePath)) {
 				console.WriteLine("\nThe sourcePath '{0}' is invalid because it does not exist", sourcePath);
