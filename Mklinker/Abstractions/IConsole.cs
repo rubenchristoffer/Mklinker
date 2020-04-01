@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.IO;
 
 namespace Mklinker.Abstractions {
 
 	interface IConsole {
 
-		void WriteLine(string line);
+		TextWriter Writer { get; }
+
+		void Write(string text = "");
+		void WriteLine(string text = "");
+		void WriteLine(string formattedText, params object[] args);
+
 		string ReadLine();
 
 	}

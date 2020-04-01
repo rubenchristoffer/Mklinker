@@ -8,12 +8,12 @@ namespace Mklinker.Commands {
 	[Verb("interactive", HelpText = "Starts an interactive session where you can run multiple commands without 'Mklinker' in front. Use 'exit' to exit from interactive session")]
 	class InteractiveCommand {
 
-		internal void Execute(IConfigHandler configHandler, IFileSystem fileSystem, IConfig defaultConfig, IArgumentParser argumentHandler, ICommandExecutor commandExecutor) {
+		internal void Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, IConfig defaultConfig, IArgumentParser argumentHandler, ICommandExecutor commandExecutor) {
 			bool finished = false;
 
 			while (!finished) {
-				Console.Write("> ");
-				string input = Console.ReadLine().Trim();
+				console.Write("> ");
+				string input = console.ReadLine().Trim();
 
 				if (input.ToLower().Equals("exit")) {
 					finished = true;

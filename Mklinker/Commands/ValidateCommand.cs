@@ -11,7 +11,7 @@ namespace Mklinker.Commands {
         [Option ("all", HelpText = "This will list all entries in config and not just the ones that didn't pass validation")]
         public bool displayAll { get; private set; }
 
-        void IDefaultCommandHandler.Execute(IConfigHandler configHandler, IFileSystem fileSystem) {
+        void IDefaultCommandHandler.Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem) {
             IConfig config = configHandler.LoadConfig(path);
 
             foreach (ConfigLink configLink in config.LinkList) {
@@ -19,7 +19,7 @@ namespace Mklinker.Commands {
                 bool validation2 = ValidateLinkType(fileSystem, configLink);
 
                 if (displayAll || !validation1 || !validation2)
-                    Console.WriteLine("\n{0}\n\t# Source path exists: {1}\n\t# Link type acceptable: {2}", configLink.ToString(), validation1 ? "Yes" : "No", validation2 ? "Yes" : "No");
+                    console.WriteLine("\n{0}\n\t# Source path exists: {1}\n\t# Link type acceptable: {2}", configLink.ToString(), validation1 ? "Yes" : "No", validation2 ? "Yes" : "No");
             }
         }
 

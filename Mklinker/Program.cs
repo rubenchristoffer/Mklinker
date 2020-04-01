@@ -22,6 +22,7 @@ namespace Mklinker {
 			builder.RegisterType<ArgumentParser>().As<IArgumentParser>();
 			builder.RegisterType<CommandExecutor>().As<ICommandExecutor>();
 			builder.RegisterType<Process>().As<IProcess>();
+			builder.RegisterType<Console>().As<IConsole>();
 
 			// Platform dependent
 			builder.RegisterType<WindowsLinker>().As<ILinker>();

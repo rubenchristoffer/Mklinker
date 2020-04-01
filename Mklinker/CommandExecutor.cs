@@ -8,13 +8,15 @@ namespace Mklinker {
 
 	class CommandExecutor : ICommandExecutor {
 
+		readonly IConsole console;
 		readonly IConfigHandler configHandler;
 		readonly IFileSystem fileSystem;
 		readonly IConfig defaultConfig;
 		readonly IArgumentParser argumentHandler;
 		readonly ILinker linker;
 
-		public CommandExecutor (IConfigHandler configHandler, IFileSystem fileSystem, IConfig defaultConfig, IArgumentParser argumentHandler, ILinker linker) {
+		public CommandExecutor (IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, IConfig defaultConfig, IArgumentParser argumentHandler, ILinker linker) {
+			this.console = console;
 			this.configHandler = configHandler;
 			this.fileSystem = fileSystem;
 			this.defaultConfig = defaultConfig;
@@ -24,14 +26,14 @@ namespace Mklinker {
 
 		void ICommandExecutor.Execute(string[] args) {
 			// Parse commands
-			var parser = new Parser(with => with.HelpWriter = Console.Out);
+			var parser = new Parser(with => with.HelpWriter = console.Writer);
 			var parserResult = parser.ParseArguments<AddLinkCommand, LinkAllCommand, ListCommand, RemoveLinkCommand, ValidateCommand, InteractiveCommand, ConfigCommand>(args);
 
 			parserResult
-				.WithParsed<IDefaultCommandHandler>(flag => flag.Execute(configHandler, fileSystem))
-				.WithParsed<ConfigCommand>(cmd => cmd.Execute(configHandler, defaultConfig))
-				.WithParsed<InteractiveCommand>(cmd => cmd.Execute (configHandler, fileSystem, defaultConfig, argumentHandler, this))
-				.WithParsed<LinkAllCommand>(cmd => cmd.Execute (configHandler, fileSystem, linker));
+				.WithParsed<IDefaultCommandHandler>(flag => flag.Execute(console, configHandler, fileSystem))
+				.WithParsed<ConfigCommand>(cmd => cmd.Execute(console, configHandler, defaultConfig))
+				.WithParsed<InteractiveCommand>(cmd => cmd.Execute (console, configHandler, fileSystem, defaultConfig, argumentHandler, this))
+				.WithParsed<LinkAllCommand>(cmd => cmd.Execute (console, configHandler, fileSystem, linker));
 		}
 
 	}

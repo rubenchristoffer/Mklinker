@@ -12,9 +12,11 @@ namespace Mklinker.Tests.Commands {
 	[TestFixture]
 	class ConfigCommandTest {
 
+		IConsole testConsole;
+
 		[SetUp]
 		public void Setup () {
-			Console.SetOut(TestContext.Out);
+			testConsole = new TestConsole("");
 		}
 
 		[Test]
@@ -34,7 +36,7 @@ namespace Mklinker.Tests.Commands {
 			configCommand.path = testPath;
 			configCommand.create = true;
 
-			configCommand.Execute(configHandler, defaultConfig);
+			configCommand.Execute(testConsole, configHandler, defaultConfig);
 			Assert.IsTrue(fileSystem.File.Exists(testPath));
 		}
 

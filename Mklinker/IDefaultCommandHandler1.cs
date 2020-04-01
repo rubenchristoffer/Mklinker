@@ -5,7 +5,7 @@ namespace Mklinker {
 
 	interface IDefaultCommandHandler {
 
-		void Execute(IConfigHandler configHandler, IFileSystem fileSystem);
+		void Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem);
 
 	}
 

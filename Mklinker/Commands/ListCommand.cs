@@ -8,12 +8,12 @@ namespace Mklinker.Commands {
 	[Verb ("list", HelpText = "Lists all the links in the config")]
 	class ListCommand : GlobalOptions, IDefaultCommandHandler {
 
-		void IDefaultCommandHandler.Execute(IConfigHandler configHandler, IFileSystem fileSystem) {
+		void IDefaultCommandHandler.Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem) {
 			IConfig config = configHandler.LoadConfig(path);
-			config.LinkList.ForEach(link => Console.WriteLine("\n" + link.ToString()));
+			config.LinkList.ForEach(link => console.WriteLine("\n" + link.ToString()));
 
 			if (config.LinkList.Count == 0)
-				Console.WriteLine("Config is empty");
+				console.WriteLine("Config is empty");
 		}
 
 	}

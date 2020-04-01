@@ -8,11 +8,13 @@ namespace Mklinker {
 
 	class WindowsLinker : ILinker {
 
+		readonly IConsole console;
 		readonly IConfigHandler configHandler;
 		readonly IFileSystem fileSystem;
 		readonly IProcess process;
 
-		public WindowsLinker (IConfigHandler configHandler, IFileSystem fileSystem, IProcess process) {
+		public WindowsLinker (IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, IProcess process) {
+			this.console = console;
 			this.configHandler = configHandler;
 			this.fileSystem = fileSystem;
 			this.process = process;
@@ -51,12 +53,12 @@ namespace Mklinker {
 				string output = mklinkProcess.StandardOutput.ReadLine();
 				success = output.ToLower().Contains("created");
 
-				Console.WriteLine(output);
+				console.WriteLine(output);
 			}
 
 			while (!mklinkProcess.StandardError.EndOfStream) {
 				success = false;
-				Console.WriteLine(mklinkProcess.StandardError.ReadLine());
+				console.WriteLine(mklinkProcess.StandardError.ReadLine());
 			}
 
 			return success;

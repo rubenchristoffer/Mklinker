@@ -14,38 +14,38 @@ namespace Mklinker.Commands {
 		[Option('d', "delete", HelpText = "Deleted config file if it exists", SetName = "Delete")]
 		public bool delete { get; internal set; }
 
-		internal void Execute(IConfigHandler configHandler, IConfig defaultConfig) {
+		internal void Execute(IConsole console, IConfigHandler configHandler, IConfig defaultConfig) {
 			if (create) {
 				if (configHandler.DoesConfigExist(path)) {
-					Console.WriteLine("Config file already exists!");
+					console.WriteLine("Config file already exists!");
 				} else {
-					Console.WriteLine("Creating config file '{0}'", path);
+					console.WriteLine("Creating config file '{0}'", path);
 
 					configHandler.SaveConfig(defaultConfig, path);
 				}
 			} else if (delete) {
 				if (configHandler.DoesConfigExist(path)) {
-					Console.WriteLine("Deleting config file '{0}'", path);
+					console.WriteLine("Deleting config file '{0}'", path);
 					configHandler.DeleteConfig(path);
 				} else {
-					Console.WriteLine("Config file '{0}' does not exist!", path);
+					console.WriteLine("Config file '{0}' does not exist!", path);
 				}
 			} else {
 				if (configHandler.DoesConfigExist(path)) {
 					IConfig config = configHandler.LoadConfig(path);
 
-					Console.WriteLine();
-					Console.WriteLine("### File info ###");
-					Console.WriteLine("Full path: {0}", path);
-					Console.WriteLine("Version: {0}", config.Version);
-					Console.WriteLine();
-					Console.WriteLine("### Link info ###");
-					Console.WriteLine("Total links: " + config.LinkList.Count);
-					Console.WriteLine("Junction links: " + config.LinkList.Count(l => l.linkType == ConfigLink.LinkType.Junction));
-					Console.WriteLine("Symbolic links: " + config.LinkList.Count(l => l.linkType == ConfigLink.LinkType.Symbolic));
-					Console.WriteLine("Hard links: " + config.LinkList.Count(l => l.linkType == ConfigLink.LinkType.Hard));
+					console.WriteLine();
+					console.WriteLine("### File info ###");
+					console.WriteLine("Full path: {0}", path);
+					console.WriteLine("Version: {0}", config.Version);
+					console.WriteLine();
+					console.WriteLine("### Link info ###");
+					console.WriteLine("Total links: " + config.LinkList.Count);
+					console.WriteLine("Junction links: " + config.LinkList.Count(l => l.linkType == ConfigLink.LinkType.Junction));
+					console.WriteLine("Symbolic links: " + config.LinkList.Count(l => l.linkType == ConfigLink.LinkType.Symbolic));
+					console.WriteLine("Hard links: " + config.LinkList.Count(l => l.linkType == ConfigLink.LinkType.Hard));
 				} else {
-					Console.WriteLine("Config file does not exist. You can create one with the --create option.");
+					console.WriteLine("Config file does not exist. You can create one with the --create option.");
 				}
 			}
 		}
