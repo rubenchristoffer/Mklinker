@@ -40,10 +40,10 @@ namespace Mklinker.Commands {
 
 			// Set default link type if type is not provided
 			if (linkType == ConfigLink.LinkType.Default) {
-				if (fileSystem.File.Exists(sourcePath)) {
-					linkType = ConfigLink.LinkType.Symbolic;
-				} else {
+				if (fileSystem.Directory.Exists(sourcePath)) {
 					linkType = ConfigLink.LinkType.Junction;
+				} else {
+					linkType = ConfigLink.LinkType.Symbolic;
 				}
 			}
 

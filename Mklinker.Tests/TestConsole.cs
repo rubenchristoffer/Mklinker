@@ -14,6 +14,8 @@ namespace Mklinker.Tests {
 
 		TextWriter IConsole.Writer => null;
 
+		public bool ShouldRecordHistory { get; set; } = true;
+
 		public TestConsole (string readLineText) {
 			this.history = new StringBuilder();
 			this.readLineText = readLineText;
@@ -24,20 +26,26 @@ namespace Mklinker.Tests {
 		}
 
 		void IConsole.Write(string text) {
-			history.Append(text);
-			TestContext.Write(text);
+			if (ShouldRecordHistory) {
+				history.Append(text);
+				TestContext.Write(text);
+			}
 		}
 
 		void IConsole.WriteLine(string text) {
-			history.Append(text + "\n");
-			TestContext.WriteLine(text);
+			if (ShouldRecordHistory) {
+				history.Append(text + "\n");
+				TestContext.WriteLine(text);
+			}
 		}
 
 		void IConsole.WriteLine(string formattedText, params object[] args) {
-			string text = String.Format(formattedText, args);
+			if (ShouldRecordHistory) {
+				string text = String.Format(formattedText, args);
 
-			history.Append(text);
-			TestContext.Write(text);
+				history.Append(text);
+				TestContext.Write(text);
+			}
 		}
 
 		public string GetHistory () {
