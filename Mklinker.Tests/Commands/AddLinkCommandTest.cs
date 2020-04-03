@@ -146,7 +146,7 @@ namespace Mklinker.Tests.Commands {
 		public void Execute_WithLinkFlagJunction_ShouldCreateJunctionLink() {
 			// Arrange
 			const string testPath = @"c:\config.linker";
-			const string testSourcePath = @"c:\demo";
+			const string testSourcePath = @"c:\demo\";
 			const string testTargetPath = @"c:\folder\anotherfolder\yetanotherfolder";
 			const ConfigLink.LinkType testLinkType = ConfigLink.LinkType.Junction;
 
