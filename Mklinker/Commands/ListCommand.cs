@@ -8,6 +8,9 @@ namespace Mklinker.Commands {
 	[Verb ("list", HelpText = "Lists all the links in the config")]
 	class ListCommand : GlobalOptions, IDefaultCommandHandler {
 
+		public ListCommand() : base() {}
+		public ListCommand(string path) : base(path) {}
+
 		void IDefaultCommandHandler.Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem) {
 			IConfig config = configHandler.LoadConfig(path);
 			config.LinkList.ForEach(link => console.WriteLine("\n" + link.ToString()));
