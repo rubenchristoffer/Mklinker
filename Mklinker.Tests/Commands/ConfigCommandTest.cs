@@ -24,13 +24,13 @@ namespace Mklinker.Tests.Commands {
 				{ @"c:\demo\image.gif", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
 			});
 
-			testConsole = new TestConsole("");
+			testConsole = new TestConsole();
 			testDefaultConfig = new Config("TestVersion");
 			testConfigHandler = new ConfigHandler(testFileSystem, testDefaultConfig);
 		}
 
 		[Test]
-		public void Execute_WithOnlyPathFlag_FileDoesNotExist() {
+		public void Execute_WithOnlyPathFlag_PrintsTotalLinks() {
 			// Arrange
 			string testPath = testFileSystem.AllFiles.First();
 			ConfigCommand command = new ConfigCommand(false, false, testPath);
@@ -47,6 +47,19 @@ namespace Mklinker.Tests.Commands {
 
 			// Assert
 			Assert.IsTrue(testConsole.GetHistory().Contains("Total links: " + testConfig.LinkList.Count));
+		}
+
+		[Test]
+		public void Execute_WithOnlyInvalidPathFlag_FileDoesNotExist() {
+			// Arrange
+			string testPath = "some config that does not exist";
+			ConfigCommand command = new ConfigCommand(false, false, testPath);
+
+			// Act
+			command.Execute(testConsole, testConfigHandler, testDefaultConfig);
+
+			// Assert
+			Assert.IsTrue(testConsole.GetHistory().Contains("does not exist"));
 		}
 
 		[Test]

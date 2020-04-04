@@ -10,19 +10,19 @@ namespace Mklinker.Tests {
 	class TestConsole : IConsole {
 
 		StringBuilder history;
-		string readLineText;
 
 		TextWriter IConsole.Writer => null;
 
+		public string ReadLineText { get; set; }
 		public bool ShouldRecordHistory { get; set; } = true;
 
-		public TestConsole (string readLineText) {
+		public TestConsole (string readLineText = "") {
 			this.history = new StringBuilder();
-			this.readLineText = readLineText;
+			ReadLineText = readLineText;
 		}
 
 		string IConsole.ReadLine() {
-			return readLineText;
+			return ReadLineText;
 		}
 
 		void IConsole.Write(string text) {

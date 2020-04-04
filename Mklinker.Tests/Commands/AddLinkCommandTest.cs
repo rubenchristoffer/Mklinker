@@ -29,7 +29,7 @@ namespace Mklinker.Tests.Commands {
 				{ @"c:\demo\image.gif", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
 			});
 
-			testConsole = new TestConsole("");
+			testConsole = new TestConsole();
 			testConfigHandler = new ConfigHandler(testFileSystem, new Config ());
 		}
 
