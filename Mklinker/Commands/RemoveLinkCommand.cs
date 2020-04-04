@@ -12,6 +12,12 @@ namespace Mklinker.Commands {
 		[Value(0, HelpText = "The targetPath matching entry you want to delete from config.", MetaName = "targetPath", Required = true)]
 		public string targetPath { get; private set; }
 
+		public RemoveLinkCommand() : base() { }
+
+		public RemoveLinkCommand(string targetPath, string path) : base(path) {
+			this.targetPath = targetPath;
+		}
+
 		void IDefaultCommandHandler.Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem) {
 			IConfig config = configHandler.LoadConfig(path);
 			ConfigLink configLink = config.LinkList.FirstOrDefault(link => fileSystem.Path.GetFullPath(link.targetPath).Equals(fileSystem.Path.GetFullPath(targetPath)));
