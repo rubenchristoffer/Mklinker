@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using Mklinker.Commands;
+using Mklinker.Abstractions;
 using NUnit.Framework;
 using System.IO.Abstractions.TestingHelpers;
 using Moq;
@@ -12,8 +13,10 @@ namespace Mklinker.Tests.Commands {
 
 		MockFileSystem testFileSystem;
 		TestConsole testConsole;
-		Config testDefaultConfig;
-		ConfigHandler testConfigHandler;
+		Mock<IConfigHandler> testConfigHandler;
+		Mock<IConfig> testConfig;
+		List<ConfigLink> links;
+		ConfigLink[] linkElements;
 
 		[SetUp]
 		public void Setup () {
@@ -25,8 +28,17 @@ namespace Mklinker.Tests.Commands {
 			});
 
 			testConsole = new TestConsole();
-			testDefaultConfig = new Config("TestVersion");
-			testConfigHandler = new ConfigHandler(testFileSystem, testDefaultConfig);
+			testConfigHandler = new Mock<IConfigHandler>();
+
+			links = new List<ConfigLink>();
+
+			linkElements = new ConfigLink[] {
+				new ConfigLink("source", "target", ConfigLink.LinkType.Default),
+				new ConfigLink("testing is fun", "not really", ConfigLink.LinkType.Hard)
+			};
+
+			testConfig = new Mock<IConfig>();
+			testConfig.Setup(m => m.LinkList).Returns(links);
 		}
 
 		[Test]
@@ -35,18 +47,16 @@ namespace Mklinker.Tests.Commands {
 			string testPath = testFileSystem.AllFiles.First();
 			ConfigCommand command = new ConfigCommand(false, false, testPath);
 
-			Config testConfig = new Config("1.1.1");
-			testConfig.LinkList.Add(new ConfigLink("source", "target", ConfigLink.LinkType.Default));
+			links.Add(linkElements[0]);
 
-			var mockHandler = new Mock<Abstractions.IConfigHandler>();
-			mockHandler.Setup(m => m.LoadConfig(testPath)).Returns(testConfig);
-			mockHandler.Setup(m => m.DoesConfigExist(testPath)).Returns(true);
+			testConfigHandler.Setup(m => m.LoadConfig(testPath)).Returns(testConfig.Object);
+			testConfigHandler.Setup(m => m.DoesConfigExist(testPath)).Returns(true);
 
 			// Act
-			command.Execute(testConsole, mockHandler.Object, testDefaultConfig);
+			command.Execute(testConsole, testConfigHandler.Object, testConfig.Object);
 
 			// Assert
-			Assert.IsTrue(testConsole.GetHistory().Contains("Total links: " + testConfig.LinkList.Count));
+			Assert.IsTrue(testConsole.GetHistory().Contains("Total links: " + links.Count));
 		}
 
 		[Test]
@@ -54,9 +64,10 @@ namespace Mklinker.Tests.Commands {
 			// Arrange
 			string testPath = "some config that does not exist";
 			ConfigCommand command = new ConfigCommand(false, false, testPath);
+			testConfigHandler.Setup(m => m.DoesConfigExist(testPath)).Returns(false);
 
 			// Act
-			command.Execute(testConsole, testConfigHandler, testDefaultConfig);
+			command.Execute(testConsole, testConfigHandler.Object, testConfig.Object);
 
 			// Assert
 			Assert.IsTrue(testConsole.GetHistory().Contains("does not exist"));
@@ -67,12 +78,13 @@ namespace Mklinker.Tests.Commands {
 			// Arrange
 			const string testPath = "config.linker";
 			ConfigCommand configCommand = new ConfigCommand(true, false, testPath);
+			testConfigHandler.Setup(m => m.DoesConfigExist(testPath)).Returns(false);
 
 			// Act
-			configCommand.Execute(testConsole, testConfigHandler, testDefaultConfig);
-			
+			configCommand.Execute(testConsole, testConfigHandler.Object, testConfig.Object);
+
 			// Assert
-			Assert.IsTrue(testFileSystem.File.Exists(testPath));
+			testConfigHandler.Verify(m => m.SaveConfig(testConfig.Object, testPath));
 		}
 
 		[Test]
@@ -80,9 +92,10 @@ namespace Mklinker.Tests.Commands {
 			// Arrange
 			string testPath = testFileSystem.AllFiles.First();
 			ConfigCommand configCommand = new ConfigCommand(true, false, testPath);
+			testConfigHandler.Setup(m => m.DoesConfigExist(testPath)).Returns(true);
 
 			// Act
-			configCommand.Execute(testConsole, testConfigHandler, testDefaultConfig);
+			configCommand.Execute(testConsole, testConfigHandler.Object, testConfig.Object);
 
 			// Assert
 			Assert.IsTrue(testConsole.GetHistory().Contains("already exists", System.StringComparison.OrdinalIgnoreCase));
@@ -93,12 +106,13 @@ namespace Mklinker.Tests.Commands {
 			// Arrange
 			string testPath = testFileSystem.AllFiles.First();
 			ConfigCommand configCommand = new ConfigCommand(false, true, testPath);
+			testConfigHandler.Setup(m => m.DoesConfigExist(testPath)).Returns(true);
 
 			// Act
-			configCommand.Execute(testConsole, testConfigHandler, testDefaultConfig);
+			configCommand.Execute(testConsole, testConfigHandler.Object, testConfig.Object);
 
 			// Assert
-			Assert.IsFalse(testFileSystem.File.Exists(testPath));
+			testConfigHandler.Verify(m => m.DeleteConfig(testPath));
 		}
 
 		[Test]
@@ -106,9 +120,10 @@ namespace Mklinker.Tests.Commands {
 			// Arrange
 			string testPath = "doesnotexist";
 			ConfigCommand configCommand = new ConfigCommand(false, true, testPath);
+			testConfigHandler.Setup(m => m.DoesConfigExist(testPath)).Returns(false);
 
 			// Act
-			configCommand.Execute(testConsole, testConfigHandler, testDefaultConfig);
+			configCommand.Execute(testConsole, testConfigHandler.Object, testConfig.Object);
 
 			// Assert
 			Assert.IsTrue(testConsole.GetHistory().Contains("does not exist", System.StringComparison.OrdinalIgnoreCase));

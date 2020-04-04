@@ -17,7 +17,10 @@ namespace Mklinker.Tests.Commands {
 
 		TestConsole testConsole;
 		MockFileSystem testFileSystem;
-		ConfigHandler testConfigHandler;
+		Mock<IConfigHandler> testConfigHandler;
+		Mock<IConfig> testConfig;
+		List<ConfigLink> links;
+		ConfigLink[] linkElements;
 
 		[SetUp]
 		public void Setup () {
@@ -30,7 +33,17 @@ namespace Mklinker.Tests.Commands {
 			});
 
 			testConsole = new TestConsole();
-			testConfigHandler = new ConfigHandler(testFileSystem, new Config ());
+			testConfigHandler = new Mock<IConfigHandler>();
+
+			links = new List<ConfigLink>();
+
+			linkElements = new ConfigLink[] {
+				new ConfigLink("source", "target", ConfigLink.LinkType.Default),
+				new ConfigLink("testing is fun", "not really", ConfigLink.LinkType.Hard)
+			};
+
+			testConfig = new Mock<IConfig>();
+			testConfig.Setup(m => m.LinkList).Returns(links);
 		}
 
 		[Test]
@@ -42,15 +55,18 @@ namespace Mklinker.Tests.Commands {
 
 			AddLinkCommand command = new AddLinkCommand(testTargetPath, testSourcePath, ConfigLink.LinkType.Default, testPath);
 
+			links.Add(linkElements[0]);
+			links.Add(linkElements[1]);
+			testConfigHandler.Setup(m => m.LoadConfig(testPath)).Returns(testConfig.Object);
+
 			// Act
-			((IDefaultCommandHandler) command).Execute(testConsole, testConfigHandler, testFileSystem);
+			((IDefaultCommandHandler) command).Execute(testConsole, testConfigHandler.Object, testFileSystem);
 
 			// Assert
-			Assert.IsTrue(testConfigHandler.LoadConfig (testPath).LinkList.Any (link => 
+			Assert.IsTrue(testConfigHandler.Object.LoadConfig (testPath).LinkList.Any (link => 
 				link.sourcePath.Equals(testSourcePath) && link.targetPath.Equals(testTargetPath) && link.linkType == ConfigLink.LinkType.Symbolic));
 		}
 
-		// NOTE: This will become platform-dependent later if cross-platform is implemented
 		[Test]
 		public void Execute_WithOnlyRequiredArguments_WillCreateDefaultDirectoryLink() {
 			// Arrange
@@ -60,11 +76,15 @@ namespace Mklinker.Tests.Commands {
 
 			AddLinkCommand command = new AddLinkCommand(testTargetPath, testSourcePath, ConfigLink.LinkType.Default, testPath);
 
+			links.Add(linkElements[0]);
+			links.Add(linkElements[1]);
+			testConfigHandler.Setup(m => m.LoadConfig(testPath)).Returns(testConfig.Object);
+
 			// Act
-			((IDefaultCommandHandler)command).Execute(testConsole, testConfigHandler, testFileSystem);
+			((IDefaultCommandHandler)command).Execute(testConsole, testConfigHandler.Object, testFileSystem);
 
 			// Assert
-			Assert.IsTrue(testConfigHandler.LoadConfig(testPath).LinkList.Any(link =>
+			Assert.IsTrue(testConfigHandler.Object.LoadConfig(testPath).LinkList.Any(link =>
 			  link.sourcePath.Equals(testSourcePath) && link.targetPath.Equals(testTargetPath) && link.linkType == ConfigLink.LinkType.Junction));
 		}
 
@@ -76,13 +96,14 @@ namespace Mklinker.Tests.Commands {
 			const string testTargetPath = "testTargetDirectory";
 
 			AddLinkCommand command = new AddLinkCommand(testTargetPath, testSourcePath, ConfigLink.LinkType.Default, testPath);
+			testConfigHandler.Setup(m => m.LoadConfig(testPath)).Returns(testConfig.Object);
 
 			// Act
 			testConsole.ShouldRecordHistory = false;
-			((IDefaultCommandHandler)command).Execute(testConsole, testConfigHandler, testFileSystem);
+			((IDefaultCommandHandler)command).Execute(testConsole, testConfigHandler.Object, testFileSystem);
 
 			testConsole.ShouldRecordHistory = true;
-			((IDefaultCommandHandler)command).Execute(testConsole, testConfigHandler, testFileSystem);
+			((IDefaultCommandHandler)command).Execute(testConsole, testConfigHandler.Object, testFileSystem);
 
 			// Assert
 			Assert.IsTrue(testConsole.GetHistory().Contains("already exists", StringComparison.OrdinalIgnoreCase));
@@ -97,9 +118,10 @@ namespace Mklinker.Tests.Commands {
 			const string testTargetPath = "testTargetDirectory";
 
 			AddLinkCommand command = new AddLinkCommand(testTargetPath, testSourcePath, ConfigLink.LinkType.Default, testPath);
+			testConfigHandler.Setup(m => m.LoadConfig(testPath)).Returns(testConfig.Object);
 
 			// Act
-			((IDefaultCommandHandler)command).Execute(testConsole, testConfigHandler, testFileSystem);
+			((IDefaultCommandHandler)command).Execute(testConsole, testConfigHandler.Object, testFileSystem);
 
 			// Assert
 			Assert.IsTrue(testConsole.GetHistory().Contains("does not exist", StringComparison.OrdinalIgnoreCase));
@@ -115,12 +137,13 @@ namespace Mklinker.Tests.Commands {
 			const ConfigLink.LinkType testLinkType = ConfigLink.LinkType.Hard;
 
 			AddLinkCommand command = new AddLinkCommand(testTargetPath, testSourcePath, testLinkType, testPath);
+			testConfigHandler.Setup(m => m.LoadConfig(testPath)).Returns(testConfig.Object);
 
 			// Act
-			((IDefaultCommandHandler)command).Execute(testConsole, testConfigHandler, testFileSystem);
+			((IDefaultCommandHandler)command).Execute(testConsole, testConfigHandler.Object, testFileSystem);
 
 			// Assert
-			Assert.IsTrue(testConfigHandler.LoadConfig(testPath).LinkList.Any(link =>
+			Assert.IsTrue(testConfigHandler.Object.LoadConfig(testPath).LinkList.Any(link =>
 			  link.sourcePath.Equals(testSourcePath) && link.targetPath.Equals(testTargetPath) && link.linkType == testLinkType));
 		}
 
@@ -133,12 +156,13 @@ namespace Mklinker.Tests.Commands {
 			const ConfigLink.LinkType testLinkType = ConfigLink.LinkType.Symbolic;
 
 			AddLinkCommand command = new AddLinkCommand(testTargetPath, testSourcePath, testLinkType, testPath);
+			testConfigHandler.Setup(m => m.LoadConfig(testPath)).Returns(testConfig.Object);
 
 			// Act
-			((IDefaultCommandHandler)command).Execute(testConsole, testConfigHandler, testFileSystem);
+			((IDefaultCommandHandler)command).Execute(testConsole, testConfigHandler.Object, testFileSystem);
 
 			// Assert
-			Assert.IsTrue(testConfigHandler.LoadConfig(testPath).LinkList.Any(link =>
+			Assert.IsTrue(testConfigHandler.Object.LoadConfig(testPath).LinkList.Any(link =>
 			  link.sourcePath.Equals(testSourcePath) && link.targetPath.Equals(testTargetPath) && link.linkType == testLinkType));
 		}
 
@@ -151,12 +175,13 @@ namespace Mklinker.Tests.Commands {
 			const ConfigLink.LinkType testLinkType = ConfigLink.LinkType.Junction;
 
 			AddLinkCommand command = new AddLinkCommand(testTargetPath, testSourcePath, testLinkType, testPath);
+			testConfigHandler.Setup(m => m.LoadConfig(testPath)).Returns(testConfig.Object);
 
 			// Act
-			((IDefaultCommandHandler)command).Execute(testConsole, testConfigHandler, testFileSystem);
+			((IDefaultCommandHandler)command).Execute(testConsole, testConfigHandler.Object, testFileSystem);
 
 			// Assert
-			Assert.IsTrue(testConfigHandler.LoadConfig(testPath).LinkList.Any(link =>
+			Assert.IsTrue(testConfigHandler.Object.LoadConfig(testPath).LinkList.Any(link =>
 			  link.sourcePath.Equals(testSourcePath) && link.targetPath.Equals(testTargetPath) && link.linkType == testLinkType));
 		}
 
