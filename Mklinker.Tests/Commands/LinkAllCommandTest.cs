@@ -36,7 +36,7 @@ namespace Mklinker.Tests.Commands {
 			links.Add(new ConfigLink(@"c:\config.linker", "targetfile.linker", ConfigLink.LinkType.Default));
 			links.Add(new ConfigLink(@"c:\invalidconfig.linker", "somerandomlink.linker", ConfigLink.LinkType.Default));
 
-			links.ForEach(link => testLinker.Setup(m => m.CreateLink(link)));
+			links.ForEach(link => testLinker.Setup(m => m.CreateLink(link)).Returns(true));
 
 			var mockConfig = new Mock<IConfig>();
 			mockConfig.Setup(m => m.LinkList).Returns(links);

@@ -23,11 +23,11 @@ namespace Mklinker.Commands {
             }
         }
 
-        bool ValidateExistence (IFileSystem fileSystem, ConfigLink configLink) {
+        internal bool ValidateExistence (IFileSystem fileSystem, ConfigLink configLink) {
             return fileSystem.File.Exists(configLink.sourcePath) || fileSystem.Directory.Exists(configLink.sourcePath);
         }
 
-        bool ValidateLinkType (IFileSystem fileSystem, ConfigLink configLink) {
+        internal bool ValidateLinkType (IFileSystem fileSystem, ConfigLink configLink) {
             if (fileSystem.File.Exists(configLink.sourcePath)) {
                 return configLink.linkType == ConfigLink.LinkType.Symbolic || configLink.linkType == ConfigLink.LinkType.Hard;
             }
