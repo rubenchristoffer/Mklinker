@@ -10,7 +10,10 @@
 		<img src="https://img.shields.io/appveyor/tests/rubenchristoffer/Mklinker.svg" alt="AppVeyor Tests">
 	</a>
 	<a href="https://coveralls.io/github/rubenchristoffer/Mklinker?branch=master">
-		<img src="https://coveralls.io/repos/github/rubenchristoffer/Mklinker/badge.svg?branch=master" alt="Coverage Status" />
+		<img src="https://img.shields.io/coveralls/github/rubenchristoffer/Mklinker.svg?style=flat" alt="Coverage Status" />
+	</a>
+	<a href="https://rubenchristoffer.github.io/Mklinker/CoverageReport/">
+		<img src="https://img.shields.io/badge/coverage_report-generated-green.svg?style=flat" alt="Coverage Report" />
 	</a>
 	<a href="../../releases/latest">
 		<img src="https://img.shields.io/github/v/release/rubenchristoffer/Mklinker.svg?style=flat" alt="Release" />
