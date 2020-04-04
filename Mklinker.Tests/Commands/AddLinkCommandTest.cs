@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text;
-using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using NUnit.Framework;
-using Mklinker;
 using Mklinker.Commands;
 using Mklinker.Abstractions;
 using Moq;
