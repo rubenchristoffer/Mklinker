@@ -17,7 +17,7 @@ namespace Mklinker.Commands {
 		[Value(2, Default = ConfigLink.LinkType.Default, HelpText = "The type of link you want to create. Default is Symbolic for files and Junction for directories")]
 		public ConfigLink.LinkType linkType { get; private set; }
 
-		public AddLinkCommand() {}
+		public AddLinkCommand() : base() {}
 
 		public AddLinkCommand(string targetPath, string sourcePath, ConfigLink.LinkType linkType, string path) : base(path) {
 			this.targetPath = targetPath;

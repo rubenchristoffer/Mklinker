@@ -14,7 +14,7 @@ namespace Mklinker.Commands {
 		[Option('d', "delete", HelpText = "Deleted config file if it exists", SetName = "Delete")]
 		public bool delete { get; private set; }
 
-		public ConfigCommand() {}
+		public ConfigCommand() : base() {}
 
 		public ConfigCommand (bool create, bool delete, string path) : base(path) {
 			this.create = create;

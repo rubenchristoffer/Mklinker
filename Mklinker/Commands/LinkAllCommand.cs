@@ -10,6 +10,9 @@ namespace Mklinker.Commands {
 	[Verb ("linkall", HelpText = "Generates all links from config")]
 	class LinkAllCommand : GlobalOptions {
 
+		public LinkAllCommand() : base () {}
+		public LinkAllCommand (string path) : base (path) {}
+
 		internal void Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, ILinker linker) {
 			IConfig config = configHandler.LoadConfig(path);
 
