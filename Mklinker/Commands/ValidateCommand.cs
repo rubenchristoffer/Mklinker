@@ -27,6 +27,7 @@ namespace Mklinker.Commands {
 
                 if (displayAll || !validation1 || !validation2) {
                     console.WriteLine("\n{0}\n\t# Source path exists: {1}\n\t# Link type acceptable: {2}", configLink.ToString(), validation1 ? "Yes" : "No", validation2 ? "Yes" : "No");
+                    isValid = false;
                 }
             }
 
