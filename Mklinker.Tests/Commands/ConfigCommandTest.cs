@@ -15,8 +15,8 @@ namespace Mklinker.Tests.Commands {
 		TestConsole testConsole;
 		Mock<IConfigHandler> testConfigHandler;
 		Mock<IConfig> testConfig;
-		List<ConfigLink> links;
-		ConfigLink[] linkElements;
+		List<ConfigLink> testLinks;
+		ConfigLink[] testLinkElements;
 
 		[SetUp]
 		public void Setup () {
@@ -30,15 +30,15 @@ namespace Mklinker.Tests.Commands {
 			testConsole = new TestConsole();
 			testConfigHandler = new Mock<IConfigHandler>();
 
-			links = new List<ConfigLink>();
+			testLinks = new List<ConfigLink>();
 
-			linkElements = new ConfigLink[] {
+			testLinkElements = new ConfigLink[] {
 				new ConfigLink("source", "target", ConfigLink.LinkType.Default),
 				new ConfigLink("testing is fun", "not really", ConfigLink.LinkType.Hard)
 			};
 
 			testConfig = new Mock<IConfig>();
-			testConfig.Setup(m => m.LinkList).Returns(links);
+			testConfig.Setup(m => m.LinkList).Returns(testLinks);
 		}
 
 		[Test]
@@ -47,7 +47,7 @@ namespace Mklinker.Tests.Commands {
 			string testPath = testFileSystem.AllFiles.First();
 			ConfigCommand command = new ConfigCommand(false, false, testPath);
 
-			links.Add(linkElements[0]);
+			testLinks.Add(testLinkElements[0]);
 
 			testConfigHandler.Setup(m => m.LoadConfig(testPath)).Returns(testConfig.Object);
 			testConfigHandler.Setup(m => m.DoesConfigExist(testPath)).Returns(true);
@@ -56,7 +56,7 @@ namespace Mklinker.Tests.Commands {
 			command.Execute(testConsole, testConfigHandler.Object, testConfig.Object);
 
 			// Assert
-			Assert.IsTrue(testConsole.GetHistory().Contains("Total links: " + links.Count));
+			Assert.IsTrue(testConsole.GetHistory().Contains("Total links: " + testLinks.Count));
 		}
 
 		[Test]

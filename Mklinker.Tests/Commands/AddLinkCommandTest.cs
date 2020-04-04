@@ -19,8 +19,8 @@ namespace Mklinker.Tests.Commands {
 		MockFileSystem testFileSystem;
 		Mock<IConfigHandler> testConfigHandler;
 		Mock<IConfig> testConfig;
-		List<ConfigLink> links;
-		ConfigLink[] linkElements;
+		List<ConfigLink> testLinks;
+		ConfigLink[] testLinkElements;
 
 		[SetUp]
 		public void Setup () {
@@ -35,15 +35,15 @@ namespace Mklinker.Tests.Commands {
 			testConsole = new TestConsole();
 			testConfigHandler = new Mock<IConfigHandler>();
 
-			links = new List<ConfigLink>();
+			testLinks = new List<ConfigLink>();
 
-			linkElements = new ConfigLink[] {
+			testLinkElements = new ConfigLink[] {
 				new ConfigLink("source", "target", ConfigLink.LinkType.Default),
 				new ConfigLink("testing is fun", "not really", ConfigLink.LinkType.Hard)
 			};
 
 			testConfig = new Mock<IConfig>();
-			testConfig.Setup(m => m.LinkList).Returns(links);
+			testConfig.Setup(m => m.LinkList).Returns(testLinks);
 		}
 
 		[Test]
@@ -55,8 +55,8 @@ namespace Mklinker.Tests.Commands {
 
 			AddLinkCommand command = new AddLinkCommand(testTargetPath, testSourcePath, ConfigLink.LinkType.Default, testPath);
 
-			links.Add(linkElements[0]);
-			links.Add(linkElements[1]);
+			testLinks.Add(testLinkElements[0]);
+			testLinks.Add(testLinkElements[1]);
 			testConfigHandler.Setup(m => m.LoadConfig(testPath)).Returns(testConfig.Object);
 
 			// Act
@@ -76,8 +76,8 @@ namespace Mklinker.Tests.Commands {
 
 			AddLinkCommand command = new AddLinkCommand(testTargetPath, testSourcePath, ConfigLink.LinkType.Default, testPath);
 
-			links.Add(linkElements[0]);
-			links.Add(linkElements[1]);
+			testLinks.Add(testLinkElements[0]);
+			testLinks.Add(testLinkElements[1]);
 			testConfigHandler.Setup(m => m.LoadConfig(testPath)).Returns(testConfig.Object);
 
 			// Act

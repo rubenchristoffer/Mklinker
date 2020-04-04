@@ -13,6 +13,9 @@ namespace Mklinker.Tests.Commands {
 		TestConsole testConsole;
 		Mock<IConfigHandler> testConfigHandler;
 		MockFileSystem testFileSystem;
+		Mock<IConfig> testConfig;
+		List<ConfigLink> testLinks;
+		ConfigLink[] testLinkElements;
 
 		[SetUp]
 		public void Setup () {
@@ -25,6 +28,15 @@ namespace Mklinker.Tests.Commands {
 				{ @"c:\demo\jQuery.js", new MockFileData("some js") },
 				{ @"c:\demo\image.gif", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
 			});
+
+			testLinks = new List<ConfigLink>();
+			testConfig = new Mock<IConfig>();
+			testConfig.Setup(m => m.LinkList).Returns(testLinks);
+
+			testLinkElements = new ConfigLink[] {
+				new ConfigLink(@"c:\config_that_does_not_exist.linker", "target", ConfigLink.LinkType.Symbolic),
+				new ConfigLink(@"c:\config.linker", "target", ConfigLink.LinkType.Symbolic)
+			};
 		}
 
 		[Test]
@@ -32,15 +44,8 @@ namespace Mklinker.Tests.Commands {
 			// Arrange
 			ValidateCommand command = new ValidateCommand(false, "testpath");
 
-			List<ConfigLink> links = new List<ConfigLink>();
-
-			var element1 = new ConfigLink(@"c:\config.linker", "target", ConfigLink.LinkType.Symbolic);
-
-			links.Add(element1);
-
-			var mockConfig = new Mock<IConfig>();
-			mockConfig.Setup(m => m.LinkList).Returns(links);
-			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(mockConfig.Object);
+			testLinks.Add(testLinkElements[1]);
+			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(testConfig.Object);
 
 			// Act
 			((IDefaultCommandHandler)command).Execute(testConsole, testConfigHandler.Object, testFileSystem);
@@ -54,11 +59,7 @@ namespace Mklinker.Tests.Commands {
 			// Arrange
 			ValidateCommand command = new ValidateCommand(false, "testpath");
 
-			List<ConfigLink> links = new List<ConfigLink>();
-
-			var mockConfig = new Mock<IConfig>();
-			mockConfig.Setup(m => m.LinkList).Returns(links);
-			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(mockConfig.Object);
+			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(testConfig.Object);
 
 			// Act
 			((IDefaultCommandHandler)command).Execute(testConsole, testConfigHandler.Object, testFileSystem);
@@ -72,21 +73,14 @@ namespace Mklinker.Tests.Commands {
 			// Arrange
 			ValidateCommand command = new ValidateCommand(false, "testpath");
 
-			List<ConfigLink> links = new List<ConfigLink>();
-
-			var element1 = new ConfigLink(@"c:\config_that_does_not_exist.linker", "target", ConfigLink.LinkType.Symbolic);
-
-			links.Add(element1);
-
-			var mockConfig = new Mock<IConfig>();
-			mockConfig.Setup(m => m.LinkList).Returns(links);
-			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(mockConfig.Object);
+			testLinks.Add(testLinkElements[0]);
+			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(testConfig.Object);
 
 			// Act
 			((IDefaultCommandHandler)command).Execute(testConsole, testConfigHandler.Object, testFileSystem);
 
 			// Assert
-			Assert.IsTrue(testConsole.GetHistory().Contains(element1.ToString(), System.StringComparison.OrdinalIgnoreCase));
+			Assert.IsTrue(testConsole.GetHistory().Contains(testLinkElements[0].ToString(), System.StringComparison.OrdinalIgnoreCase));
 		}
 
 	}

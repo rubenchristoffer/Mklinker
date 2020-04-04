@@ -14,25 +14,26 @@ namespace Mklinker.Tests.Commands {
 
 		TestConsole testConsole;
 		Mock<IConfigHandler> testConfigHandler;
+		Mock<IConfig> testConfig;
 		MockFileSystem testFileSystem;
+		List<ConfigLink> testLinks;
 
 		[SetUp]
 		public void Setup () {
 			testConsole = new TestConsole();
 			testConfigHandler = new Mock<IConfigHandler>();
 			testFileSystem = new MockFileSystem();
+
+			testLinks = new List<ConfigLink>();
+			testConfig = new Mock<IConfig>();
+			testConfig.Setup(m => m.LinkList).Returns(testLinks);
 		}
 
 		[Test]
 		public void Execute_WithEmptyConfig_ShouldPrintConfigEmpty () {
 			// Arrange
 			IDefaultCommandHandler command = new ListCommand("testpath");
-
-			List<ConfigLink> links = new List<ConfigLink>();
-
-			var mockConfig = new Mock<IConfig>();
-			mockConfig.Setup(m => m.LinkList).Returns(links);
-			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(mockConfig.Object);
+			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(testConfig.Object);
 
 			// Act
 			command.Execute(testConsole, testConfigHandler.Object, testFileSystem);
@@ -46,19 +47,16 @@ namespace Mklinker.Tests.Commands {
 			// Arrange
 			IDefaultCommandHandler command = new ListCommand("testpath");
 
-			List<ConfigLink> links = new List<ConfigLink>();
-			links.Add(new ConfigLink("source", "target", ConfigLink.LinkType.Default));
-			links.Add(new ConfigLink("testing is fun", "not really", ConfigLink.LinkType.Hard));
+			testLinks.Add(new ConfigLink("source", "target", ConfigLink.LinkType.Default));
+			testLinks.Add(new ConfigLink("testing is fun", "not really", ConfigLink.LinkType.Hard));
 
-			var mockConfig = new Mock<IConfig>();
-			mockConfig.Setup(m => m.LinkList).Returns(links);
-			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(mockConfig.Object);
+			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(testConfig.Object);
 
 			// Act
 			command.Execute(testConsole, testConfigHandler.Object, testFileSystem);
 
 			// Assert
-			links.ForEach(link => Assert.IsTrue(testConsole.GetHistory().Contains(link.ToString(), StringComparison.OrdinalIgnoreCase)));
+			testLinks.ForEach(link => Assert.IsTrue(testConsole.GetHistory().Contains(link.ToString(), StringComparison.OrdinalIgnoreCase)));
 		}
 
 	}

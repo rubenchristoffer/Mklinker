@@ -15,6 +15,9 @@ namespace Mklinker.Tests.Commands {
 		TestConsole testConsole;
 		Mock<IConfigHandler> testConfigHandler;
 		MockFileSystem testFileSystem;
+		Mock<IConfig> testConfig;
+		List<ConfigLink> testLinks;
+		ConfigLink[] testLinkElements;
 
 		[SetUp]
 		public void Setup() {
@@ -29,6 +32,16 @@ namespace Mklinker.Tests.Commands {
 				{ @"c:\demo\", new MockDirectoryData () },
 				{ @"c:\demo\image.gif", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
 			});
+
+			testLinks = new List<ConfigLink>();
+
+			testLinkElements = new ConfigLink[] {
+				new ConfigLink("source", "target", ConfigLink.LinkType.Default),
+				new ConfigLink("testing is fun", "not really", ConfigLink.LinkType.Hard)
+			};
+
+			testConfig = new Mock<IConfig>();
+			testConfig.Setup(m => m.LinkList).Returns(testLinks);
 		}
 
 		[Test]
@@ -36,24 +49,17 @@ namespace Mklinker.Tests.Commands {
 			// Arrange
 			IDefaultCommandHandler command = new RemoveLinkCommand("target", "testpath");
 
-			List<ConfigLink> links = new List<ConfigLink>();
+			testLinks.Add(testLinkElements[0]);
+			testLinks.Add(testLinkElements[1]);
 
-			var element1 = new ConfigLink("source", "target", ConfigLink.LinkType.Default);
-			var element2 = new ConfigLink("testing is fun", "not really", ConfigLink.LinkType.Hard);
-
-			links.Add(element1);
-			links.Add(element2);
-
-			var mockConfig = new Mock<IConfig>();
-			mockConfig.Setup(m => m.LinkList).Returns(links);
-			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(mockConfig.Object);
+			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(testConfig.Object);
 
 			// Act
 			command.Execute(testConsole, testConfigHandler.Object, testFileSystem);
 
 			// Assert
-			Assert.IsFalse(links.Contains(element1));
-			Assert.IsTrue(links.Contains(element2));
+			Assert.IsFalse(testConfigHandler.Object.LoadConfig("testpath").LinkList.Contains(testLinkElements[0]));
+			Assert.IsTrue(testConfigHandler.Object.LoadConfig("testpath").LinkList.Contains(testLinkElements[1]));
 		}
 
 		[Test]
@@ -62,17 +68,9 @@ namespace Mklinker.Tests.Commands {
 			const string testTargetPath = "some random target here";
 			IDefaultCommandHandler command = new RemoveLinkCommand(testTargetPath, "testpath");
 
-			List<ConfigLink> links = new List<ConfigLink>();
-
-			var element1 = new ConfigLink("source", "target", ConfigLink.LinkType.Default);
-			var element2 = new ConfigLink("testing is fun", "not really", ConfigLink.LinkType.Hard);
-
-			links.Add(element1);
-			links.Add(element2);
-
-			var mockConfig = new Mock<IConfig>();
-			mockConfig.Setup(m => m.LinkList).Returns(links);
-			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(mockConfig.Object);
+			testLinks.Add(testLinkElements[0]);
+			testLinks.Add(testLinkElements[1]);
+			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(testConfig.Object);
 
 			// Act
 			command.Execute(testConsole, testConfigHandler.Object, testFileSystem);
