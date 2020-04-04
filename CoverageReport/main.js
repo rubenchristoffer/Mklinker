@@ -231,7 +231,7 @@ var assemblies = [
       { "name": "Mklinker.Commands.InteractiveCommand", "rp": "Mklinker_InteractiveCommand.htm", "cl": 12, "ucl": 0, "cal": 12, "tl": 26, "ct": "LineCoverage", "mc": "-", "cb": 4, "tb": 4, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.LinkAllCommand", "rp": "Mklinker_LinkAllCommand.htm", "cl": 13, "ucl": 2, "cal": 15, "tl": 38, "ct": "LineCoverage", "mc": "-", "cb": 7, "tb": 8, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.ListCommand", "rp": "Mklinker_ListCommand.htm", "cl": 7, "ucl": 1, "cal": 8, "tl": 24, "ct": "LineCoverage", "mc": "-", "cb": 2, "tb": 2, "lch": [], "bch": [], "hc": [] },
-      { "name": "Mklinker.Commands.RemoveLinkCommand", "rp": "Mklinker_RemoveLinkCommand.htm", "cl": 0, "ucl": 12, "cal": 12, "tl": 30, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 2, "lch": [], "bch": [], "hc": [] },
+      { "name": "Mklinker.Commands.RemoveLinkCommand", "rp": "Mklinker_RemoveLinkCommand.htm", "cl": 15, "ucl": 1, "cal": 16, "tl": 36, "ct": "LineCoverage", "mc": "-", "cb": 2, "tb": 2, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.ValidateCommand", "rp": "Mklinker_ValidateCommand.htm", "cl": 0, "ucl": 20, "cal": 20, "tl": 44, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 22, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Config", "rp": "Mklinker_Config.htm", "cl": 21, "ucl": 1, "cal": 22, "tl": 52, "ct": "LineCoverage", "mc": "-", "cb": 1, "tb": 2, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.ConfigHandler", "rp": "Mklinker_ConfigHandler.htm", "cl": 16, "ucl": 0, "cal": 16, "tl": 34, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
