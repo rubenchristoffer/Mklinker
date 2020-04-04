@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using Mklinker.Abstractions;
 using NUnit.Framework;
+using System.Linq;
 
 namespace Mklinker.Tests {
 
@@ -13,16 +14,24 @@ namespace Mklinker.Tests {
 
 		TextWriter IConsole.Writer => null;
 
-		public string ReadLineText { get; set; }
+		public int CurrentReadLineIndex { get; set; }
+		public string[] ReadLineText { get; set; }
 		public bool ShouldRecordHistory { get; set; } = true;
 
-		public TestConsole (string readLineText = "") {
+		public TestConsole(string[] readLineText = null) {
 			this.history = new StringBuilder();
+
 			ReadLineText = readLineText;
+			CurrentReadLineIndex = -1;
 		}
 
 		string IConsole.ReadLine() {
-			return ReadLineText;
+			CurrentReadLineIndex++;
+
+			if (ReadLineText == null || CurrentReadLineIndex >= ReadLineText.Length)
+				return "";
+
+			return ReadLineText[CurrentReadLineIndex];
 		}
 
 		void IConsole.Write(string text) {

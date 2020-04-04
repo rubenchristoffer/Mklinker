@@ -10,36 +10,40 @@ namespace Mklinker.Tests.Commands {
 	class InteractiveCommandTest {
 
 		TestConsole testConsole;
-		IConfig testDefaultConfig;
-		IConfigHandler testConfigHandler;
-		MockFileSystem testFileSystem;
 		TestArgumentParser testArgumentParser;
-		ICommandExecutor testCommandExecutor;
+		Mock<ICommandExecutor> testCommandExecutor;
 
 		[SetUp]
-		public void Setup () {
+		public void Setup() {
 			testConsole = new TestConsole();
-			testDefaultConfig = new Mock<IConfig>().Object;
-			testConfigHandler = new Mock<IConfigHandler>().Object;
-			testFileSystem = new MockFileSystem();
 			testArgumentParser = new TestArgumentParser();
-
-			var testLinker = new Mock<ILinker>();
-
-			testCommandExecutor = new CommandExecutor(testConsole, testConfigHandler, testFileSystem, testDefaultConfig, testArgumentParser, testLinker.Object);
+			testCommandExecutor = new Mock<ICommandExecutor>();
 		}
 
 		[Test]
-		public void Execute () {
+		public void Execute_WithExitString_ShouldExit () {
 			// Arrange
 			InteractiveCommand command = new InteractiveCommand();
-			testConsole.ReadLineText = "exit ";
+			testConsole.ReadLineText = new string[] { "exit" };
 
 			// Act
-			command.Execute(testConsole, testConfigHandler, testFileSystem, testDefaultConfig, testArgumentParser, testCommandExecutor);
+			command.Execute(testConsole, testArgumentParser, testCommandExecutor.Object);
 
 			// Assert
 			Assert.Pass();
+		}
+
+		[Test]
+		public void Execute_WithCommandString_ShouldExecuteCommand() {
+			// Arrange
+			InteractiveCommand command = new InteractiveCommand();
+			testConsole.ReadLineText = new string[] { "command arg1 arg2", "exit" };
+
+			// Act
+			command.Execute(testConsole, testArgumentParser, testCommandExecutor.Object);
+
+			// Assert
+			testCommandExecutor.Verify(m => m.Execute(new string[] { "command", "arg1", "arg2" }));
 		}
 
 	}
