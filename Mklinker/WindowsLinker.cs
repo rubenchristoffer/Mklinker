@@ -20,7 +20,7 @@ namespace Mklinker {
 			this.process = process;
 		}
 
-		ProcessStartInfo GetProcessInfo(IFileSystem fileSystem, ConfigLink configLink) {
+		internal ProcessStartInfo GetProcessInfo(IFileSystem fileSystem, ConfigLink configLink) {
 			return new ProcessStartInfo {
 				FileName = "cmd.exe",
 
@@ -35,7 +35,7 @@ namespace Mklinker {
 			};
 		}
 
-		string GetLinkTypeArgument(IFileSystem fileSystem, LinkType linkType, string sourcePath) {
+		internal string GetLinkTypeArgument(IFileSystem fileSystem, LinkType linkType, string sourcePath) {
 			if (fileSystem.File.Exists(sourcePath)) {
 				return linkType == LinkType.Hard ? "/H" : "";
 			} else if (fileSystem.Directory.Exists(sourcePath)) {
