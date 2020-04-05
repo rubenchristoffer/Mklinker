@@ -24,7 +24,7 @@ namespace Mklinker {
 			this.linker = linker;
 		}
 
-		void ICommandExecutor.Execute(string[] args) {
+		void ICommandExecutor.Execute(params string[] args) {
 			// Parse commands
 			var parser = new Parser(with => with.HelpWriter = console.Writer);
 			var parserResult = parser.ParseArguments<AddLinkCommand, LinkAllCommand, ListCommand, RemoveLinkCommand, ValidateCommand, InteractiveCommand, ConfigCommand>(args);

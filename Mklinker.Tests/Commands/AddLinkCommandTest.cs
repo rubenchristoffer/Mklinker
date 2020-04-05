@@ -31,7 +31,6 @@ namespace Mklinker.Tests.Commands {
 
 			testConsole = new TestConsole();
 			testConfigHandler = new Mock<IConfigHandler>();
-
 			testLinks = new List<ConfigLink>();
 
 			testLinkElements = new ConfigLink[] {

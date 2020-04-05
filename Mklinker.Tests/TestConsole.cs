@@ -12,17 +12,16 @@ namespace Mklinker.Tests {
 
 		StringBuilder history;
 
-		TextWriter IConsole.Writer => null;
+		public TextWriter Writer { get; private set; }
 
-		public int CurrentReadLineIndex { get; set; }
+		public int CurrentReadLineIndex { get; set; } = -1;
 		public string[] ReadLineText { get; set; }
 		public bool ShouldRecordHistory { get; set; } = true;
 
 		public TestConsole(string[] readLineText = null) {
 			this.history = new StringBuilder();
-
+			Writer = new StringWriter(history);
 			ReadLineText = readLineText;
-			CurrentReadLineIndex = -1;
 		}
 
 		string IConsole.ReadLine() {

@@ -7,7 +7,7 @@ namespace Mklinker.Abstractions {
 
 	interface ICommandExecutor {
 
-		void Execute(string[] args);
+		void Execute(params string[] args);
 
 	}
 
