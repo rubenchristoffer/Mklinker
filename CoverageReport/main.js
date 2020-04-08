@@ -233,15 +233,16 @@ var assemblies = [
       { "name": "Mklinker.Commands.ListCommand", "rp": "Mklinker_ListCommand.htm", "cl": 7, "ucl": 1, "cal": 8, "tl": 24, "ct": "LineCoverage", "mc": "-", "cb": 2, "tb": 2, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.RemoveLinkCommand", "rp": "Mklinker_RemoveLinkCommand.htm", "cl": 15, "ucl": 1, "cal": 16, "tl": 36, "ct": "LineCoverage", "mc": "-", "cb": 2, "tb": 2, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.ValidateCommand", "rp": "Mklinker_ValidateCommand.htm", "cl": 30, "ucl": 1, "cal": 31, "tl": 58, "ct": "LineCoverage", "mc": "-", "cb": 23, "tb": 26, "lch": [], "bch": [], "hc": [] },
-      { "name": "Mklinker.Config", "rp": "Mklinker_Config.htm", "cl": 9, "ucl": 13, "cal": 22, "tl": 52, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 2, "lch": [], "bch": [], "hc": [] },
+      { "name": "Mklinker.Config", "rp": "Mklinker_Config.htm", "cl": 9, "ucl": 0, "cal": 9, "tl": 32, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.ConfigHandler", "rp": "Mklinker_ConfigHandler.htm", "cl": 16, "ucl": 0, "cal": 16, "tl": 34, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.ConfigLink", "rp": "Mklinker_ConfigLink.htm", "cl": 8, "ucl": 1, "cal": 9, "tl": 38, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Console", "rp": "Mklinker_Console.htm", "cl": 12, "ucl": 1, "cal": 13, "tl": 31, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.GlobalOptions", "rp": "Mklinker_GlobalOptions.htm", "cl": 4, "ucl": 1, "cal": 5, "tl": 18, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Process", "rp": "Mklinker_Process.htm", "cl": 0, "ucl": 10, "cal": 10, "tl": 30, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
-      { "name": "Mklinker.Program", "rp": "Mklinker_Program.htm", "cl": 0, "ucl": 17, "cal": 17, "tl": 39, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
+      { "name": "Mklinker.Program", "rp": "Mklinker_Program.htm", "cl": 0, "ucl": 18, "cal": 18, "tl": 40, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Variable", "rp": "Mklinker_Variable.htm", "cl": 0, "ucl": 5, "cal": 5, "tl": 30, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.WindowsLinker", "rp": "Mklinker_WindowsLinker.htm", "cl": 0, "ucl": 41, "cal": 41, "tl": 69, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 12, "lch": [], "bch": [], "hc": [] },
+      { "name": "Mklinker.XMLConfigSerializer", "rp": "Mklinker_XMLConfigSerializer.htm", "cl": 0, "ucl": 13, "cal": 13, "tl": 33, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 2, "lch": [], "bch": [], "hc": [] },
     ]},
 ];
 
