@@ -13,6 +13,7 @@ namespace Mklinker.Tests {
 	class ConfigHandlerTest {
 
 		MockFileSystem testFileSystem;
+		Mock<IConfigSerializer> testConfigSerializer;
 		Mock<IConfig> testConfig;
 
 		[SetUp]
@@ -24,6 +25,7 @@ namespace Mklinker.Tests {
 				{ @"c:\demo\image.gif", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
 			});
 
+			testConfigSerializer = new Mock<IConfigSerializer>();
 			testConfig = new Mock<IConfig>();
 		}
 
@@ -31,7 +33,7 @@ namespace Mklinker.Tests {
 		public void DoesConfigExist_WhereFileExists_WillReturnTrue() {
 			// Arrange
 			const string testPath = @"c:\config.linker";
-			ConfigHandler configHandler = new ConfigHandler(testFileSystem, testConfig.Object);
+			ConfigHandler configHandler = new ConfigHandler(testFileSystem, testConfigSerializer.Object);
 
 			// Act
 			bool result = configHandler.DoesConfigExist(testPath);
@@ -44,7 +46,7 @@ namespace Mklinker.Tests {
 		public void DoesConfigExist_WhereFileDoesNotExist_WillReturnFalse() {
 			// Arrange
 			const string testPath = @"c:\config_not_existing.linker";
-			ConfigHandler configHandler = new ConfigHandler(testFileSystem, testConfig.Object);
+			ConfigHandler configHandler = new ConfigHandler(testFileSystem, testConfigSerializer.Object);
 
 			// Act
 			bool result = configHandler.DoesConfigExist(testPath);
@@ -57,7 +59,7 @@ namespace Mklinker.Tests {
 		public void DeleteConfig_WhereFileExists_WillDeleteFile() {
 			// Arrange
 			const string testPath = @"c:\config.linker";
-			ConfigHandler configHandler = new ConfigHandler(testFileSystem, testConfig.Object);
+			ConfigHandler configHandler = new ConfigHandler(testFileSystem, testConfigSerializer.Object);
 
 			// Act
 			configHandler.DeleteConfig(testPath);
@@ -70,8 +72,8 @@ namespace Mklinker.Tests {
 		public void SaveConfig_WhereFileDoesNotExist_WillCreateConfig() {
 			// Arrange
 			const string testPath = @"c:\config_not_existing.linker";
-			ConfigHandler configHandler = new ConfigHandler(testFileSystem, testConfig.Object);
-			testConfig.Setup(m => m.Serialize()).Returns("serialized string");
+			ConfigHandler configHandler = new ConfigHandler(testFileSystem, testConfigSerializer.Object);
+			testConfigSerializer.Setup(m => m.Serialize(testConfig.Object)).Returns("serialized string");
 
 			// Act
 			configHandler.SaveConfig(testConfig.Object, testPath);
@@ -84,8 +86,9 @@ namespace Mklinker.Tests {
 		public void SaveConfig_WhereFileExists_WillCreateConfig() {
 			// Arrange
 			const string testPath = @"c:\config.linker";
-			ConfigHandler configHandler = new ConfigHandler(testFileSystem, testConfig.Object);
-			testConfig.Setup(m => m.Serialize()).Returns("serialized string");
+			ConfigHandler configHandler = new ConfigHandler(testFileSystem, testConfigSerializer.Object);
+			configHandler.SaveConfig(testConfig.Object, testPath);
+			testConfigSerializer.Setup(m => m.Serialize(testConfig.Object)).Returns("serialized string");
 
 			// Act
 			configHandler.SaveConfig(testConfig.Object, testPath);
@@ -98,8 +101,8 @@ namespace Mklinker.Tests {
 		public void LoadConfig_WhereFileExists_WillLoadConfig() {
 			// Arrange
 			const string testPath = @"c:\demo\jQuery.js";
-			ConfigHandler configHandler = new ConfigHandler(testFileSystem, testConfig.Object);
-			testConfig.Setup(m => m.Deserialize("some js")).Returns(testConfig.Object);
+			ConfigHandler configHandler = new ConfigHandler(testFileSystem, testConfigSerializer.Object);
+			testConfigSerializer.Setup(m => m.Deserialize("some js")).Returns(testConfig.Object);
 
 			// Act
 			IConfig result = configHandler.LoadConfig(testPath);
