@@ -27,26 +27,6 @@ namespace Mklinker {
 			Version = version;
 		}
 
-		string IConfig.Serialize() {
-			XmlSerializer serializer = new XmlSerializer(GetType());
-
-			using (StringWriter writer = new StringWriter()) {
-				serializer.Serialize(writer, this);
-				return writer.ToString();
-			}
-		}
-
-		IConfig IConfig.Deserialize(string xml) {
-			if (xml.Length == 0)
-				return new Config();
-
-			XmlSerializer serializer = new XmlSerializer(typeof(Config));
-
-			using (StringReader reader = new StringReader(xml)) {
-				return (Config)serializer.Deserialize(reader);
-			}
-		}
-
 	}
 
 }

@@ -6,19 +6,19 @@ namespace Mklinker {
 	class ConfigHandler : IConfigHandler {
 
 		readonly IFileSystem fileSystem;
-		readonly IConfig referenceConfig;
+		readonly IConfigSerializer configSerializer;
 
-		public ConfigHandler (IFileSystem fileSystem, IConfig referenceConfig) {
+		public ConfigHandler (IFileSystem fileSystem, IConfigSerializer configSerializer) {
 			this.fileSystem = fileSystem;
-			this.referenceConfig = referenceConfig;
+			this.configSerializer = configSerializer;
 		}
 
 		public IConfig LoadConfig(string pathToConfigFile) {
-			return referenceConfig.Deserialize(fileSystem.File.ReadAllText(pathToConfigFile));
+			return configSerializer.Deserialize(fileSystem.File.ReadAllText(pathToConfigFile));
 		}
 
 		public void SaveConfig(IConfig config, string pathToConfigFile) {
-			fileSystem.File.WriteAllText(pathToConfigFile, config.Serialize());
+			fileSystem.File.WriteAllText(pathToConfigFile, configSerializer.Serialize (config));
 		}
 
 		public void DeleteConfig(string pathToConfigFile) {

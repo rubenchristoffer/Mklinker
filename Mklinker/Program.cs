@@ -25,6 +25,7 @@ namespace Mklinker {
 			builder.RegisterType<CommandExecutor>().As<ICommandExecutor>();
 			builder.RegisterType<Process>().As<IProcess>();
 			builder.RegisterType<Console>().As<IConsole>();
+			builder.RegisterType<XMLConfigSerializer>().As<IConfigSerializer>();
 
 			// Platform dependent
 			builder.RegisterType<WindowsLinker>().As<ILinker>();
