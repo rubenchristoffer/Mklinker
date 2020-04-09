@@ -17,7 +17,7 @@ namespace Mklinker.Commands {
 		[Value(1, HelpText = "The value of the variable", Required = true)]
 		public string value { get; private set; }
 
-		[Option(Default = false, HelpText = "If this flag is set it will override existing variable if name already exists", Required = false)]
+		[Option('f', "force", Default = false, HelpText = "If this flag is set it will override existing variable if name already exists", Required = false)]
 		public bool force { get; private set; }
 
 		public AddVariableCommand() : base() {}
