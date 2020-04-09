@@ -35,7 +35,8 @@ namespace Mklinker {
 				.WithParsed<IDefaultCommandHandler>(flag => flag.Execute(console, configHandler, fileSystem))
 				.WithParsed<ConfigCommand>(cmd => cmd.Execute(console, configHandler, defaultConfig))
 				.WithParsed<InteractiveCommand>(cmd => cmd.Execute (console, argumentHandler, this))
-				.WithParsed<LinkAllCommand>(cmd => cmd.Execute (console, configHandler, fileSystem, linker, pathFormatter));
+				.WithParsed<LinkAllCommand>(cmd => cmd.Execute (console, configHandler, fileSystem, linker, pathFormatter))
+				.WithParsed<AddLinkCommand>(cmd => cmd.Execute (console, configHandler, fileSystem, pathFormatter));
 		}
 
 	}
