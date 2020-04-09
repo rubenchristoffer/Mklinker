@@ -16,6 +16,7 @@ namespace Mklinker.Tests.Commands {
 		MockFileSystem testFileSystem; 
 		Mock<ILinker> testLinker;
 		List<ConfigLink> testLinks;
+		Mock<IPathFormatter> testPathFormatter;
 
 		[SetUp]
 		public void Setup () {
@@ -33,6 +34,7 @@ namespace Mklinker.Tests.Commands {
 			testLinks = new List<ConfigLink>();
 			testConfig = new Mock<IConfig>();
 			testConfig.Setup(m => m.LinkList).Returns(testLinks);
+			testPathFormatter = new Mock<IPathFormatter>();
 		}
 
 		[Test]
@@ -47,29 +49,10 @@ namespace Mklinker.Tests.Commands {
 			LinkAllCommand command = new LinkAllCommand("testpath");
 
 			// Act
-			command.Execute(testConsole, testConfigHandler.Object, testFileSystem, testLinker.Object);
+			command.Execute(testConsole, testConfigHandler.Object, testFileSystem, testLinker.Object, testPathFormatter.Object);
 
 			// Assert
 			testLinks.ForEach(link => testLinker.Verify(m => m.CreateLink(link)));
-		}
-
-		[Test]
-		public void Execute_WithNonexistingSource_WillShowError() {
-			// Arrange
-			const string testSourcePath = @"source that does not exist";
-			testLinks.Add(new ConfigLink(testSourcePath, "targetfile.linker", ConfigLink.LinkType.Default));
-
-			testLinks.ForEach(link => testLinker.Setup(m => m.CreateLink(link)));
-			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(testConfig.Object);
-
-			LinkAllCommand command = new LinkAllCommand("testpath");
-
-			// Act
-			command.Execute(testConsole, testConfigHandler.Object, testFileSystem, testLinker.Object);
-
-			// Assert
-			Assert.IsTrue(testConsole.GetHistory().Contains("does not exist", System.StringComparison.OrdinalIgnoreCase));
-			Assert.IsTrue(testConsole.GetHistory().Contains(testSourcePath, System.StringComparison.OrdinalIgnoreCase));
 		}
 
 	}

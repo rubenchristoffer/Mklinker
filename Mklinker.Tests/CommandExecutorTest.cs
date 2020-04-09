@@ -18,6 +18,7 @@ namespace Mklinker.Tests {
 		Mock<IConfig> testConfig;
 		Mock<IArgumentParser> testArgumentParser;
 		Mock<ILinker> testLinker;
+		Mock<IPathFormatter> testPathFormatter;
 
 		[SetUp]
 		public void Setup() {
@@ -27,12 +28,13 @@ namespace Mklinker.Tests {
 			testConfig = new Mock<IConfig>();
 			testArgumentParser = new Mock<IArgumentParser>();
 			testLinker = new Mock<ILinker>();
+			testPathFormatter = new Mock<IPathFormatter>();
 		}
 
 		[Test]
 		public void Execute_WithInvalidCommand_WillPrintHelp() {
 			// Arrange
-			ICommandExecutor commandExecutor = new CommandExecutor(testConsole, testConfigHandler.Object, testFileSystem, testConfig.Object, testArgumentParser.Object, testLinker.Object);
+			ICommandExecutor commandExecutor = new CommandExecutor(testConsole, testConfigHandler.Object, testFileSystem, testConfig.Object, testArgumentParser.Object, testLinker.Object, testPathFormatter.Object);
 
 			// Act
 			commandExecutor.Execute("invalidcommand");
@@ -44,7 +46,7 @@ namespace Mklinker.Tests {
 		[Test]
 		public void Execute_WithHelpCommand_WillPrintHelp() {
 			// Arrange
-			ICommandExecutor commandExecutor = new CommandExecutor(testConsole, testConfigHandler.Object, testFileSystem, testConfig.Object, testArgumentParser.Object, testLinker.Object);
+			ICommandExecutor commandExecutor = new CommandExecutor(testConsole, testConfigHandler.Object, testFileSystem, testConfig.Object, testArgumentParser.Object, testLinker.Object, testPathFormatter.Object);
 
 			// Act
 			commandExecutor.Execute("help");
@@ -56,7 +58,7 @@ namespace Mklinker.Tests {
 		[Test]
 		public void Execute_WithVersionCommand_WillPrintVersion() {
 			// Arrange
-			ICommandExecutor commandExecutor = new CommandExecutor(testConsole, testConfigHandler.Object, testFileSystem, testConfig.Object, testArgumentParser.Object, testLinker.Object);
+			ICommandExecutor commandExecutor = new CommandExecutor(testConsole, testConfigHandler.Object, testFileSystem, testConfig.Object, testArgumentParser.Object, testLinker.Object, testPathFormatter.Object);
 
 			// Act
 			commandExecutor.Execute("version");

@@ -13,7 +13,7 @@ namespace Mklinker.Commands {
 		public LinkAllCommand() : base () {}
 		public LinkAllCommand (string path) : base (path) {}
 
-		internal void Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, ILinker linker) {
+		internal void Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, ILinker linker, IPathFormatter formatter) {
 			IConfig config = configHandler.LoadConfig(path);
 
 			console.WriteLine("\nCreating links based on config...");
@@ -21,11 +21,6 @@ namespace Mklinker.Commands {
 			int successes = 0;
 
 			foreach (ConfigLink configLink in config.LinkList) {
-				if (!fileSystem.File.Exists(configLink.sourcePath) && !fileSystem.Directory.Exists(configLink.sourcePath)) {
-					console.WriteLine("Path '{0}' does not exist!", configLink.sourcePath);
-					continue;
-				}
-
 				if (linker.CreateLink(configLink))
 					successes++;
 			}
