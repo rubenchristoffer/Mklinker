@@ -46,6 +46,11 @@ namespace Mklinker.Commands {
 					console.WriteLine("Full path: {0}", path);
 					console.WriteLine("Version: {0}", config.Version);
 					console.WriteLine();
+
+					console.WriteLine("### Variable info ###");
+					console.WriteLine("Total variables: " + config.Variables.Count);
+					console.WriteLine();
+
 					console.WriteLine("### Link info ###");
 					console.WriteLine("Total links: " + config.LinkList.Count);
 					console.WriteLine("Junction links: " + config.LinkList.Count(l => l.linkType == ConfigLink.LinkType.Junction));

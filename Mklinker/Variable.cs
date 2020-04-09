@@ -25,6 +25,10 @@ namespace Mklinker {
 			this.value = value;
 		}
 
+		public override string ToString() {
+			return $"{ name }: { value }";
+		}
+
 	}
 
 }
