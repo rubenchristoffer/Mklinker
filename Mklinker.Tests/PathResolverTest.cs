@@ -26,7 +26,7 @@ namespace Mklinker.Tests {
 		[Test]
 		public void GetAbsoluteResolvedPath_WithNormalPath_ShouldReturnNormalPath() {
 			// Arrange
-			const string testPath = @"C:\MyPath";
+			const string testPath = @"C:/MyPath";
 			PathResolver pathFormatter = new PathResolver(testFileSystem);
 
 			// Act
@@ -39,7 +39,7 @@ namespace Mklinker.Tests {
 		[Test]
 		public void GetAbsoluteResolvedPath_WithVariablePath_ShouldReturnResolvedPath() {
 			// Arrange
-			string testPath = $@"C:\Users\{ PathResolver.delimiter }User{ PathResolver.delimiter }\Desktop";
+			string testPath = $@"C:/Users/{ PathResolver.delimiter }User{ PathResolver.delimiter }/Desktop";
 			PathResolver pathFormatter = new PathResolver(testFileSystem);
 			var testVariables = new List<Variable>(new Variable[] { new Variable("User", "Frans") });
 
@@ -47,7 +47,7 @@ namespace Mklinker.Tests {
 			string result = pathFormatter.GetAbsoluteResolvedPath(testPath, testVariables);
 
 			// Assert
-			Assert.AreEqual(@"C:\Users\Frans\Desktop", result);
+			Assert.AreEqual(@"C:/Users/Frans/Desktop", result);
 		}
 
 		[Test]
@@ -58,14 +58,14 @@ namespace Mklinker.Tests {
 
 			var testVariables = new List<Variable>(new Variable[] { 
 				new Variable("User", "Frans"),
-				new Variable("UserPath", $@"C:\Users\{ PathResolver.delimiter }User{ PathResolver.delimiter }\Desktop")
+				new Variable("UserPath", $@"C:/Users/{ PathResolver.delimiter }User{ PathResolver.delimiter }/Desktop")
 			});
 
 			// Act
 			string result = pathFormatter.GetAbsoluteResolvedPath(testPath, testVariables);
 
 			// Assert
-			Assert.AreEqual(@"C:\Users\Frans\Desktop", result);
+			Assert.AreEqual(@"C:/Users/Frans/Desktop", result);
 		}
 
 		[Test]
@@ -75,20 +75,20 @@ namespace Mklinker.Tests {
 			PathResolver pathFormatter = new PathResolver(testFileSystem);
 
 			var testVariables = new List<Variable>(new Variable[] {
-				new Variable("UserPath", $@"C:\Users\{ PathResolver.delimiter }User{ PathResolver.delimiter }\Desktop")
+				new Variable("UserPath", $@"C:/Users/{ PathResolver.delimiter }User{ PathResolver.delimiter }/Desktop")
 			});
 
 			// Act
 			string result = pathFormatter.GetAbsoluteResolvedPath(testPath, testVariables);
 
 			// Assert
-			Assert.AreEqual($@"C:\Users\{ PathResolver.delimiter }User{ PathResolver.delimiter }\Desktop", result);
+			Assert.AreEqual($@"C:/Users/{ PathResolver.delimiter }User{ PathResolver.delimiter }/Desktop", result);
 		}
 
 		[Test]
 		public void GetAbsoluteResolvedPath_WithVariablePathButWithoutVariable_ShouldReturnUnresolvedPath() {
 			// Arrange
-			string testPath = $@"C:\Users\{ PathResolver.delimiter }User{ PathResolver.delimiter }\Desktop";
+			string testPath = $@"C:/Users/{ PathResolver.delimiter }User{ PathResolver.delimiter }/Desktop";
 			PathResolver pathFormatter = new PathResolver(testFileSystem);
 			var testVariables = new List<Variable>();
 

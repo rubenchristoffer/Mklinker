@@ -33,7 +33,7 @@ namespace Mklinker {
 				resolvedPath = resolvedPath.Replace(name, matchedVariables.value, StringComparison.OrdinalIgnoreCase);
 			}
 
-			return fileSystem.Path.GetFullPath(resolvedPath);
+			return fileSystem.Path.GetFullPath(resolvedPath.Replace(@"\", "/")).Replace(@"\", "/");
 		}
 
 	}
