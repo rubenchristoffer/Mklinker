@@ -16,6 +16,7 @@ namespace Mklinker.Tests.Commands {
 		Mock<IConfig> testConfig;
 		List<ConfigLink> testLinks;
 		ConfigLink[] testLinkElements;
+		TestPathFormatter testPathFormatter;
 
 		[SetUp]
 		public void Setup () {
@@ -39,6 +40,8 @@ namespace Mklinker.Tests.Commands {
 				new ConfigLink(@"c:\config.linker", "target", ConfigLink.LinkType.Symbolic),
 				new ConfigLink(@"somedirectory", "target", ConfigLink.LinkType.Hard),
 			};
+
+			testPathFormatter = new TestPathFormatter();
 		}
 
 		[Test]
@@ -50,7 +53,7 @@ namespace Mklinker.Tests.Commands {
 			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(testConfig.Object);
 
 			// Act
-			((IDefaultCommandHandler)command).Execute(testConsole, testConfigHandler.Object, testFileSystem);
+			command.Execute(testConsole, testConfigHandler.Object, testFileSystem, testPathFormatter);
 
 			// Assert
 			Assert.IsTrue(testConsole.GetHistory().Contains("100% valid", System.StringComparison.OrdinalIgnoreCase));
@@ -64,7 +67,7 @@ namespace Mklinker.Tests.Commands {
 			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(testConfig.Object);
 
 			// Act
-			((IDefaultCommandHandler)command).Execute(testConsole, testConfigHandler.Object, testFileSystem);
+			command.Execute(testConsole, testConfigHandler.Object, testFileSystem, testPathFormatter);
 
 			// Assert
 			Assert.IsTrue(testConsole.GetHistory().Contains("empty", System.StringComparison.OrdinalIgnoreCase));
@@ -79,7 +82,7 @@ namespace Mklinker.Tests.Commands {
 			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(testConfig.Object);
 
 			// Act
-			((IDefaultCommandHandler)command).Execute(testConsole, testConfigHandler.Object, testFileSystem);
+			command.Execute(testConsole, testConfigHandler.Object, testFileSystem, testPathFormatter);
 
 			// Assert
 			Assert.IsTrue(testConsole.GetHistory().Contains(testLinkElements[0].ToString(), System.StringComparison.OrdinalIgnoreCase));
@@ -94,7 +97,7 @@ namespace Mklinker.Tests.Commands {
 			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(testConfig.Object);
 
 			// Act
-			((IDefaultCommandHandler)command).Execute(testConsole, testConfigHandler.Object, testFileSystem);
+			command.Execute(testConsole, testConfigHandler.Object, testFileSystem, testPathFormatter);
 
 			// Assert
 			Assert.IsTrue(testConsole.GetHistory().Contains(testLinkElements[2].ToString(), System.StringComparison.OrdinalIgnoreCase));

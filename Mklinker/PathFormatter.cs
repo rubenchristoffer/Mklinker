@@ -1,9 +1,13 @@
-﻿using Mklinker.Abstractions;
+﻿using System;
+using System.Linq;
+using Mklinker.Abstractions;
 using System.IO.Abstractions;
 
 namespace Mklinker {
 
 	class PathFormatter : IPathFormatter {
+
+		public const string delimiter = "?";
 
 		readonly IConfig config;
 
@@ -12,7 +16,11 @@ namespace Mklinker {
 		}
 
 		public string GetFormattedPath(string unformattedPath) {
-			return unformattedPath;
+			string formattedPath = unformattedPath;
+
+			config.Variables.ForEach(variable => formattedPath = formattedPath.Replace($"{ delimiter }{ variable.name }{ delimiter }", variable.value));
+
+			return formattedPath;
 		}
 
 	}
