@@ -13,7 +13,7 @@ namespace Mklinker.Commands {
 		public LinkAllCommand() : base () {}
 		public LinkAllCommand (string path) : base (path) {}
 
-		internal void Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, ILinker linker, IPathFormatter formatter) {
+		internal void Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, ILinker linker, IPathResolver pathResolver) {
 			IConfig config = configHandler.LoadConfig(path);
 
 			console.WriteLine("\nCreating links based on config...");
@@ -21,7 +21,10 @@ namespace Mklinker.Commands {
 			int successes = 0;
 
 			foreach (ConfigLink configLink in config.LinkList) {
-				if (linker.CreateLink(configLink))
+				string resolvedTargetPath = pathResolver.GetAbsoluteResolvedPath(configLink.targetPath, config.Variables);
+				string resolvedSourcePath = pathResolver.GetAbsoluteResolvedPath(configLink.sourcePath, config.Variables);
+
+				if (linker.CreateLink(resolvedTargetPath, resolvedSourcePath, configLink.linkType))
 					successes++;
 			}
 

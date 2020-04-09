@@ -5,11 +5,14 @@ using Mklinker.Abstractions;
 
 namespace Mklinker.Commands {
 
-	[Verb ("list", HelpText = "Lists all the links in the config")]
-	class ListCommand : GlobalOptions, IDefaultCommandHandler {
+	[Verb ("list", HelpText = "Lists all the links or variables in the config")]
+	class ListCommand : GlobalOptions {
 
 		[Option('v', "variables", HelpText = "Will display variables instead", Required = false, Default = false)]
 		public bool displayVariables { get; private set; }
+
+		[Option('a', "absolute", HelpText = "Will display absolute paths with variables resolved", Required = false, Default = false)]
+		public bool displayAbsolutePaths { get; private set; }
 
 		public ListCommand() : base() {}
 
@@ -17,13 +20,28 @@ namespace Mklinker.Commands {
 			this.displayVariables = displayVariables;
 		}
 
-		void IDefaultCommandHandler.Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem) {
+		internal void Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, IPathResolver pathResolver) {
 			IConfig config = configHandler.LoadConfig(path);
 
 			if (!displayVariables) {
-				config.LinkList.ForEach(link => console.WriteLine("\n" + link.ToString()));
+				foreach (ConfigLink configLink in config.LinkList) {
+					string absoluteTargetPathString = "";
+					string absoluteSourcePathString = "";
+
+					if (displayAbsolutePaths) {
+						absoluteTargetPathString = $"\n\t\t => { pathResolver.GetAbsoluteResolvedPath(configLink.targetPath, config.Variables) }";
+						absoluteSourcePathString = $"\n\t\t => { pathResolver.GetAbsoluteResolvedPath(configLink.sourcePath, config.Variables) }";
+					}
+
+					console.WriteLine($"\n" +
+						$"{ configLink.linkType.ToString() } link:\n" +
+						$"\t- Target: { configLink.targetPath }{ absoluteTargetPathString }\n" +
+						$"\t- Source: { configLink.sourcePath }{ absoluteSourcePathString }\n");
+				}
 			} else {
-				config.Variables.ForEach(variable => console.WriteLine("\n" + variable.ToString()));
+				foreach (Variable variable in config.Variables) {
+					console.WriteLine($"\n { variable.ToString() }");
+				}
 			}
 
 			if (config.LinkList.Count == 0)

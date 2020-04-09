@@ -11,23 +11,23 @@ namespace Mklinker {
 		readonly IConsole console;
 		readonly IFileSystem fileSystem;
 		readonly IProcess process;
-		readonly IPathFormatter pathFormatter;
+		readonly IPathResolver pathResolver;
 
-		public WindowsLinker (IConsole console, IFileSystem fileSystem, IProcess process, IPathFormatter pathFormatter) {
+		public WindowsLinker (IConsole console, IFileSystem fileSystem, IProcess process, IPathResolver pathResolver) {
 			this.console = console;
 			this.fileSystem = fileSystem;
 			this.process = process;
-			this.pathFormatter = pathFormatter;
+			this.pathResolver = pathResolver;
 		}
 
-		internal ProcessStartInfo GetProcessInfo(IFileSystem fileSystem, string sourcePath, string targetPath, ConfigLink.LinkType linkType) {
+		internal ProcessStartInfo GetProcessInfo(IFileSystem fileSystem, string resolvedSourcePath, string resolvedTargetPath, ConfigLink.LinkType linkType) {
 			return new ProcessStartInfo {
 				FileName = "cmd.exe",
 
 				Arguments = string.Format("/c mklink {0} \"{1}\" \"{2}\"", 
-				GetLinkTypeArgument(fileSystem, linkType, sourcePath), 
-				fileSystem.Path.GetFullPath(targetPath), 
-				fileSystem.Path.GetFullPath(sourcePath)),
+				GetLinkTypeArgument(fileSystem, linkType, resolvedSourcePath),
+				resolvedTargetPath,
+				resolvedSourcePath),
 
 				RedirectStandardOutput = true,
 				RedirectStandardError = true,
@@ -35,27 +35,25 @@ namespace Mklinker {
 			};
 		}
 
-		internal string GetLinkTypeArgument(IFileSystem fileSystem, LinkType linkType, string sourcePath) {
-			if (fileSystem.File.Exists(sourcePath)) {
+		internal string GetLinkTypeArgument(IFileSystem fileSystem, LinkType linkType, string resolvedSourcePath) {
+			if (fileSystem.File.Exists(resolvedSourcePath)) {
 				return linkType == LinkType.Hard ? "/H" : "";
-			} else if (fileSystem.Directory.Exists(sourcePath)) {
+			} else if (fileSystem.Directory.Exists(resolvedSourcePath)) {
 				return linkType == LinkType.Symbolic ? "/D" : "/J";
 			}
 
 			return "";
 		}
 
-		bool ILinker.CreateLink(ConfigLink configLink) {
-			string sourcePath = pathFormatter.GetFormattedPath(configLink.sourcePath);
-			string targetPath = pathFormatter.GetFormattedPath(configLink.targetPath);
-
-			if (!fileSystem.File.Exists(sourcePath) && !fileSystem.Directory.Exists(sourcePath)) {
-				console.WriteLine("Path '{0}' does not exist!", sourcePath);
+		public bool CreateLink(string resolvedTargetPath, string resolvedSourcePath, ConfigLink.LinkType linkType) {
+			if (!fileSystem.File.Exists(resolvedSourcePath) && !fileSystem.Directory.Exists(resolvedSourcePath)) {
+				console.WriteLine("Path '{0}' does not exist!", resolvedSourcePath);
 
 				return false;
 			}
 
-			IProcess mklinkProcess = process.Start(GetProcessInfo(fileSystem, sourcePath, targetPath, configLink.linkType));
+			ProcessStartInfo processStartInfo = GetProcessInfo(fileSystem, resolvedSourcePath, resolvedTargetPath, linkType);
+			IProcess mklinkProcess = process.Start(processStartInfo);
 			bool success = false;
 			
 			while (!mklinkProcess.StandardOutput.EndOfStream) {

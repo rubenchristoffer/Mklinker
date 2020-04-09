@@ -16,7 +16,7 @@ namespace Mklinker.Tests.Commands {
 		MockFileSystem testFileSystem; 
 		Mock<ILinker> testLinker;
 		List<ConfigLink> testLinks;
-		Mock<IPathFormatter> testPathFormatter;
+		TestPathResolver testPathResolver;
 
 		[SetUp]
 		public void Setup () {
@@ -34,7 +34,8 @@ namespace Mklinker.Tests.Commands {
 			testLinks = new List<ConfigLink>();
 			testConfig = new Mock<IConfig>();
 			testConfig.Setup(m => m.LinkList).Returns(testLinks);
-			testPathFormatter = new Mock<IPathFormatter>();
+
+			testPathResolver = new TestPathResolver();
 		}
 
 		[Test]
@@ -43,16 +44,16 @@ namespace Mklinker.Tests.Commands {
 			testLinks.Add(new ConfigLink(@"c:\config.linker", "targetfile.linker", ConfigLink.LinkType.Default));
 			testLinks.Add(new ConfigLink(@"c:\invalidconfig.linker", "somerandomlink.linker", ConfigLink.LinkType.Default));
 
-			testLinks.ForEach(link => testLinker.Setup(m => m.CreateLink(link)).Returns(true));
+			testLinks.ForEach(link => testLinker.Setup(m => m.CreateLink(link.targetPath, link.sourcePath, link.linkType)).Returns(true));
 			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(testConfig.Object);
 
 			LinkAllCommand command = new LinkAllCommand("testpath");
 
 			// Act
-			command.Execute(testConsole, testConfigHandler.Object, testFileSystem, testLinker.Object, testPathFormatter.Object);
+			command.Execute(testConsole, testConfigHandler.Object, testFileSystem, testLinker.Object, testPathResolver);
 
 			// Assert
-			testLinks.ForEach(link => testLinker.Verify(m => m.CreateLink(link)));
+			testLinks.ForEach(link => testLinker.Verify(m => m.CreateLink(link.targetPath, link.sourcePath, link.linkType)));
 		}
 
 	}

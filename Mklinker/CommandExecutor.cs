@@ -14,9 +14,9 @@ namespace Mklinker {
 		readonly IConfig defaultConfig;
 		readonly IArgumentParser argumentHandler;
 		readonly ILinker linker;
-		readonly IPathFormatter pathFormatter;
+		readonly IPathResolver pathFormatter;
 
-		public CommandExecutor (IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, IConfig defaultConfig, IArgumentParser argumentHandler, ILinker linker, IPathFormatter pathFormatter) {
+		public CommandExecutor (IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, IConfig defaultConfig, IArgumentParser argumentHandler, ILinker linker, IPathResolver pathFormatter) {
 			this.console = console;
 			this.configHandler = configHandler;
 			this.fileSystem = fileSystem;
@@ -37,7 +37,8 @@ namespace Mklinker {
 				.WithParsed<InteractiveCommand>(cmd => cmd.Execute (console, argumentHandler, this))
 				.WithParsed<LinkAllCommand>(cmd => cmd.Execute (console, configHandler, fileSystem, linker, pathFormatter))
 				.WithParsed<AddLinkCommand>(cmd => cmd.Execute (console, configHandler, fileSystem, pathFormatter))
-				.WithParsed<ValidateCommand>(cmd => cmd.Execute(console, configHandler, fileSystem, pathFormatter));
+				.WithParsed<ValidateCommand>(cmd => cmd.Execute(console, configHandler, fileSystem, pathFormatter))
+				.WithParsed<ListCommand>(cmd => cmd.Execute (console, configHandler, fileSystem, pathFormatter));
 		}
 
 	}

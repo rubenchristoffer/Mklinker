@@ -13,48 +13,52 @@ namespace Mklinker.Tests {
 	class PathFormatterTests {
 
 		Mock<IConfig> testConfig;
+		MockFileSystem testFileSystem;
 
 		[SetUp]
 		public void Setup() {
 			testConfig = new Mock<IConfig>();
 			testConfig.Setup(m => m.Variables).Returns(new List<Variable>());
+
+			testFileSystem = new MockFileSystem();
 		}
 
 		[Test]
-		public void GetFormattedPath_WithNormalPath_ShouldReturnNormalPath() {
+		public void GetAbsoluteResolvedPath_WithNormalPath_ShouldReturnNormalPath() {
 			// Arrange
 			const string testPath = @"C:\MyPath";
-			PathFormatter pathFormatter = new PathFormatter(testConfig.Object);
+			PathResolver pathFormatter = new PathResolver(testFileSystem);
 
 			// Act
-			string result = pathFormatter.GetFormattedPath(testPath);
+			string result = pathFormatter.GetAbsoluteResolvedPath(testPath, new List<Variable>());
 
 			// Assert
 			Assert.AreEqual(result, testPath);
 		}
 
 		[Test]
-		public void GetFormattedPath_WithVariablePath_ShouldReturnFormattedPath() {
+		public void GetAbsoluteResolvedPath_WithVariablePath_ShouldReturnResolvedPath() {
 			// Arrange
-			string testPath = $@"C:\Users\{ PathFormatter.delimiter }User{ PathFormatter.delimiter }\Desktop";
-			PathFormatter pathFormatter = new PathFormatter(testConfig.Object);
-			testConfig.Setup(m => m.Variables).Returns(new List<Variable>(new Variable[] { new Variable("User", "Frans") }));
+			string testPath = $@"C:\Users\{ PathResolver.delimiter }User{ PathResolver.delimiter }\Desktop";
+			PathResolver pathFormatter = new PathResolver(testFileSystem);
+			var testVariables = new List<Variable>(new Variable[] { new Variable("User", "Frans") });
 
 			// Act
-			string result = pathFormatter.GetFormattedPath(testPath);
+			string result = pathFormatter.GetAbsoluteResolvedPath(testPath, testVariables);
 
 			// Assert
 			Assert.AreEqual(result, @"C:\Users\Frans\Desktop");
 		}
 
 		[Test]
-		public void GetFormattedPath_WithVariablePathButWithoutVariable_ShouldReturnUnformattedPath() {
+		public void GetAbsoluteResolvedPath_WithVariablePathButWithoutVariable_ShouldReturnUnresolvedPath() {
 			// Arrange
-			string testPath = $@"C:\Users\{ PathFormatter.delimiter }User{ PathFormatter.delimiter }\Desktop";
-			PathFormatter pathFormatter = new PathFormatter(testConfig.Object);
+			string testPath = $@"C:\Users\{ PathResolver.delimiter }User{ PathResolver.delimiter }\Desktop";
+			PathResolver pathFormatter = new PathResolver(testFileSystem);
+			var testVariables = new List<Variable>();
 
 			// Act
-			string result = pathFormatter.GetFormattedPath(testPath);
+			string result = pathFormatter.GetAbsoluteResolvedPath(testPath, testVariables);
 
 			// Assert
 			Assert.AreEqual(result, testPath);

@@ -18,6 +18,7 @@ namespace Mklinker.Tests.Commands {
 		MockFileSystem testFileSystem;
 		List<ConfigLink> testLinks;
 		List<Variable> testVariables;
+		TestPathResolver testPathResolver;
 
 		[SetUp]
 		public void Setup () {
@@ -31,16 +32,18 @@ namespace Mklinker.Tests.Commands {
 			testConfig = new Mock<IConfig>();
 			testConfig.Setup(m => m.LinkList).Returns(testLinks);
 			testConfig.Setup(m => m.Variables).Returns(testVariables);
+
+			testPathResolver = new TestPathResolver();
 		}
 
 		[Test]
 		public void Execute_WithEmptyConfig_ShouldPrintConfigEmpty () {
 			// Arrange
-			IDefaultCommandHandler command = new ListCommand(false, "testpath");
+			ListCommand command = new ListCommand(false, "testpath");
 			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(testConfig.Object);
 
 			// Act
-			command.Execute(testConsole, testConfigHandler.Object, testFileSystem);
+			command.Execute(testConsole, testConfigHandler.Object, testFileSystem, testPathResolver);
 
 			// Assert
 			Assert.IsTrue(testConsole.GetHistory().Contains("empty", StringComparison.OrdinalIgnoreCase));
@@ -49,7 +52,7 @@ namespace Mklinker.Tests.Commands {
 		[Test]
 		public void Execute_WithConfigLinks_ShouldPrintAllCases() {
 			// Arrange
-			IDefaultCommandHandler command = new ListCommand(false, "testpath");
+			ListCommand command = new ListCommand(false, "testpath");
 
 			testLinks.Add(new ConfigLink("source", "target", ConfigLink.LinkType.Default));
 			testLinks.Add(new ConfigLink("testing is fun", "not really", ConfigLink.LinkType.Hard));
@@ -57,7 +60,7 @@ namespace Mklinker.Tests.Commands {
 			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(testConfig.Object);
 
 			// Act
-			command.Execute(testConsole, testConfigHandler.Object, testFileSystem);
+			command.Execute(testConsole, testConfigHandler.Object, testFileSystem, testPathResolver);
 
 			// Assert
 			testLinks.ForEach(link => Assert.IsTrue(testConsole.GetHistory().Contains(link.ToString(), StringComparison.OrdinalIgnoreCase)));
@@ -66,7 +69,7 @@ namespace Mklinker.Tests.Commands {
 		[Test]
 		public void Execute_WithVariables_ShouldPrintAllCases() {
 			// Arrange
-			IDefaultCommandHandler command = new ListCommand(true, "testpath");
+			ListCommand command = new ListCommand(true, "testpath");
 
 			testVariables.Add(new Variable("var", "value"));
 			testVariables.Add(new Variable("othervar", "othervalue"));
@@ -74,7 +77,7 @@ namespace Mklinker.Tests.Commands {
 			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(testConfig.Object);
 
 			// Act
-			command.Execute(testConsole, testConfigHandler.Object, testFileSystem);
+			command.Execute(testConsole, testConfigHandler.Object, testFileSystem, testPathResolver);
 
 			// Assert
 			testVariables.ForEach(variable => Assert.IsTrue(testConsole.GetHistory().Contains(variable.ToString(), StringComparison.OrdinalIgnoreCase)));

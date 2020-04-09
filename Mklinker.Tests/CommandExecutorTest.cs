@@ -18,7 +18,7 @@ namespace Mklinker.Tests {
 		Mock<IConfig> testConfig;
 		Mock<IArgumentParser> testArgumentParser;
 		Mock<ILinker> testLinker;
-		Mock<IPathFormatter> testPathFormatter;
+		Mock<IPathResolver> testPathFormatter;
 
 		[SetUp]
 		public void Setup() {
@@ -28,7 +28,7 @@ namespace Mklinker.Tests {
 			testConfig = new Mock<IConfig>();
 			testArgumentParser = new Mock<IArgumentParser>();
 			testLinker = new Mock<ILinker>();
-			testPathFormatter = new Mock<IPathFormatter>();
+			testPathFormatter = new Mock<IPathResolver>();
 		}
 
 		[Test]

@@ -18,6 +18,7 @@ namespace Mklinker.Tests.Commands {
 		Mock<IConfig> testConfig;
 		List<ConfigLink> testLinks;
 		ConfigLink[] testLinkElements;
+		TestPathResolver testPathResolver;
 
 		[SetUp]
 		public void Setup() {
@@ -42,12 +43,14 @@ namespace Mklinker.Tests.Commands {
 
 			testConfig = new Mock<IConfig>();
 			testConfig.Setup(m => m.LinkList).Returns(testLinks);
+
+			testPathResolver = new TestPathResolver();
 		}
 
 		[Test]
 		public void Execute_WithTargetPath_WillRemoveFromConfig () {
 			// Arrange
-			IDefaultCommandHandler command = new RemoveLinkCommand("target", "testpath");
+			RemoveLinkCommand command = new RemoveLinkCommand("target", "testpath");
 
 			testLinks.Add(testLinkElements[0]);
 			testLinks.Add(testLinkElements[1]);
@@ -55,7 +58,7 @@ namespace Mklinker.Tests.Commands {
 			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(testConfig.Object);
 
 			// Act
-			command.Execute(testConsole, testConfigHandler.Object, testFileSystem);
+			command.Execute(testConsole, testConfigHandler.Object, testFileSystem, testPathResolver);
 
 			// Assert
 			Assert.IsFalse(testConfigHandler.Object.LoadConfig("testpath").LinkList.Contains(testLinkElements[0]));
@@ -66,14 +69,14 @@ namespace Mklinker.Tests.Commands {
 		public void Execute_WithInvalidTargetPath_WillPrintError() {
 			// Arrange
 			const string testTargetPath = "some random target here";
-			IDefaultCommandHandler command = new RemoveLinkCommand(testTargetPath, "testpath");
+			RemoveLinkCommand command = new RemoveLinkCommand(testTargetPath, "testpath");
 
 			testLinks.Add(testLinkElements[0]);
 			testLinks.Add(testLinkElements[1]);
 			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(testConfig.Object);
 
 			// Act
-			command.Execute(testConsole, testConfigHandler.Object, testFileSystem);
+			command.Execute(testConsole, testConfigHandler.Object, testFileSystem, testPathResolver);
 
 			// Assert
 			Assert.IsTrue(testConsole.GetHistory().Contains("does not exist", StringComparison.OrdinalIgnoreCase));

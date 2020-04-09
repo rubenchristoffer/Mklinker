@@ -18,7 +18,7 @@ namespace Mklinker.Tests.Commands {
 		Mock<IConfig> testConfig;
 		List<ConfigLink> testLinks;
 		ConfigLink[] testLinkElements;
-		TestPathFormatter testPathFormatter;
+		TestPathResolver testPathFormatter;
 
 		[SetUp]
 		public void Setup () {
@@ -41,7 +41,7 @@ namespace Mklinker.Tests.Commands {
 
 			testConfig = new Mock<IConfig>();
 			testConfig.Setup(m => m.LinkList).Returns(testLinks);
-			testPathFormatter = new TestPathFormatter();
+			testPathFormatter = new TestPathResolver();
 		}
 
 		[Test]

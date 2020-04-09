@@ -25,17 +25,17 @@ namespace Mklinker.Commands {
 			this.linkType = linkType;
 		}
 
-		internal void Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, IPathFormatter pathFormatter) {
-			string formattedSourcePath = pathFormatter.GetFormattedPath(sourcePath);
+		internal void Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, IPathResolver pathResolver) {
+			IConfig config = configHandler.LoadConfig(path);
+			string formattedSourcePath = pathResolver.GetAbsoluteResolvedPath(sourcePath, config.Variables);
+			string formattedTargetPath = pathResolver.GetAbsoluteResolvedPath(targetPath, config.Variables);
 
 			if (!fileSystem.File.Exists(formattedSourcePath) && !fileSystem.Directory.Exists(formattedSourcePath)) {
 				console.WriteLine("\nThe sourcePath '{0}' is invalid because it does not exist", sourcePath);
 				return;
 			}
 
-			IConfig config = configHandler.LoadConfig(path);
-
-			if (config.LinkList.Any(link => pathFormatter.GetFormattedPath(link.targetPath).Equals(pathFormatter.GetFormattedPath(targetPath)))) {
+			if (config.LinkList.Any(link => pathResolver.GetAbsoluteResolvedPath(link.targetPath, config.Variables).Equals(formattedTargetPath))) {
 				console.WriteLine("\nThe targetPath '{0}' is invalid because it already exists in config file", targetPath);
 				return;
 			}
