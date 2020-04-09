@@ -1,7 +1,7 @@
 ﻿using System.IO.Abstractions;
 using Mklinker.Abstractions;
 
-namespace Mklinker {
+namespace Mklinker.Abstractions {
 
 	interface IDefaultCommandHandler {
 
