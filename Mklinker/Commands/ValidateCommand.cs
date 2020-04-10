@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.IO.Abstractions;
 using CommandLine;
 using Mklinker.Abstractions;
@@ -19,19 +20,36 @@ namespace Mklinker.Commands {
         }
 
         internal void Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, IPathResolver pathResolver) {
+            if (!configHandler.DoesConfigExist(path)) {
+                console.WriteLine($"Config '{ path }' could not be found");
+                return;
+            }
+
             IConfig config = configHandler.LoadConfig(path);
             bool isValid = true;
 
             foreach (ConfigLink configLink in config.LinkList) {
                 string resolvedSourcePath = pathResolver.GetAbsoluteResolvedPath(configLink.sourcePath, config.Variables);
+                string resolvedTargetPath = pathResolver.GetAbsoluteResolvedPath(configLink.targetPath, config.Variables);
 
                 bool validation1 = ValidateExistence(fileSystem, resolvedSourcePath);
-                bool validation2 = ValidateLinkType(fileSystem, resolvedSourcePath, configLink);
+                bool validation2 = ValidateLinkType(fileSystem, resolvedSourcePath, configLink.linkType);
+                bool validation3 = ValidateDuplicate(pathResolver, config, resolvedTargetPath);
 
-                if (displayAll || !validation1 || !validation2) {
-                    console.WriteLine("\n{0}\n\t# Source path exists: {1}\n\t# Link type acceptable: {2}", configLink.ToString(), validation1 ? "Yes" : "No", validation2 ? "Yes" : "No");
+                if (displayAll || !validation1 || !validation2 || !validation3) {
+                    console.WriteLine($"\n{ configLink.ToString() }");
+
                     isValid = false;
                 }
+
+                if (!validation1 || displayAll)
+                    console.WriteLine($"\t# Source path exists: { (validation1 ? "Yes" : "No") }");
+
+                if (!validation2 || displayAll)
+                    console.WriteLine($"\t# Link type acceptable: { (validation2 ? "Yes" : "No") }");
+
+                if (!validation3 || displayAll)
+                    console.WriteLine($"\t# Duplicate target path exists: { (validation3 ? "False" : "True") }");
             }
 
             if (config.LinkList.Count == 0)
@@ -44,16 +62,26 @@ namespace Mklinker.Commands {
             return fileSystem.File.Exists(resolvedSourcePath) || fileSystem.Directory.Exists(resolvedSourcePath);
         }
 
-        internal bool ValidateLinkType (IFileSystem fileSystem, string resolvedSourcePath, ConfigLink configLink) {
+        internal bool ValidateLinkType (IFileSystem fileSystem, string resolvedSourcePath, ConfigLink.LinkType linkType) {
+            if (linkType == ConfigLink.LinkType.Default)
+                return true;
+
             if (fileSystem.File.Exists(resolvedSourcePath)) {
-                return configLink.linkType == ConfigLink.LinkType.Symbolic || configLink.linkType == ConfigLink.LinkType.Hard;
+                return linkType == ConfigLink.LinkType.Symbolic || linkType == ConfigLink.LinkType.Hard;
             }
 
             if (fileSystem.Directory.Exists(resolvedSourcePath)) {
-                return configLink.linkType == ConfigLink.LinkType.Symbolic || configLink.linkType == ConfigLink.LinkType.Junction;
+                return linkType == ConfigLink.LinkType.Symbolic || linkType == ConfigLink.LinkType.Junction;
             }
 
             return false;
+        }
+
+        internal bool ValidateDuplicate (IPathResolver pathResolver, IConfig config, string resolvedTargetPath) {
+            return config.LinkList
+                .Where(link => pathResolver.GetAbsoluteResolvedPath(link.targetPath, config.Variables)
+                    .Equals(resolvedTargetPath, StringComparison.OrdinalIgnoreCase))
+                .Count() <= 1;
         }
 
     }

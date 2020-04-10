@@ -22,6 +22,7 @@ namespace Mklinker.Tests.Commands {
 		public void Setup () {
 			testConsole = new TestConsole();
 			testConfigHandler = new Mock<IConfigHandler>();
+			testConfigHandler.Setup(m => m.DoesConfigExist(It.IsAny<string>())).Returns(true);
 
 			testFileSystem = new MockFileSystem(new Dictionary<string, MockFileData> {
 				{ @"c:\config.linker", new MockFileData("<?xml version=\"1.0\" encoding=\"utf-16\"?><Config xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" Version=\"v1.1.1\"></Config>") },
@@ -39,6 +40,7 @@ namespace Mklinker.Tests.Commands {
 				new ConfigLink(@"c:\config_that_does_not_exist.linker", "target", ConfigLink.LinkType.Symbolic),
 				new ConfigLink(@"c:\config.linker", "target", ConfigLink.LinkType.Symbolic),
 				new ConfigLink(@"somedirectory", "target", ConfigLink.LinkType.Hard),
+				new ConfigLink(@"somedirectory", "anothertarget", ConfigLink.LinkType.Default),
 			};
 
 			testPathFormatter = new TestPathResolver();
@@ -50,6 +52,7 @@ namespace Mklinker.Tests.Commands {
 			ValidateCommand command = new ValidateCommand(false, "testpath");
 
 			testLinks.Add(testLinkElements[1]);
+			testLinks.Add(testLinkElements[3]);
 			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(testConfig.Object);
 
 			// Act
