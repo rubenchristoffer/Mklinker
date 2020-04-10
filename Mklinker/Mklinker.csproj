@@ -5,6 +5,7 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	<SignAssembly>false</SignAssembly>
+	<StartupObject>Mklinker.Program</StartupObject>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

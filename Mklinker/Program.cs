@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO.Abstractions;
 using Autofac;
 using Mklinker.Abstractions;
+using System.Runtime.InteropServices;
 
 namespace Mklinker {
 
@@ -29,7 +30,11 @@ namespace Mklinker {
 			builder.RegisterType<PathResolver>().As<IPathResolver>();
 
 			// Platform dependent
-			builder.RegisterType<WindowsLinker>().As<ILinker>();
+			if (RuntimeInformation.IsOSPlatform (OSPlatform.Windows)) {
+				builder.RegisterType<WindowsLinker>().As<ILinker>();
+			} else {
+				builder.RegisterType<UnixLinker>().As<ILinker>();
+			}
 
 			using (var scope = builder.Build().BeginLifetimeScope()) {
 				scope.Resolve<ICommandExecutor>().Execute(args);
