@@ -21,10 +21,10 @@ namespace Mklinker.Commands {
 			int successes = 0;
 
 			foreach (ConfigLink configLink in config.LinkList) {
-				string resolvedTargetPath = pathResolver.GetAbsoluteResolvedPath(configLink.targetPath, config.Variables);
 				string resolvedSourcePath = pathResolver.GetAbsoluteResolvedPath(configLink.sourcePath, config.Variables);
+				string resolvedTargetPath = pathResolver.GetAbsoluteResolvedPath(configLink.targetPath, config.Variables);
 
-				if (linker.CreateLink(resolvedTargetPath, resolvedSourcePath, configLink.linkType))
+				if (linker.CreateLink(resolvedSourcePath, resolvedTargetPath, configLink.linkType))
 					successes++;
 			}
 

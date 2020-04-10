@@ -23,7 +23,10 @@ namespace Mklinker.Tests.Commands {
 		[SetUp]
 		public void Setup () {
 			testConsole = new TestConsole();
+
 			testConfigHandler = new Mock<IConfigHandler>();
+			testConfigHandler.Setup(m => m.DoesConfigExist(It.IsAny<string>())).Returns(true);
+
 			testFileSystem = new MockFileSystem();
 
 			testLinks = new List<ConfigLink>();

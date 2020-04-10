@@ -51,7 +51,7 @@ namespace Mklinker.Tests.Commands {
 			const string testSourcePath = @"c:\config.linker";
 			const string testTargetPath = @"c:\demo\image.gif"; // Should be able to add target link that already exists
 
-			AddLinkCommand command = new AddLinkCommand(testTargetPath, testSourcePath, ConfigLink.LinkType.Default, testPath);
+			AddLinkCommand command = new AddLinkCommand(testSourcePath, testTargetPath, ConfigLink.LinkType.Default, testPath);
 
 			testLinks.Add(testLinkElements[0]);
 			testLinks.Add(testLinkElements[1]);
@@ -72,7 +72,7 @@ namespace Mklinker.Tests.Commands {
 			const string testSourcePath = @"c:\demo\";
 			const string testTargetPath = "testTargetDirectory";
 
-			AddLinkCommand command = new AddLinkCommand(testTargetPath, testSourcePath, ConfigLink.LinkType.Default, testPath);
+			AddLinkCommand command = new AddLinkCommand(testSourcePath, testTargetPath, ConfigLink.LinkType.Default, testPath);
 
 			testLinks.Add(testLinkElements[0]);
 			testLinks.Add(testLinkElements[1]);
@@ -93,7 +93,7 @@ namespace Mklinker.Tests.Commands {
 			const string testSourcePath = @"c:\demo\";
 			const string testTargetPath = "testTargetDirectory";
 
-			AddLinkCommand command = new AddLinkCommand(testTargetPath, testSourcePath, ConfigLink.LinkType.Default, testPath);
+			AddLinkCommand command = new AddLinkCommand(testSourcePath, testTargetPath, ConfigLink.LinkType.Default, testPath);
 			testConfigHandler.Setup(m => m.LoadConfig(testPath)).Returns(testConfig.Object);
 
 			// Act
@@ -115,7 +115,7 @@ namespace Mklinker.Tests.Commands {
 			const string testSourcePath = @"c:\some path that does not exist";
 			const string testTargetPath = "testTargetDirectory";
 
-			AddLinkCommand command = new AddLinkCommand(testTargetPath, testSourcePath, ConfigLink.LinkType.Default, testPath);
+			AddLinkCommand command = new AddLinkCommand(testSourcePath, testTargetPath, ConfigLink.LinkType.Default, testPath);
 			testConfigHandler.Setup(m => m.LoadConfig(testPath)).Returns(testConfig.Object);
 
 			// Act
@@ -134,7 +134,7 @@ namespace Mklinker.Tests.Commands {
 			const string testTargetPath = "someOtherFile";
 			const ConfigLink.LinkType testLinkType = ConfigLink.LinkType.Hard;
 
-			AddLinkCommand command = new AddLinkCommand(testTargetPath, testSourcePath, testLinkType, testPath);
+			AddLinkCommand command = new AddLinkCommand(testSourcePath, testTargetPath, testLinkType, testPath);
 			testConfigHandler.Setup(m => m.LoadConfig(testPath)).Returns(testConfig.Object);
 
 			// Act
@@ -153,7 +153,7 @@ namespace Mklinker.Tests.Commands {
 			const string testTargetPath = "someOtherFile";
 			const ConfigLink.LinkType testLinkType = ConfigLink.LinkType.Symbolic;
 
-			AddLinkCommand command = new AddLinkCommand(testTargetPath, testSourcePath, testLinkType, testPath);
+			AddLinkCommand command = new AddLinkCommand(testSourcePath, testTargetPath, testLinkType, testPath);
 			testConfigHandler.Setup(m => m.LoadConfig(testPath)).Returns(testConfig.Object);
 
 			// Act
@@ -172,7 +172,7 @@ namespace Mklinker.Tests.Commands {
 			const string testTargetPath = @"c:\folder\anotherfolder\yetanotherfolder";
 			const ConfigLink.LinkType testLinkType = ConfigLink.LinkType.Junction;
 
-			AddLinkCommand command = new AddLinkCommand(testTargetPath, testSourcePath, testLinkType, testPath);
+			AddLinkCommand command = new AddLinkCommand(testSourcePath, testTargetPath, testLinkType, testPath);
 			testConfigHandler.Setup(m => m.LoadConfig(testPath)).Returns(testConfig.Object);
 
 			// Act

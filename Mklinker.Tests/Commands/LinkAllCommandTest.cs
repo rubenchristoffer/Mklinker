@@ -44,7 +44,7 @@ namespace Mklinker.Tests.Commands {
 			testLinks.Add(new ConfigLink(@"c:\config.linker", "targetfile.linker", ConfigLink.LinkType.Default));
 			testLinks.Add(new ConfigLink(@"c:\invalidconfig.linker", "somerandomlink.linker", ConfigLink.LinkType.Default));
 
-			testLinks.ForEach(link => testLinker.Setup(m => m.CreateLink(link.targetPath, link.sourcePath, link.linkType)).Returns(true));
+			testLinks.ForEach(link => testLinker.Setup(m => m.CreateLink(link.sourcePath, link.targetPath, link.linkType)).Returns(true));
 			testConfigHandler.Setup(m => m.LoadConfig("testpath")).Returns(testConfig.Object);
 
 			LinkAllCommand command = new LinkAllCommand("testpath");
@@ -53,7 +53,7 @@ namespace Mklinker.Tests.Commands {
 			command.Execute(testConsole, testConfigHandler.Object, testFileSystem, testLinker.Object, testPathResolver);
 
 			// Assert
-			testLinks.ForEach(link => testLinker.Verify(m => m.CreateLink(link.targetPath, link.sourcePath, link.linkType)));
+			testLinks.ForEach(link => testLinker.Verify(m => m.CreateLink(link.sourcePath, link.targetPath, link.linkType)));
 		}
 
 	}

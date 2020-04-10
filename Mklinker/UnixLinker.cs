@@ -40,7 +40,7 @@ namespace Mklinker {
 			return "";
 		}
 
-		public bool CreateLink(string resolvedTargetPath, string resolvedSourcePath, ConfigLink.LinkType linkType) {
+		public bool CreateLink(string resolvedSourcePath, string resolvedTargetPath, ConfigLink.LinkType linkType) {
 			if (!fileSystem.File.Exists(resolvedSourcePath) && !fileSystem.Directory.Exists(resolvedSourcePath)) {
 				console.WriteLine("Path '{0}' does not exist!", resolvedSourcePath);
 

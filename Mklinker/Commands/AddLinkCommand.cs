@@ -8,18 +8,18 @@ namespace Mklinker.Commands {
 	[Verb("addlink", HelpText = "Adds a new link to config file")]
 	class AddLinkCommand : GlobalOptions {
 
-		[Value(0, HelpText = "The path to new link file", Required = true)]
-		public string targetPath { get; private set; }
-
-		[Value(1, HelpText = "The path to the source file", Required = true)]
+		[Value(0, HelpText = "The path to the source file", Required = true)]
 		public string sourcePath { get; private set; }
+
+		[Value(1, HelpText = "The path to new link file", Required = true)]
+		public string targetPath { get; private set; }
 
 		[Value(2, Default = ConfigLink.LinkType.Default, HelpText = "The type of link you want to create. Default is Symbolic for files and Junction for directories")]
 		public ConfigLink.LinkType linkType { get; private set; }
 
 		public AddLinkCommand() : base() {}
 
-		public AddLinkCommand(string targetPath, string sourcePath, ConfigLink.LinkType linkType, string path) : base(path) {
+		public AddLinkCommand(string sourcePath, string targetPath, ConfigLink.LinkType linkType, string path) : base(path) {
 			this.targetPath = targetPath;
 			this.sourcePath = sourcePath;
 			this.linkType = linkType;
@@ -43,7 +43,9 @@ namespace Mklinker.Commands {
 			config.LinkList.Add(new ConfigLink(sourcePath, targetPath, linkType));
 			configHandler.SaveConfig(config, path);
 
-			console.WriteLine("\nAdded new {0} link to config file: \nTarget: '{1}'\nSource: '{2}'", linkType.ToString(), targetPath, sourcePath);
+			console.WriteLine($"\nAdded new { linkType.ToString() } link to config file: \n" +
+				$"Source: '{ sourcePath }'\n" +
+				$"Target: '{ targetPath }'");
 		}
 
 	}

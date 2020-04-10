@@ -6,6 +6,10 @@
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	<SignAssembly>false</SignAssembly>
 	<StartupObject>Mklinker.Program</StartupObject>
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	<PackageLicenseExpression></PackageLicenseExpression>
+	<PackageProjectUrl>https://github.com/rubenchristoffer/Mklinker/blob/master/LICENSE</PackageProjectUrl>
+	<RepositoryUrl>https://github.com/rubenchristoffer/Mklinker</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

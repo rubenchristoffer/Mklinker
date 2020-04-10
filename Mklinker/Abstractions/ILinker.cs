@@ -6,7 +6,7 @@ namespace Mklinker.Abstractions {
 
 	interface ILinker {
 
-		bool CreateLink(string resolvedTargetPath, string resolvedSourcePath, ConfigLink.LinkType linkType);
+		bool CreateLink(string resolvedSourcePath, string resolvedTargetPath, ConfigLink.LinkType linkType);
 
 	}
 

@@ -21,22 +21,28 @@ namespace Mklinker.Commands {
 		}
 
 		internal void Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, IPathResolver pathResolver) {
+			if (!configHandler.DoesConfigExist(path)) {
+				console.WriteLine($"Config '{ path }' could not be found");
+				return;
+			}
+			
 			IConfig config = configHandler.LoadConfig(path);
 
 			if (!displayVariables) {
 				foreach (ConfigLink configLink in config.LinkList) {
-					string absoluteTargetPathString = "";
 					string absoluteSourcePathString = "";
+					string absoluteTargetPathString = "";
 
 					if (displayAbsolutePaths) {
-						absoluteTargetPathString = $"\n\t\t => { pathResolver.GetAbsoluteResolvedPath(configLink.targetPath, config.Variables) }";
-						absoluteSourcePathString = $"\n\t\t => { pathResolver.GetAbsoluteResolvedPath(configLink.sourcePath, config.Variables) }";
+						absoluteSourcePathString = $"\n\t\t  => { pathResolver.GetAbsoluteResolvedPath(configLink.sourcePath, config.Variables) }";
+						absoluteTargetPathString = $"\n\t\t  => { pathResolver.GetAbsoluteResolvedPath(configLink.targetPath, config.Variables) }";
 					}
 
 					console.WriteLine($"\n" +
 						$"{ configLink.linkType.ToString() } link:\n" +
-						$"\t- Target: { configLink.targetPath }{ absoluteTargetPathString }\n" +
-						$"\t- Source: { configLink.sourcePath }{ absoluteSourcePathString }\n");
+						$"\t- Source: { configLink.sourcePath }{ absoluteSourcePathString }\n" +
+						$"\t- Target: { configLink.targetPath }{ absoluteTargetPathString }\n");
+						
 				}
 			} else {
 				foreach (Variable variable in config.Variables) {
