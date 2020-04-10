@@ -1,18 +1,20 @@
 ﻿using System;
-using System.Diagnostics;
-using System.IO.Abstractions;
+using System.Collections.Generic;
+using System.Text;
 using Mklinker.Abstractions;
-using LinkType = Mklinker.ConfigLink.LinkType;
+using System.IO.Abstractions;
+using System.Diagnostics;
+using static Mklinker.ConfigLink;
 
 namespace Mklinker {
 
-	class WindowsLinker : ILinker {
+	class UnixLinker : ILinker {
 
 		readonly IConsole console;
 		readonly IFileSystem fileSystem;
 		readonly IProcess process;
 
-		public WindowsLinker (IConsole console, IFileSystem fileSystem, IProcess process) {
+		public UnixLinker(IConsole console, IFileSystem fileSystem, IProcess process) {
 			this.console = console;
 			this.fileSystem = fileSystem;
 			this.process = process;
@@ -20,13 +22,8 @@ namespace Mklinker {
 
 		internal ProcessStartInfo GetProcessInfo(IFileSystem fileSystem, string resolvedSourcePath, string resolvedTargetPath, ConfigLink.LinkType linkType) {
 			return new ProcessStartInfo {
-				FileName = "cmd.exe",
-
-				Arguments = string.Format("/c mklink {0} \"{1}\" \"{2}\"", 
-				GetLinkTypeArgument(fileSystem, linkType, resolvedSourcePath),
-				resolvedTargetPath,
-				resolvedSourcePath),
-
+				FileName = "ln",
+				Arguments = $"{ resolvedSourcePath } { resolvedTargetPath } { GetLinkTypeArgument(fileSystem, linkType, resolvedSourcePath) }",
 				RedirectStandardOutput = true,
 				RedirectStandardError = true,
 				UseShellExecute = false
@@ -35,9 +32,9 @@ namespace Mklinker {
 
 		internal string GetLinkTypeArgument(IFileSystem fileSystem, LinkType linkType, string resolvedSourcePath) {
 			if (fileSystem.File.Exists(resolvedSourcePath)) {
-				return linkType == LinkType.Hard ? "/H" : "";
+				return linkType == LinkType.Hard ? "" : "-s";
 			} else if (fileSystem.Directory.Exists(resolvedSourcePath)) {
-				return linkType == LinkType.Symbolic ? "/D" : "/J";
+				return "-s";
 			}
 
 			return "";
@@ -52,13 +49,11 @@ namespace Mklinker {
 
 			ProcessStartInfo processStartInfo = GetProcessInfo(fileSystem, resolvedSourcePath, resolvedTargetPath, linkType);
 			IProcess mklinkProcess = process.Start(processStartInfo);
-			bool success = false;
-			
-			while (!mklinkProcess.StandardOutput.EndOfStream) {
-				string output = mklinkProcess.StandardOutput.ReadLine();
-				success = output.ToLower().Contains("created");
+			bool success = true;
 
-				console.WriteLine(output);
+			while (!mklinkProcess.StandardOutput.EndOfStream) {
+				success = false;
+				console.WriteLine(mklinkProcess.StandardOutput.ReadLine());
 			}
 
 			while (!mklinkProcess.StandardError.EndOfStream) {
@@ -68,7 +63,6 @@ namespace Mklinker {
 
 			return success;
 		}
-
 	}
 
 }

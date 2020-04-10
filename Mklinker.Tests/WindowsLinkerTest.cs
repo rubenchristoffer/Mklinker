@@ -15,13 +15,11 @@ namespace Mklinker.Tests {
 		TestConsole testConsole;
 		MockFileSystem testFileSystem;
 		Mock<IProcess> testProcess;
-		TestPathResolver testPathFormatter;
 
 		[SetUp]
 		public void Setup() {
 			testConsole = new TestConsole();
 			testProcess = new Mock<IProcess>();
-			testPathFormatter = new TestPathResolver();
 
 			testFileSystem = new MockFileSystem(new Dictionary<string, MockFileData> {
 				{ @"c:\config.linker", new MockFileData("<?xml version=\"1.0\" encoding=\"utf-16\"?><Config xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" Version=\"v1.1.1\"></Config>") },
@@ -36,7 +34,7 @@ namespace Mklinker.Tests {
 		public void GetLinkTypeArgument_WithDefaultFile_WillReturnEmptyString() {
 			// Arrange
 			const string testSourcePath = @"c:\config.linker";
-			WindowsLinker windowsLinker = new WindowsLinker(testConsole, testFileSystem, testProcess.Object, testPathFormatter);
+			WindowsLinker windowsLinker = new WindowsLinker(testConsole, testFileSystem, testProcess.Object);
 
 			// Act
 			string result = windowsLinker.GetLinkTypeArgument(testFileSystem, ConfigLink.LinkType.Default, testSourcePath);
@@ -49,7 +47,7 @@ namespace Mklinker.Tests {
 		public void GetLinkTypeArgument_WithHardFile_WillReturnHardString() {
 			// Arrange
 			const string testSourcePath = @"c:\config.linker";
-			WindowsLinker windowsLinker = new WindowsLinker(testConsole, testFileSystem, testProcess.Object, testPathFormatter);
+			WindowsLinker windowsLinker = new WindowsLinker(testConsole, testFileSystem, testProcess.Object);
 
 			// Act
 			string result = windowsLinker.GetLinkTypeArgument(testFileSystem, ConfigLink.LinkType.Hard, testSourcePath);
@@ -62,7 +60,7 @@ namespace Mklinker.Tests {
 		public void GetLinkTypeArgument_WithDefaultDirectory_WillReturnJunctionString() {
 			// Arrange
 			const string testSourcePath = @"c:\demo\";
-			WindowsLinker windowsLinker = new WindowsLinker(testConsole, testFileSystem, testProcess.Object, testPathFormatter);
+			WindowsLinker windowsLinker = new WindowsLinker(testConsole, testFileSystem, testProcess.Object);
 
 			// Act
 			string result = windowsLinker.GetLinkTypeArgument(testFileSystem, ConfigLink.LinkType.Default, testSourcePath);
@@ -75,7 +73,7 @@ namespace Mklinker.Tests {
 		public void GetLinkTypeArgument_WithSymbolicDirectory_WillReturnSymbolicString() {
 			// Arrange
 			const string testSourcePath = @"c:\demo\";
-			WindowsLinker windowsLinker = new WindowsLinker(testConsole, testFileSystem, testProcess.Object, testPathFormatter);
+			WindowsLinker windowsLinker = new WindowsLinker(testConsole, testFileSystem, testProcess.Object);
 
 			// Act
 			string result = windowsLinker.GetLinkTypeArgument(testFileSystem, ConfigLink.LinkType.Symbolic, testSourcePath);
@@ -88,7 +86,7 @@ namespace Mklinker.Tests {
 		public void GetLinkTypeArgument_PathDoesNotExist_WillReturnEmptyString() {
 			// Arrange
 			const string testSourcePath = @"some random path that does not exist";
-			WindowsLinker windowsLinker = new WindowsLinker(testConsole, testFileSystem, testProcess.Object, testPathFormatter);
+			WindowsLinker windowsLinker = new WindowsLinker(testConsole, testFileSystem, testProcess.Object);
 
 			// Act
 			string result = windowsLinker.GetLinkTypeArgument(testFileSystem, ConfigLink.LinkType.Symbolic, testSourcePath);
