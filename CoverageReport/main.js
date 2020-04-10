@@ -242,9 +242,10 @@ var assemblies = [
       { "name": "Mklinker.GlobalOptions", "rp": "Mklinker_GlobalOptions.htm", "cl": 4, "ucl": 1, "cal": 5, "tl": 18, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.PathResolver", "rp": "Mklinker_PathResolver.htm", "cl": 15, "ucl": 0, "cal": 15, "tl": 41, "ct": "LineCoverage", "mc": "-", "cb": 4, "tb": 4, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Process", "rp": "Mklinker_Process.htm", "cl": 0, "ucl": 10, "cal": 10, "tl": 30, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
-      { "name": "Mklinker.Program", "rp": "Mklinker_Program.htm", "cl": 0, "ucl": 19, "cal": 19, "tl": 41, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
+      { "name": "Mklinker.Program", "rp": "Mklinker_Program.htm", "cl": 0, "ucl": 23, "cal": 23, "tl": 46, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 2, "lch": [], "bch": [], "hc": [] },
+      { "name": "Mklinker.UnixLinker", "rp": "Mklinker_UnixLinker.htm", "cl": 12, "ucl": 26, "cal": 38, "tl": 68, "ct": "LineCoverage", "mc": "-", "cb": 6, "tb": 14, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Variable", "rp": "Mklinker_Variable.htm", "cl": 7, "ucl": 1, "cal": 8, "tl": 34, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
-      { "name": "Mklinker.WindowsLinker", "rp": "Mklinker_WindowsLinker.htm", "cl": 13, "ucl": 32, "cal": 45, "tl": 76, "ct": "LineCoverage", "mc": "-", "cb": 8, "tb": 16, "lch": [], "bch": [], "hc": [] },
+      { "name": "Mklinker.WindowsLinker", "rp": "Mklinker_WindowsLinker.htm", "cl": 12, "ucl": 32, "cal": 44, "tl": 74, "ct": "LineCoverage", "mc": "-", "cb": 8, "tb": 16, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.XMLConfigSerializer", "rp": "Mklinker_XMLConfigSerializer.htm", "cl": 0, "ucl": 13, "cal": 13, "tl": 33, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 2, "lch": [], "bch": [], "hc": [] },
     ]},
 ];
