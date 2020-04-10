@@ -226,18 +226,18 @@ var assemblies = [
     "classes": [
       { "name": "Mklinker.ArgumentParser", "rp": "Mklinker_ArgumentParser.htm", "cl": 5, "ucl": 0, "cal": 5, "tl": 17, "ct": "LineCoverage", "mc": "-", "cb": 6, "tb": 6, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.CommandExecutor", "rp": "Mklinker_CommandExecutor.htm", "cl": 14, "ucl": 7, "cal": 21, "tl": 46, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
-      { "name": "Mklinker.Commands.AddLinkCommand", "rp": "Mklinker_AddLinkCommand.htm", "cl": 22, "ucl": 1, "cal": 23, "tl": 51, "ct": "LineCoverage", "mc": "-", "cb": 6, "tb": 6, "lch": [], "bch": [], "hc": [] },
+      { "name": "Mklinker.Commands.AddLinkCommand", "rp": "Mklinker_AddLinkCommand.htm", "cl": 24, "ucl": 1, "cal": 25, "tl": 53, "ct": "LineCoverage", "mc": "-", "cb": 6, "tb": 6, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.AddVariableCommand", "rp": "Mklinker_AddVariableCommand.htm", "cl": 25, "ucl": 1, "cal": 26, "tl": 54, "ct": "LineCoverage", "mc": "-", "cb": 4, "tb": 4, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.ConfigCommand", "rp": "Mklinker_ConfigCommand.htm", "cl": 42, "ucl": 1, "cal": 43, "tl": 67, "ct": "LineCoverage", "mc": "-", "cb": 16, "tb": 16, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.InteractiveCommand", "rp": "Mklinker_InteractiveCommand.htm", "cl": 12, "ucl": 0, "cal": 12, "tl": 26, "ct": "LineCoverage", "mc": "-", "cb": 4, "tb": 4, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.LinkAllCommand", "rp": "Mklinker_LinkAllCommand.htm", "cl": 13, "ucl": 1, "cal": 14, "tl": 36, "ct": "LineCoverage", "mc": "-", "cb": 4, "tb": 4, "lch": [], "bch": [], "hc": [] },
-      { "name": "Mklinker.Commands.ListCommand", "rp": "Mklinker_ListCommand.htm", "cl": 23, "ucl": 6, "cal": 29, "tl": 53, "ct": "LineCoverage", "mc": "-", "cb": 9, "tb": 10, "lch": [], "bch": [], "hc": [] },
+      { "name": "Mklinker.Commands.ListCommand", "rp": "Mklinker_ListCommand.htm", "cl": 23, "ucl": 9, "cal": 32, "tl": 59, "ct": "LineCoverage", "mc": "-", "cb": 10, "tb": 12, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.RemoveLinkCommand", "rp": "Mklinker_RemoveLinkCommand.htm", "cl": 15, "ucl": 1, "cal": 16, "tl": 36, "ct": "LineCoverage", "mc": "-", "cb": 2, "tb": 2, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.RemoveVariableCommand", "rp": "Mklinker_RemoveVariableCommand.htm", "cl": 15, "ucl": 1, "cal": 16, "tl": 39, "ct": "LineCoverage", "mc": "-", "cb": 2, "tb": 2, "lch": [], "bch": [], "hc": [] },
-      { "name": "Mklinker.Commands.ValidateCommand", "rp": "Mklinker_ValidateCommand.htm", "cl": 31, "ucl": 1, "cal": 32, "tl": 61, "ct": "LineCoverage", "mc": "-", "cb": 23, "tb": 26, "lch": [], "bch": [], "hc": [] },
+      { "name": "Mklinker.Commands.ValidateCommand", "rp": "Mklinker_ValidateCommand.htm", "cl": 46, "ucl": 5, "cal": 51, "tl": 89, "ct": "LineCoverage", "mc": "-", "cb": 37, "tb": 46, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Config", "rp": "Mklinker_Config.htm", "cl": 9, "ucl": 0, "cal": 9, "tl": 32, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.ConfigHandler", "rp": "Mklinker_ConfigHandler.htm", "cl": 16, "ucl": 0, "cal": 16, "tl": 34, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
-      { "name": "Mklinker.ConfigLink", "rp": "Mklinker_ConfigLink.htm", "cl": 8, "ucl": 1, "cal": 9, "tl": 38, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
+      { "name": "Mklinker.ConfigLink", "rp": "Mklinker_ConfigLink.htm", "cl": 10, "ucl": 1, "cal": 11, "tl": 40, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Console", "rp": "Mklinker_Console.htm", "cl": 12, "ucl": 1, "cal": 13, "tl": 31, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.GlobalOptions", "rp": "Mklinker_GlobalOptions.htm", "cl": 4, "ucl": 1, "cal": 5, "tl": 18, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.PathResolver", "rp": "Mklinker_PathResolver.htm", "cl": 15, "ucl": 0, "cal": 15, "tl": 41, "ct": "LineCoverage", "mc": "-", "cb": 4, "tb": 4, "lch": [], "bch": [], "hc": [] },
@@ -253,9 +253,17 @@ var assemblies = [
 var historicCoverageExecutionTimes = [];
 
 var riskHotspotMetrics = [
+      { "name": "Cyclomatic complexity", "explanationUrl": "https://en.wikipedia.org/wiki/Cyclomatic_complexity" },
+      { "name": "NPath complexity", "explanationUrl": "https://modess.io/npath-complexity-cyclomatic-complexity-explained" },
 ];
 
 var riskHotspots = [
+  {
+    "assembly": "Mklinker", "class": "Mklinker.Commands.ValidateCommand", "reportPath": "Mklinker_ValidateCommand.htm", "methodName": "System.Void Mklinker.Commands.ValidateCommand::Execute(Mklinker.Abstractions.IConsole,Mklinker.Abstractions.IConfigHandler,System.IO.Abstractions.IFileSystem,Mklinker.Abstractions.IPathResolver)", "methodShortName": "Execute(...)", "fileIndex": 0, "line": 22,
+    "metrics": [
+      { "value": 34, "exceeded": true },
+      { "value": 0, "exceeded": false },
+    ]},
 ];
 
 var branchCoverageAvailable = true;
