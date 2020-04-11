@@ -17,6 +17,9 @@ namespace Mklinker.Commands {
 		[Value(2, Default = ConfigLink.LinkType.Default, HelpText = "The type of link you want to create. Default is Symbolic for files and Junction for directories")]
 		public ConfigLink.LinkType linkType { get; private set; }
 
+		[Option('f', "force", Default = false, HelpText = "If this flag is set it will ignore validation checks and add it no matter what", Required = false)]
+		public bool force { get; private set; }
+
 		public AddLinkCommand() : base() {}
 
 		public AddLinkCommand(string sourcePath, string targetPath, ConfigLink.LinkType linkType, string path) : base(path) {
@@ -30,12 +33,12 @@ namespace Mklinker.Commands {
 			string formattedSourcePath = pathResolver.GetAbsoluteResolvedPath(sourcePath, config.Variables);
 			string formattedTargetPath = pathResolver.GetAbsoluteResolvedPath(targetPath, config.Variables);
 
-			if (!fileSystem.File.Exists(formattedSourcePath) && !fileSystem.Directory.Exists(formattedSourcePath)) {
+			if (!force && !fileSystem.File.Exists(formattedSourcePath) && !fileSystem.Directory.Exists(formattedSourcePath)) {
 				console.WriteLine("\nThe sourcePath '{0}' is invalid because it does not exist", sourcePath);
 				return;
 			}
 
-			if (config.LinkList.Any(link => pathResolver.GetAbsoluteResolvedPath(link.targetPath, config.Variables).Equals(formattedTargetPath))) {
+			if (!force && config.LinkList.Any(link => pathResolver.GetAbsoluteResolvedPath(link.targetPath, config.Variables).Equals(formattedTargetPath))) {
 				console.WriteLine("\nThe targetPath '{0}' is invalid because it already exists in config file", targetPath);
 				return;
 			}
