@@ -9,9 +9,6 @@
 	<a href="https://ci.appveyor.com/project/rubenchristoffer/Mklinker/build/tests">
 		<img src="https://img.shields.io/appveyor/tests/rubenchristoffer/Mklinker.svg" alt="AppVeyor Tests">
 	</a>
-	<a href="https://coveralls.io/github/rubenchristoffer/Mklinker?branch=master">
-		<img src="https://img.shields.io/coveralls/github/rubenchristoffer/Mklinker.svg?style=flat" alt="Coverage Status" />
-	</a>
 	<a href="https://rubenchristoffer.github.io/Mklinker/CoverageReport/">
 		<img src="https://img.shields.io/badge/coverage_report-generated-green.svg?style=flat" alt="Coverage Report" />
 	</a>
