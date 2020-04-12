@@ -22,10 +22,10 @@ namespace Mklinker.Commands {
 
 		internal void Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, IPathResolver pathResolver) {
 			if (!configHandler.DoesConfigExist(path)) {
-				console.WriteLine($"Config '{ path }' could not be found");
+				console.WriteLine($"Config '{ path }' does not exist. Type 'help config' in order to see how you create a config file.");
 				return;
 			}
-			
+
 			IConfig config = configHandler.LoadConfig(path);
 
 			if (!displayVariables) {

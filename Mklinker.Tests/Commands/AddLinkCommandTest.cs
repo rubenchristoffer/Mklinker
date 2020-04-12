@@ -32,6 +32,7 @@ namespace Mklinker.Tests.Commands {
 
 			testConsole = new TestConsole();
 			testConfigHandler = new Mock<IConfigHandler>();
+			testConfigHandler.Setup(m => m.DoesConfigExist(It.IsAny<string>())).Returns(true);
 			testLinks = new List<ConfigLink>();
 
 			testLinkElements = new ConfigLink[] {

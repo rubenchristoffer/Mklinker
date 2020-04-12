@@ -14,6 +14,11 @@ namespace Mklinker.Commands {
 		public LinkAllCommand (string path) : base (path) {}
 
 		internal void Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, ILinker linker, IPathResolver pathResolver) {
+			if (!configHandler.DoesConfigExist(path)) {
+				console.WriteLine($"Config '{ path }' does not exist. Type 'help config' in order to see how you create a config file.");
+				return;
+			}
+
 			IConfig config = configHandler.LoadConfig(path);
 
 			console.WriteLine("\nCreating links based on config...");

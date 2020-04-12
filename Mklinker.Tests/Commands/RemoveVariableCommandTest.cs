@@ -35,6 +35,7 @@ namespace Mklinker.Tests {
 			testConfig.Setup(m => m.Variables).Returns(testVariables);
 
 			testConfigHandler = new Mock<IConfigHandler>();
+			testConfigHandler.Setup(m => m.DoesConfigExist("config")).Returns(true);
 			testConfigHandler.Setup(m => m.LoadConfig("config")).Returns(testConfig.Object);
 		}
 

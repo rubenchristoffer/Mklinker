@@ -21,6 +21,11 @@ namespace Mklinker.Commands {
 		}
 
 		public void Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem) {
+			if (!configHandler.DoesConfigExist(path)) {
+				console.WriteLine($"Config '{ path }' does not exist. Type 'help config' in order to see how you create a config file.");
+				return;
+			}
+
 			IConfig config = configHandler.LoadConfig(path);
 			Variable existingVariable = config.Variables.FirstOrDefault(variable => variable.name.Equals(name, StringComparison.OrdinalIgnoreCase));
 

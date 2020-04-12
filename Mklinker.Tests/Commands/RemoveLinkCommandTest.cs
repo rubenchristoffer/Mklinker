@@ -25,6 +25,7 @@ namespace Mklinker.Tests.Commands {
 			testConsole = new TestConsole();
 
 			testConfigHandler = new Mock<IConfigHandler>();
+			testConfigHandler.Setup(m => m.DoesConfigExist(It.IsAny<string>())).Returns(true);
 
 			testFileSystem = new MockFileSystem(new Dictionary<string, MockFileData> {
 				{ @"c:\config.linker", new MockFileData("<?xml version=\"1.0\" encoding=\"utf-16\"?><Config xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" Version=\"v1.1.1\"></Config>") },
