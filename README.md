@@ -20,12 +20,20 @@
 	</a>
 </p>
 
-Mklinker is a console utility that let's you create multiple symbolic / junction / hard links at once based on a single config file. Just copy the Mklinker.exe binary and run "mklinker" in a console window in order to create the config file 'linker.config' and use the commands below to setup links.
+Mklinker is a cross-platform console utility that let's you create multiple symbolic / junction / hard links at once based on a single config file. Just copy the Mklinker binary from <a href="../../releases/">releases</a> and run "mklinker" in a console window in order to create the config file 'linker.config' and use the commands below to setup links.
 
 ## Why use Mklinker?
 - With Mklinker you can keep the config file around and if you for example re-install your operating system you can just use Mklinker and restore all the various links you had before.
-- With Mklinker you can send someone the config file and they can easily create all the links. 
+- With Mklinker you can send someone the config file and they can easily create all the links.  
 
 ## Features
-- Mklinker supports symbolic, junction and hard links on Windows platform (linux / mac support is planned)
-- Supports relative paths in config file, but will turn them into absolute paths when running mklink commands.
+- Supports symbolic, junction and hard links on Windows platform  
+- Supports symbolic and hard links on Linux and Mac platforms  
+- Supports relative paths in config file, but will turn them into absolute paths when running linking commands.  
+- Supports variables for paths (e.g. "C:\Users\\?User?\Desktop" which means that you can create more dynamic configs. Nested variables (variables inside variables) are also supported.  
+- Supports custom config file name (if you don't like 'linker.config')
+- Supports config validation where you can check for errors and warnings
+- Supports interactive mode where you can run multiple commands without 'Mklinker' in front
+
+## How do I use Mklinker?
+Run `Mklinker help` to see all verbs / commands. You can also run `Mklinker help [VERB]` in order to get more information about that given verb / command.
