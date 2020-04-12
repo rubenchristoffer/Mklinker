@@ -25,12 +25,13 @@ Mklinker is a cross-platform console utility that let's you create multiple symb
 ## Why use Mklinker?
 - With Mklinker you can keep the config file around and if you for example re-install your operating system you can just use Mklinker and restore all the various links you had before.
 - With Mklinker you can send someone the config file and they can easily create all the links.  
+- Mklinker is cross-platform  
 
 ## Features
 - Supports symbolic, junction and hard links on Windows platform  
 - Supports symbolic and hard links on Linux and Mac platforms  
 - Supports relative paths in config file, but will turn them into absolute paths when running linking commands.  
-- Supports variables for paths (e.g. "C:\Users\\?User?\Desktop" which means that you can create more dynamic configs. Nested variables (variables inside variables) are also supported.  
+- Supports variables for paths (e.g. "C:\Users\\?User?\Desktop") which means that you can create more dynamic configs. Nested variables (variables inside variables) are also supported.  
 - Supports custom config file name (if you don't like 'linker.config')
 - Supports config validation where you can check for errors and warnings
 - Supports interactive mode where you can run multiple commands without 'Mklinker' in front
