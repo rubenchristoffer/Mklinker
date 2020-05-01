@@ -13,27 +13,30 @@ namespace Mklinker.Commands {
 		public LinkAllCommand() : base () {}
 		public LinkAllCommand (string path) : base (path) {}
 
-		internal void Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, ILinker linker, IPathResolver pathResolver) {
-			if (!configHandler.DoesConfigExist(path)) {
-				console.WriteLine($"Config '{ path }' does not exist. Type 'help config' in order to see how you create a config file.");
+		internal void Execute (IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, ILinker linker, IPathResolver pathResolver) {
+			if (!configHandler.DoesConfigExist (path)) {
+				console.WriteLine ($"Config '{ path }' does not exist. Type 'help config' in order to see how you create a config file.");
 				return;
 			}
 
-			IConfig config = configHandler.LoadConfig(path);
+			IConfig config = configHandler.LoadConfig (path);
 
-			console.WriteLine("\nCreating links based on config...");
+			console.WriteLine ("\nCreating links based on config...");
 
 			int successes = 0;
 
 			foreach (ConfigLink configLink in config.LinkList) {
-				string resolvedSourcePath = pathResolver.GetAbsoluteResolvedPath(configLink.sourcePath, config.Variables);
-				string resolvedTargetPath = pathResolver.GetAbsoluteResolvedPath(configLink.targetPath, config.Variables);
+				string resolvedSourcePath = pathResolver.GetAbsoluteResolvedPath (configLink.sourcePath, config.Variables);
+				string resolvedTargetPath = pathResolver.GetAbsoluteResolvedPath (configLink.targetPath, config.Variables);
 
-				if (linker.CreateLink(resolvedSourcePath, resolvedTargetPath, configLink.linkType))
+				// Create sub-dirs if they do not exist
+				fileSystem.Directory.CreateDirectory (resolvedTargetPath);
+
+				if (linker.CreateLink (resolvedSourcePath, resolvedTargetPath, configLink.linkType))
 					successes++;
 			}
 
-			console.WriteLine("\n### Finished! Created {0} / {1} links ###", successes, config.LinkList.Count);
+			console.WriteLine ("\n### Finished! Created {0} / {1} links ###", successes, config.LinkList.Count);
 		}
 
 	}
