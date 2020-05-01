@@ -3,13 +3,16 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+	<PackAsTool>true</PackAsTool>
+    <ToolCommandName>mklinker</ToolCommandName>
+    <PackageOutputPath>./nupkg</PackageOutputPath>
+	  
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	<SignAssembly>false</SignAssembly>
 	<StartupObject>Mklinker.Program</StartupObject>
-	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	<PackageLicenseExpression></PackageLicenseExpression>
-	<PackageProjectUrl>https://github.com/rubenchristoffer/Mklinker/blob/master/LICENSE</PackageProjectUrl>
 	<RepositoryUrl>https://github.com/rubenchristoffer/Mklinker</RepositoryUrl>
+	<PackageLicenseFile>LICENSE</PackageLicenseFile>
+	<PackageProjectUrl>https://github.com/rubenchristoffer/Mklinker</PackageProjectUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -21,6 +24,13 @@
     <PackageReference Include="Autofac" Version="5.1.2" />
     <PackageReference Include="CommandLineParser" Version="2.7.82" />
     <PackageReference Include="System.IO.Abstractions" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
