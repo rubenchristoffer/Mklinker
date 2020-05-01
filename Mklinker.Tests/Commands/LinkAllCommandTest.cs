@@ -60,8 +60,8 @@ namespace Mklinker.Tests.Commands {
 		[Test]
 		public void Execute_WithMissingSubdirectories_WillCreateLinkForAll () {
 			// Arrange
-			testLinks.Add (new ConfigLink (@"c:\config.linker", @"c:\subdir1\subdir2\targetfile.linker", ConfigLink.LinkType.Default));
-			testLinks.Add (new ConfigLink (@"c:\invalidconfig.linker", @"./sub dir/somerandomlink.linker", ConfigLink.LinkType.Default));
+			testLinks.Add (new ConfigLink (@"c:\config.linker", @"./sub dir/targetfile.linker", ConfigLink.LinkType.Default));
+			testLinks.Add (new ConfigLink (@"c:\invalidconfig.linker", @"./subdir1/subdir2/somerandomlink.linker", ConfigLink.LinkType.Default));
 
 			testLinks.ForEach (link => testLinker.Setup (m => m.CreateLink (link.sourcePath, link.targetPath, link.linkType)).Returns (true));
 			testConfigHandler.Setup (m => m.LoadConfig ("testpath")).Returns (testConfig.Object);
@@ -72,8 +72,8 @@ namespace Mklinker.Tests.Commands {
 			command.Execute (testConsole, testConfigHandler.Object, testFileSystem, testLinker.Object, testPathResolver);
 
 			// Assert
-			Assert.IsTrue (testFileSystem.Directory.Exists(@"c:\subdir1\subdir2\"));
-			Assert.IsTrue (testFileSystem.Directory.Exists (@"c:\sub dir\"));
+			Assert.IsTrue (testFileSystem.Directory.Exists (@"./sub dir/"));
+			Assert.IsTrue (testFileSystem.Directory.Exists(@"subdir1/subdir2/"));
 
 			testLinks.ForEach (link => testLinker.Verify (m => m.CreateLink (link.sourcePath, link.targetPath, link.linkType)));
 		}
