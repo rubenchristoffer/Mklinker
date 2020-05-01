@@ -29,7 +29,7 @@ namespace Mklinker {
 		void ICommandExecutor.Execute(params string[] args) {
 			// Parse commands
 			var parser = new Parser(with => with.HelpWriter = console.Writer);
-			var parserResult = parser.ParseArguments<AddLinkCommand, AddVariableCommand, RemoveLinkCommand, RemoveVariableCommand, LinkAllCommand, ListCommand, ConfigCommand, ValidateCommand, InteractiveCommand>(args);
+			var parserResult = parser.ParseArguments<AddLinkCommand, AddLinksCommand, AddVariableCommand, RemoveLinkCommand, RemoveVariableCommand, LinkAllCommand, ListCommand, ConfigCommand, ValidateCommand, InteractiveCommand>(args);
 
 			parserResult
 				.WithParsed<IDefaultCommandHandler>(flag => flag.Execute(console, configHandler, fileSystem))
@@ -38,7 +38,8 @@ namespace Mklinker {
 				.WithParsed<LinkAllCommand>(cmd => cmd.Execute (console, configHandler, fileSystem, linker, pathFormatter))
 				.WithParsed<AddLinkCommand>(cmd => cmd.Execute (console, configHandler, fileSystem, pathFormatter))
 				.WithParsed<ValidateCommand>(cmd => cmd.Execute(console, configHandler, fileSystem, pathFormatter))
-				.WithParsed<ListCommand>(cmd => cmd.Execute (console, configHandler, fileSystem, pathFormatter));
+				.WithParsed<ListCommand>(cmd => cmd.Execute (console, configHandler, fileSystem, pathFormatter))
+				.WithParsed<AddLinksCommand>(cmd => cmd.Execute(console, configHandler, fileSystem, pathFormatter));
 		}
 
 	}
