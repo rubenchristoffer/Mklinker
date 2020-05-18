@@ -21,7 +21,7 @@ namespace Mklinker.Commands {
 			this.delete = delete;
 		}
 
-		internal void Execute(IConsole console, IConfigHandler configHandler, IConfig defaultConfig) {
+		internal void Execute(IConsole console, IConfigHandler configHandler, IConfig defaultConfig, IPathResolver pathResolver) {
 			if (create) {
 				if (configHandler.DoesConfigExist(path)) {
 					console.WriteLine("Config already exists!", IConsole.ContentType.Negative);
@@ -43,8 +43,9 @@ namespace Mklinker.Commands {
 
 					console.WriteLine();
 					console.WriteLine("### Metadata info ###", IConsole.ContentType.Header);
-					console.WriteLine("Full path: {0}", path);
-					console.WriteLine("Version: {0}", config.Version);
+					console.WriteLine($"Path: {path}");
+					console.WriteLine($"Full path: {pathResolver.GetAbsoluteResolvedPath(path, config.Variables)}");
+					console.WriteLine($"Version: {config.Version}");
 					console.WriteLine();
 
 					console.WriteLine("### Variable info ###", IConsole.ContentType.Header);
