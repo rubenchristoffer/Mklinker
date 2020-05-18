@@ -50,6 +50,19 @@ namespace Mklinker.Tests.Commands {
 			testConfigHandler.Setup (m => m.LoadConfig (It.IsAny<string> ())).Returns (testConfig.Object);
 		}
 
+		[Test]
+		public void Execute_WithNoConfig_ShouldPrintError () {
+			// Arrange
+			AddLinksCommand command = new AddLinksCommand ("c:/", ".", ConfigLink.LinkType.Default, @"[\s\S]*", @"[\s\S]*", false, false, null);
+			testConfigHandler.Setup (m => m.DoesConfigExist (It.IsAny<string> ())).Returns (false);
+
+			// Act
+			command.Execute (testConsole, testConfigHandler.Object, testFileSystem, testPathFormatter);
+
+			// Assert
+			Assert.IsTrue (testConsole.GetHistory().Contains("does not exist", StringComparison.OrdinalIgnoreCase));
+		}
+
 		[TestCase ("testfile1.txt", true)]
 		[TestCase ("testfile2.txt", true)]
 		[TestCase ("testfile3.txt", true)]
