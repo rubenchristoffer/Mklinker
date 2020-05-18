@@ -29,14 +29,18 @@ namespace Mklinker.Commands {
 				string resolvedSourcePath = pathResolver.GetAbsoluteResolvedPath (configLink.sourcePath, config.Variables);
 				string resolvedTargetPath = pathResolver.GetAbsoluteResolvedPath (configLink.targetPath, config.Variables);
 
-				// Create sub-dirs if they do not exist
-				fileSystem.Directory.CreateDirectory (resolvedTargetPath);
+				CreateSubDirectories (fileSystem, resolvedTargetPath);
 
 				if (linker.CreateLink (resolvedSourcePath, resolvedTargetPath, configLink.linkType))
 					successes++;
 			}
 
 			console.WriteLine ("\n### Finished! Created {0} / {1} links ###", successes, config.LinkList.Count);
+		}
+
+		internal void CreateSubDirectories (IFileSystem fileSystem, string resolvedTargetPath) {
+			// Create sub-dirs if they do not exist
+			fileSystem.Directory.CreateDirectory (fileSystem.Path.GetDirectoryName (resolvedTargetPath));
 		}
 
 	}
