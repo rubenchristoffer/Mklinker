@@ -18,6 +18,7 @@ namespace Mklinker.Tests.Commands {
 		List<ConfigLink> testLinks;
 		ConfigLink[] testLinkElements;
 		List<Variable> testVariables;
+		TestPathResolver testPathResolver;
 
 		[SetUp]
 		public void Setup () {
@@ -43,6 +44,8 @@ namespace Mklinker.Tests.Commands {
 			testConfig = new Mock<IConfig>();
 			testConfig.Setup(m => m.LinkList).Returns(testLinks);
 			testConfig.Setup(m => m.Variables).Returns(testVariables);
+			
+			testPathResolver = new TestPathResolver ();
 		}
 
 		[Test]
@@ -57,7 +60,7 @@ namespace Mklinker.Tests.Commands {
 			testConfigHandler.Setup(m => m.DoesConfigExist(testPath)).Returns(true);
 
 			// Act
-			command.Execute(testConsole, testConfigHandler.Object, testConfig.Object);
+			command.Execute(testConsole, testConfigHandler.Object, testConfig.Object, testPathResolver);
 
 			// Assert
 			Assert.IsTrue(testConsole.GetHistory().Contains("Total links: " + testLinks.Count));
@@ -76,7 +79,7 @@ namespace Mklinker.Tests.Commands {
 			testConfigHandler.Setup(m => m.DoesConfigExist(testPath)).Returns(true);
 
 			// Act
-			command.Execute(testConsole, testConfigHandler.Object, testConfig.Object);
+			command.Execute(testConsole, testConfigHandler.Object, testConfig.Object, testPathResolver);
 
 			// Assert
 			Assert.IsTrue(testConsole.GetHistory().Contains("Total variables: " + testVariables.Count));
@@ -90,7 +93,7 @@ namespace Mklinker.Tests.Commands {
 			testConfigHandler.Setup(m => m.DoesConfigExist(testPath)).Returns(false);
 
 			// Act
-			command.Execute(testConsole, testConfigHandler.Object, testConfig.Object);
+			command.Execute(testConsole, testConfigHandler.Object, testConfig.Object, testPathResolver);
 
 			// Assert
 			Assert.IsTrue(testConsole.GetHistory().Contains("does not exist"));
@@ -104,7 +107,7 @@ namespace Mklinker.Tests.Commands {
 			testConfigHandler.Setup(m => m.DoesConfigExist(testPath)).Returns(false);
 
 			// Act
-			configCommand.Execute(testConsole, testConfigHandler.Object, testConfig.Object);
+			configCommand.Execute(testConsole, testConfigHandler.Object, testConfig.Object, testPathResolver);
 
 			// Assert
 			testConfigHandler.Verify(m => m.SaveConfig(testConfig.Object, testPath));
@@ -118,7 +121,7 @@ namespace Mklinker.Tests.Commands {
 			testConfigHandler.Setup(m => m.DoesConfigExist(testPath)).Returns(true);
 
 			// Act
-			configCommand.Execute(testConsole, testConfigHandler.Object, testConfig.Object);
+			configCommand.Execute(testConsole, testConfigHandler.Object, testConfig.Object, testPathResolver);
 
 			// Assert
 			Assert.IsTrue(testConsole.GetHistory().Contains("already exists", System.StringComparison.OrdinalIgnoreCase));
@@ -132,7 +135,7 @@ namespace Mklinker.Tests.Commands {
 			testConfigHandler.Setup(m => m.DoesConfigExist(testPath)).Returns(true);
 
 			// Act
-			configCommand.Execute(testConsole, testConfigHandler.Object, testConfig.Object);
+			configCommand.Execute(testConsole, testConfigHandler.Object, testConfig.Object, testPathResolver);
 
 			// Assert
 			testConfigHandler.Verify(m => m.DeleteConfig(testPath));
@@ -146,7 +149,7 @@ namespace Mklinker.Tests.Commands {
 			testConfigHandler.Setup(m => m.DoesConfigExist(testPath)).Returns(false);
 
 			// Act
-			configCommand.Execute(testConsole, testConfigHandler.Object, testConfig.Object);
+			configCommand.Execute(testConsole, testConfigHandler.Object, testConfig.Object, testPathResolver);
 
 			// Assert
 			Assert.IsTrue(testConsole.GetHistory().Contains("does not exist", System.StringComparison.OrdinalIgnoreCase));
