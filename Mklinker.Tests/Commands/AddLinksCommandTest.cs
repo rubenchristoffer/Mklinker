@@ -68,9 +68,9 @@ namespace Mklinker.Tests.Commands {
 
 			// Assert
 			if (shouldExist) {
-				Assert.IsTrue (testLinks.Any (link => link.sourcePath.Equals ("c:/" + fileName) && link.targetPath.Equals ("./" + fileName)));
+				Assert.IsTrue (testLinks.Any (link => link.sourcePath.EndsWith ("c:/" + fileName) && link.targetPath.EndsWith ("./" + fileName)));
 			} else {
-				Assert.IsFalse (testLinks.Any (link => link.sourcePath.Equals ("c:/" + fileName) && link.targetPath.Equals ("./" + fileName)));
+				Assert.IsFalse (testLinks.Any (link => link.sourcePath.EndsWith ("c:/" + fileName) && link.targetPath.EndsWith ("./" + fileName)));
 			}
 		}
 
@@ -97,9 +97,9 @@ namespace Mklinker.Tests.Commands {
 
 			// Assert
 			if (shouldExist) {
-				Assert.IsTrue (testLinks.Any (link => link.sourcePath.Equals ("c:/" + relativePath) && link.targetPath.Equals ("./" + relativePath)));
+				Assert.IsTrue (testLinks.Any (link => link.sourcePath.EndsWith ("c:/" + relativePath) && link.targetPath.EndsWith ("./" + relativePath)));
 			} else {
-				Assert.IsFalse (testLinks.Any (link => link.sourcePath.Equals ("c:/" + relativePath) && link.targetPath.Equals ("./" + relativePath)));
+				Assert.IsFalse (testLinks.Any (link => link.sourcePath.EndsWith ("c:/" + relativePath) && link.targetPath.EndsWith ("./" + relativePath)));
 			}
 		}
 
@@ -115,9 +115,9 @@ namespace Mklinker.Tests.Commands {
 
 			// Assert
 			if(shouldExist) {
-				Assert.IsTrue (testLinks.Any (link => link.sourcePath.Equals ("c:/" + relativePath) && link.targetPath.Equals ("./" + relativePath)));
+				Assert.IsTrue (testLinks.Any (link => link.sourcePath.EndsWith ("c:/" + relativePath) && link.targetPath.EndsWith ("./" + relativePath)));
 			} else {
-				Assert.IsFalse (testLinks.Any (link => link.sourcePath.Equals ("c:/" + relativePath) && link.targetPath.Equals ("./" + relativePath)));
+				Assert.IsFalse (testLinks.Any (link => link.sourcePath.EndsWith ("c:/" + relativePath) && link.targetPath.EndsWith ("./" + relativePath)));
 			}
 		}
 
