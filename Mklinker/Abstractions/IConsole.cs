@@ -6,8 +6,15 @@ namespace Mklinker.Abstractions {
 
 		TextWriter Writer { get; }
 
-		void Write(string text = "");
-		void WriteLine(string text = "");
+		public enum ContentType {
+			Ordinary,
+			Negative,
+			Positive,
+			Header
+		}
+
+		void Write(string text = "", ContentType contentType = ContentType.Ordinary);
+		void WriteLine(string text = "", ContentType contentType = ContentType.Ordinary);
 		void WriteLine(string formattedText, params object[] args);
 
 		string ReadLine();

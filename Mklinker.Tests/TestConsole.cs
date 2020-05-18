@@ -33,14 +33,14 @@ namespace Mklinker.Tests {
 			return ReadLineText[CurrentReadLineIndex];
 		}
 
-		void IConsole.Write(string text) {
+		void IConsole.Write(string text, IConsole.ContentType contentType) {
 			if (ShouldRecordHistory) {
 				history.Append(text);
 				TestContext.Write(text);
 			}
 		}
 
-		void IConsole.WriteLine(string text) {
+		void IConsole.WriteLine(string text, IConsole.ContentType contentType) {
 			if (ShouldRecordHistory) {
 				history.Append(text + "\n");
 				TestContext.WriteLine(text);
