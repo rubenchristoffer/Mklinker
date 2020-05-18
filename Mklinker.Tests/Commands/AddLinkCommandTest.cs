@@ -23,7 +23,7 @@ namespace Mklinker.Tests.Commands {
 		[SetUp]
 		public void Setup () {
 			testFileSystem = new MockFileSystem(new Dictionary<string, MockFileData> {
-				{ @"c:\config.linker", new MockFileData("<?xml version=\"1.0\" encoding=\"utf-16\"?><Config xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" Version=\"v1.1.1\"></Config>") },
+				{ @"c:/config.linker", new MockFileData("<?xml version=\"1.0\" encoding=\"utf-16\"?><Config xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" Version=\"v1.1.1\"></Config>") },
 				{ @"c:/invalidconfig.linker", new MockFileData("This content is invalid for a linker file!") },
 				{ @"c:/demo/jQuery.js", new MockFileData("some js") },
 				{ @"c:/demo/", new MockDirectoryData () },
@@ -140,7 +140,7 @@ namespace Mklinker.Tests.Commands {
 
 			// Act
 			command.Execute(testConsole, testConfigHandler.Object, testFileSystem, testPathFormatter);
-
+			
 			// Assert
 			Assert.IsTrue(testConfigHandler.Object.LoadConfig(testPath).LinkList.Any(link =>
 			  link.sourcePath.Equals(testSourcePath) && link.targetPath.Equals(testTargetPath) && link.linkType == testLinkType));
