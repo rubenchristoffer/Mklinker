@@ -24,10 +24,10 @@ namespace Mklinker.Tests.Commands {
 		public void Setup () {
 			testFileSystem = new MockFileSystem(new Dictionary<string, MockFileData> {
 				{ @"c:\config.linker", new MockFileData("<?xml version=\"1.0\" encoding=\"utf-16\"?><Config xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" Version=\"v1.1.1\"></Config>") },
-				{ @"c:\invalidconfig.linker", new MockFileData("This content is invalid for a linker file!") },
-				{ @"c:\demo\jQuery.js", new MockFileData("some js") },
-				{ @"c:\demo\", new MockDirectoryData () },
-				{ @"c:\demo\image.gif", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
+				{ @"c:/invalidconfig.linker", new MockFileData("This content is invalid for a linker file!") },
+				{ @"c:/demo/jQuery.js", new MockFileData("some js") },
+				{ @"c:/demo/", new MockDirectoryData () },
+				{ @"c:/demo/image.gif", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) }
 			});
 
 			testConsole = new TestConsole();
@@ -48,9 +48,9 @@ namespace Mklinker.Tests.Commands {
 		[Test]
 		public void Execute_WithOnlyRequiredArguments_WillCreateDefaultFileLink () {
 			// Arrange
-			const string testPath = @"c:\config.linker";
-			const string testSourcePath = @"c:\config.linker";
-			const string testTargetPath = @"c:\demo\image.gif"; // Should be able to add target link that already exists
+			const string testPath = @"c:/config.linker";
+			const string testSourcePath = @"c:/config.linker";
+			const string testTargetPath = @"c:/demo/image.gif"; // Should be able to add target link that already exists
 
 			AddLinkCommand command = new AddLinkCommand(testSourcePath, testTargetPath, ConfigLink.LinkType.Default, testPath);
 
@@ -69,8 +69,8 @@ namespace Mklinker.Tests.Commands {
 		[Test]
 		public void Execute_WithOnlyRequiredArguments_WillCreateDefaultDirectoryLink() {
 			// Arrange
-			const string testPath = @"c:\config.linker";
-			const string testSourcePath = @"c:\demo\";
+			const string testPath = @"c:/config.linker";
+			const string testSourcePath = @"c:/demo/";
 			const string testTargetPath = "testTargetDirectory";
 
 			AddLinkCommand command = new AddLinkCommand(testSourcePath, testTargetPath, ConfigLink.LinkType.Default, testPath);
@@ -90,8 +90,8 @@ namespace Mklinker.Tests.Commands {
 		[Test]
 		public void Execute_WithOnlyRequiredArgumentsRunTwice_ShouldShowDuplicatePathErrorMessage() {
 			// Arrange
-			const string testPath = @"c:\config.linker";
-			const string testSourcePath = @"c:\demo\";
+			const string testPath = @"c:/config.linker";
+			const string testSourcePath = @"c:/demo/";
 			const string testTargetPath = "testTargetDirectory";
 
 			AddLinkCommand command = new AddLinkCommand(testSourcePath, testTargetPath, ConfigLink.LinkType.Default, testPath);
@@ -112,8 +112,8 @@ namespace Mklinker.Tests.Commands {
 		[Test]
 		public void Execute_WithInvalidSourceFolder_ShouldShowInvalidPathErrorMessage() {
 			// Arrange
-			const string testPath = @"c:\config.linker";
-			const string testSourcePath = @"c:\some path that does not exist";
+			const string testPath = @"c:/config.linker";
+			const string testSourcePath = @"c:/some path that does not exist";
 			const string testTargetPath = "testTargetDirectory";
 
 			AddLinkCommand command = new AddLinkCommand(testSourcePath, testTargetPath, ConfigLink.LinkType.Default, testPath);
@@ -130,8 +130,8 @@ namespace Mklinker.Tests.Commands {
 		[Test]
 		public void Execute_WithLinkFlagHard_ShouldCreateHardLink() {
 			// Arrange
-			const string testPath = @"c:\config.linker";
-			const string testSourcePath = @"c:\config.linker";
+			const string testPath = @"c:/config.linker";
+			const string testSourcePath = @"c:/config.linker";
 			const string testTargetPath = "someOtherFile";
 			const ConfigLink.LinkType testLinkType = ConfigLink.LinkType.Hard;
 
@@ -149,8 +149,8 @@ namespace Mklinker.Tests.Commands {
 		[Test]
 		public void Execute_WithLinkFlagSymbolic_ShouldCreateSymbolicLink() {
 			// Arrange
-			const string testPath = @"c:\config.linker";
-			const string testSourcePath = @"c:\config.linker";
+			const string testPath = @"c:/config.linker";
+			const string testSourcePath = @"c:/config.linker";
 			const string testTargetPath = "someOtherFile";
 			const ConfigLink.LinkType testLinkType = ConfigLink.LinkType.Symbolic;
 
@@ -168,9 +168,9 @@ namespace Mklinker.Tests.Commands {
 		[Test]
 		public void Execute_WithLinkFlagJunction_ShouldCreateJunctionLink() {
 			// Arrange
-			const string testPath = @"c:\config.linker";
-			const string testSourcePath = @"c:\demo\";
-			const string testTargetPath = @"c:\folder\anotherfolder\yetanotherfolder";
+			const string testPath = @"c:/config.linker";
+			const string testSourcePath = @"c:/demo/";
+			const string testTargetPath = @"c:/folder/anotherfolder/yetanotherfolder";
 			const ConfigLink.LinkType testLinkType = ConfigLink.LinkType.Junction;
 
 			AddLinkCommand command = new AddLinkCommand(testSourcePath, testTargetPath, testLinkType, testPath);

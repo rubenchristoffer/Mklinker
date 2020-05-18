@@ -35,6 +35,11 @@ namespace Mklinker.Commands {
 			}
 
 			IConfig config = configHandler.LoadConfig(path);
+
+			// Force forward slash
+			sourcePath = sourcePath.Replace ('\\', '/');
+			targetPath = targetPath.Replace ('\\', '/');
+
 			string formattedSourcePath = pathResolver.GetAbsoluteResolvedPath(sourcePath, config.Variables);
 			string formattedTargetPath = pathResolver.GetAbsoluteResolvedPath(targetPath, config.Variables);
 
