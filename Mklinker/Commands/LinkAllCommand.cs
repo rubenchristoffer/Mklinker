@@ -3,7 +3,7 @@ using System.IO.Abstractions;
 using System.Diagnostics;
 using CommandLine;
 using Mklinker.Abstractions;
-using LinkType = Mklinker.ConfigLink.LinkType;
+using System.Text;
 
 namespace Mklinker.Commands {
 
@@ -29,7 +29,7 @@ namespace Mklinker.Commands {
 				string resolvedSourcePath = pathResolver.GetAbsoluteResolvedPath (configLink.sourcePath, config.Variables);
 				string resolvedTargetPath = pathResolver.GetAbsoluteResolvedPath (configLink.targetPath, config.Variables);
 
-				CreateSubDirectories (fileSystem, resolvedTargetPath);
+				CreateSubDirectories (console, fileSystem, pathResolver, config, resolvedTargetPath);
 
 				if (linker.CreateLink (resolvedSourcePath, resolvedTargetPath, configLink.linkType))
 					successes++;
@@ -38,9 +38,13 @@ namespace Mklinker.Commands {
 			console.WriteLine ("\n### Finished! Created {0} / {1} links ###", successes, config.LinkList.Count);
 		}
 
-		internal void CreateSubDirectories (IFileSystem fileSystem, string resolvedTargetPath) {
+		internal void CreateSubDirectories (IConsole console, IFileSystem fileSystem, IPathResolver pathResolver, IConfig config, string resolvedTargetPath) {
 			// Create sub-dirs if they do not exist
-			fileSystem.Directory.CreateDirectory (fileSystem.Path.GetDirectoryName (resolvedTargetPath));
+			string path = fileSystem.Path.GetDirectoryName (resolvedTargetPath);
+
+			if (path.Trim().Length != 0 && !fileSystem.Directory.Exists(path)) {
+				fileSystem.Directory.CreateDirectory (path);
+			}
 		}
 
 	}
