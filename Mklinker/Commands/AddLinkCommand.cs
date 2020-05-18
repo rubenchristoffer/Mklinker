@@ -30,7 +30,7 @@ namespace Mklinker.Commands {
 
 		internal void Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, IPathResolver pathResolver) {
 			if (!configHandler.DoesConfigExist(path)) {
-				console.WriteLine($"Config '{ path }' does not exist. Type 'help config' in order to see how you create a config file.");
+				console.WriteLine($"Config '{ path }' does not exist. Type 'help config' in order to see how you create a config file.", IConsole.ContentType.Negative);
 				return;
 			}
 
@@ -44,12 +44,12 @@ namespace Mklinker.Commands {
 			string formattedTargetPath = pathResolver.GetAbsoluteResolvedPath(targetPath, config.Variables);
 
 			if (!force && !fileSystem.File.Exists(formattedSourcePath) && !fileSystem.Directory.Exists(formattedSourcePath)) {
-				console.WriteLine("\nThe sourcePath '{0}' is invalid because it does not exist", sourcePath);
+				console.WriteLine($"\nThe sourcePath '{sourcePath}' is invalid because it does not exist", IConsole.ContentType.Negative);
 				return;
 			}
 
 			if (!force && config.LinkList.Any(link => pathResolver.GetAbsoluteResolvedPath(link.targetPath, config.Variables).Equals(formattedTargetPath))) {
-				console.WriteLine("\nThe targetPath '{0}' is invalid because it already exists in config file", targetPath);
+				console.WriteLine($"\nThe targetPath '{targetPath}' is invalid because it already exists in config file", IConsole.ContentType.Negative);
 				return;
 			}
 

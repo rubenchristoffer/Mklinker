@@ -47,7 +47,7 @@ namespace Mklinker.Commands {
 
 		internal void Execute (IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, IPathResolver pathResolver) {
 			if (!configHandler.DoesConfigExist(path)) {
-				console.WriteLine($"Config '{ path }' does not exist. Type 'help config' in order to see how you create a config file.");
+				console.WriteLine($"Config '{ path }' does not exist. Type 'help config' in order to see how you create a config file.", IConsole.ContentType.Negative);
 				return;
 			}
 
@@ -75,8 +75,6 @@ namespace Mklinker.Commands {
 		}
 
 		internal void TryCreateLink (IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, IPathResolver pathResolver, IConfig config, string sourcePath, string targetBasePath, bool isFile) {
-			console.WriteLine ($"Debug: { sourcePath }, { targetBasePath }");
-			
 			try {
 				// Check absolute path regex filter first
 				if (Regex.IsMatch (pathResolver.GetAbsoluteResolvedPath(sourcePath, config.Variables), absoluteRegexFilter)) {
@@ -94,7 +92,7 @@ namespace Mklinker.Commands {
 					}
 				}
 			} catch (ArgumentException) {
-				console.WriteLine ("Regex provided is invalid!");
+				console.WriteLine ("Regex provided is invalid!", IConsole.ContentType.Negative);
 			}
 		}
 

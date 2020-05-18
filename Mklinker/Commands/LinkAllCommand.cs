@@ -15,7 +15,7 @@ namespace Mklinker.Commands {
 
 		internal void Execute (IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, ILinker linker, IPathResolver pathResolver) {
 			if (!configHandler.DoesConfigExist (path)) {
-				console.WriteLine ($"Config '{ path }' does not exist. Type 'help config' in order to see how you create a config file.");
+				console.WriteLine ($"Config '{ path }' does not exist. Type 'help config' in order to see how you create a config file.", IConsole.ContentType.Negative);
 				return;
 			}
 

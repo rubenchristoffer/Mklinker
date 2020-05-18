@@ -22,7 +22,7 @@ namespace Mklinker.Commands {
 
 		public void Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem) {
 			if (!configHandler.DoesConfigExist(path)) {
-				console.WriteLine($"Config '{ path }' does not exist. Type 'help config' in order to see how you create a config file.");
+				console.WriteLine($"Config '{ path }' does not exist. Type 'help config' in order to see how you create a config file.", IConsole.ContentType.Negative);
 				return;
 			}
 
@@ -30,7 +30,7 @@ namespace Mklinker.Commands {
 			Variable existingVariable = config.Variables.FirstOrDefault(variable => variable.name.Equals(name, StringComparison.OrdinalIgnoreCase));
 
 			if (existingVariable == null) {
-				console.WriteLine($"A variable with name '{ name }' does not exist");
+				console.WriteLine($"A variable with name '{ name }' does not exist", IConsole.ContentType.Negative);
 			} else {
 				config.Variables.Remove(existingVariable);
 				configHandler.SaveConfig(config, path);

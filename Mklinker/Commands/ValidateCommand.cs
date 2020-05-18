@@ -21,7 +21,7 @@ namespace Mklinker.Commands {
 
         internal void Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, IPathResolver pathResolver) {
             if (!configHandler.DoesConfigExist(path)) {
-                console.WriteLine($"Config '{ path }' does not exist. Type 'help config' in order to see how you create a config file.");
+                console.WriteLine($"Config '{ path }' does not exist. Type 'help config' in order to see how you create a config file.", IConsole.ContentType.Negative);
                 return;
             }
 
@@ -42,14 +42,26 @@ namespace Mklinker.Commands {
                     isValid = false;
                 }
 
-                if (!validation1 || displayAll)
-                    console.WriteLine($"\t# Source path exists: { (validation1 ? "Yes" : "No") }");
+                if (!validation1 || displayAll) {
+                    console.WriteLine ($"\t# Source path exists: { (validation1 ? "Yes" : "No") }", 
+                        validation1 
+                        ? IConsole.ContentType.Positive 
+                        : IConsole.ContentType.Negative);
+                }
 
-                if (!validation2 || displayAll)
-                    console.WriteLine($"\t# Link type acceptable: { (validation2 ? "Yes" : "No") }");
+                if (!validation2 || displayAll) {
+                    console.WriteLine ($"\t# Link type acceptable: { (validation2 ? "Yes" : "No") }",
+                        validation2
+                        ? IConsole.ContentType.Positive
+                        : IConsole.ContentType.Negative);
+                }
 
-                if (!validation3 || displayAll)
-                    console.WriteLine($"\t# Duplicate target path exists: { (validation3 ? "False" : "True") }");
+                if (!validation3 || displayAll) {
+                    console.WriteLine ($"\t# Duplicate target path exists: { (validation3 ? "False" : "True") }",
+                        validation3
+                        ? IConsole.ContentType.Positive
+                        : IConsole.ContentType.Negative);
+                }
             }
 
             if (config.LinkList.Count == 0)

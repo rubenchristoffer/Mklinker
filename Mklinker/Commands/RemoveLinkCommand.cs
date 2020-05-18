@@ -20,7 +20,7 @@ namespace Mklinker.Commands {
 
 		internal void Execute(IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, IPathResolver pathResolver) {
 			if (!configHandler.DoesConfigExist(path)) {
-				console.WriteLine($"Config '{ path }' does not exist. Type 'help config' in order to see how you create a config file.");
+				console.WriteLine($"Config '{ path }' does not exist. Type 'help config' in order to see how you create a config file.", IConsole.ContentType.Negative);
 				return;
 			}
 
@@ -33,7 +33,7 @@ namespace Mklinker.Commands {
 
 				configHandler.SaveConfig(config, path);
 			} else {
-				console.WriteLine(String.Format("\nThe targetPath '{0}' is invalid because it does not exist in config", targetPath));
+				console.WriteLine($"\nThe targetPath '{targetPath}' is invalid because it does not exist in config", IConsole.ContentType.Negative);
 			}
 		}
 

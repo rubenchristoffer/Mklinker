@@ -24,7 +24,7 @@ namespace Mklinker.Commands {
 		internal void Execute(IConsole console, IConfigHandler configHandler, IConfig defaultConfig) {
 			if (create) {
 				if (configHandler.DoesConfigExist(path)) {
-					console.WriteLine("Config already exists!");
+					console.WriteLine("Config already exists!", IConsole.ContentType.Negative);
 				} else {
 					console.WriteLine("Creating config '{0}'", path);
 
@@ -35,29 +35,29 @@ namespace Mklinker.Commands {
 					console.WriteLine("Deleting config '{0}'", path);
 					configHandler.DeleteConfig(path);
 				} else {
-					console.WriteLine("Config '{0}' does not exist!", path);
+					console.WriteLine($"Config '{path}' does not exist!", IConsole.ContentType.Negative);
 				}
 			} else {
 				if (configHandler.DoesConfigExist(path)) {
 					IConfig config = configHandler.LoadConfig(path);
 
 					console.WriteLine();
-					console.WriteLine("### Metadata info ###");
+					console.WriteLine("### Metadata info ###", IConsole.ContentType.Header);
 					console.WriteLine("Full path: {0}", path);
 					console.WriteLine("Version: {0}", config.Version);
 					console.WriteLine();
 
-					console.WriteLine("### Variable info ###");
+					console.WriteLine("### Variable info ###", IConsole.ContentType.Header);
 					console.WriteLine("Total variables: " + config.Variables.Count);
 					console.WriteLine();
 
-					console.WriteLine("### Link info ###");
+					console.WriteLine("### Link info ###", IConsole.ContentType.Header);
 					console.WriteLine("Total links: " + config.LinkList.Count);
 					console.WriteLine("Junction links: " + config.LinkList.Count(l => l.linkType == ConfigLink.LinkType.Junction));
 					console.WriteLine("Symbolic links: " + config.LinkList.Count(l => l.linkType == ConfigLink.LinkType.Symbolic));
 					console.WriteLine("Hard links: " + config.LinkList.Count(l => l.linkType == ConfigLink.LinkType.Hard));
 				} else {
-					console.WriteLine("Config does not exist. You can create one with the --create option.");
+					console.WriteLine("Config does not exist. You can create one with the --create option.", IConsole.ContentType.Negative);
 				}
 			}
 		}
