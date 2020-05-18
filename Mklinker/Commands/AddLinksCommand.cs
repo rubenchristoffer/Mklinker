@@ -18,8 +18,11 @@ namespace Mklinker.Commands {
 		[Value (2, Default = ConfigLink.LinkType.Default, HelpText = "The type of link you want to create. Default is Symbolic for files and Junction for directories")]
 		public ConfigLink.LinkType linkType { get; private set; }
 
-		[Option('r', "regex", Default = @"[\s\S]*", HelpText = "Regex filter deciding which files / directories to add links for in source folder. Default will match everything", Required = false)]
+		[Option('r', "regex", Default = @"[\s\S]*", HelpText = "Regex filter deciding which files / directories to add links for in source folder. It matches based on file / directory name only. Default will match everything", Required = false)]
 		public string regexFilter { get; private set; }
+
+		[Option ('a', "absoluteregex", Default = @"[\s\S]*", HelpText = "Additional Regex filter deciding which files / directories to add links for in source folder. It matches based on absolute (full) path. Default will match everything. Both regex filters have to be matched in order for file / directory to be added", Required = false)]
+		public string absoluteRegexFilter { get; private set; }
 
 		[Option('s', "subdirs", Default = false, HelpText = "Determines if files / directories from subdirectories are included as well", Required = false)]
 		public bool includeSubdirectories { get; private set; }
@@ -44,14 +47,18 @@ namespace Mklinker.Commands {
 			IConfig config = configHandler.LoadConfig(path);
 			
 			foreach (string file in fileSystem.Directory.GetFiles(pathResolver.GetAbsoluteResolvedPath(sourceDirectoryPath, config.Variables))) {
-				if (Regex.IsMatch(file, regexFilter)) {
-					AddLinkCommand addLinkCommand = new AddLinkCommand(
-						fileSystem.Path.Combine(sourceDirectoryPath, file),
-						fileSystem.Path.Combine(targetDirectoryPath, file), 
-						linkType, 
+				if (Regex.IsMatch(file, absoluteRegexFilter)) {
+					string fileName = fileSystem.Path.GetFileName (file);
+
+					if (Regex.IsMatch(fileName, regexFilter)) {
+						AddLinkCommand addLinkCommand = new AddLinkCommand (
+						fileSystem.Path.Combine (sourceDirectoryPath, fileName),
+						fileSystem.Path.Combine (targetDirectoryPath, fileName),
+						linkType,
 						path);
 
-					addLinkCommand.Execute(console, configHandler, fileSystem, pathResolver);
+						addLinkCommand.Execute (console, configHandler, fileSystem, pathResolver);
+					}
 				}
 			}
 		}
