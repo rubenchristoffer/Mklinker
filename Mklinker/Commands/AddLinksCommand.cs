@@ -35,10 +35,14 @@ namespace Mklinker.Commands {
 
 		public AddLinksCommand () : base () { }
 
-		public AddLinksCommand (string sourcePath, string targetPath, ConfigLink.LinkType linkType, string path) : base (path) {
-			this.targetDirectoryPath = targetPath;
-			this.sourceDirectoryPath = sourcePath;
+		public AddLinksCommand (string sourceDirectoryPath, string targetDirectoryPath, ConfigLink.LinkType linkType, string regexFilter, string absoluteRegexFilter, bool includeSubdirectories, bool linkDirectories, string path) : base (path) {
+			this.sourceDirectoryPath = sourceDirectoryPath;
+			this.targetDirectoryPath = targetDirectoryPath;
 			this.linkType = linkType;
+			this.regexFilter = regexFilter;
+			this.absoluteRegexFilter = absoluteRegexFilter;
+			this.includeSubdirectories = includeSubdirectories;
+			this.linkDirectories = linkDirectories;
 		}
 
 		internal void Execute (IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, IPathResolver pathResolver) {
