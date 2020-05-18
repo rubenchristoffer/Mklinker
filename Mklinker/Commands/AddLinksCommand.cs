@@ -3,6 +3,9 @@ using CommandLine;
 using System.IO.Abstractions;
 using Mklinker.Abstractions;
 using System.Text.RegularExpressions;
+using System.IO;
+using System.Runtime.CompilerServices;
+using System;
 
 namespace Mklinker.Commands {
 
@@ -21,13 +24,13 @@ namespace Mklinker.Commands {
 		[Option('r', "regex", Default = @"[\s\S]*", HelpText = "Regex filter deciding which files / directories to add links for in source folder. It matches based on file / directory name only. Default will match everything", Required = false)]
 		public string regexFilter { get; private set; }
 
-		[Option ('a', "absoluteregex", Default = @"[\s\S]*", HelpText = "Additional Regex filter deciding which files / directories to add links for in source folder. It matches based on absolute (full) path. Default will match everything. Both regex filters have to be matched in order for file / directory to be added", Required = false)]
+		[Option ('a', "absolute-regex", Default = @"[\s\S]*", HelpText = "Additional Regex filter deciding which files / directories to add links for in source folder. It matches based on absolute (full) path. Default will match everything. Both regex filters have to be matched in order for file / directory to be added", Required = false)]
 		public string absoluteRegexFilter { get; private set; }
 
-		[Option('s', "subdirs", Default = false, HelpText = "Determines if files / directories from subdirectories are included as well", Required = false)]
+		[Option('s', "subdirs", Default = false, HelpText = "Determines if files (not directories) from subdirectories are included as well (recursive)", Required = false)]
 		public bool includeSubdirectories { get; private set; }
 
-		[Option('d', "dirs", Default = false, HelpText = "Determines if directory links should be created instead of file links", Required = false)]
+		[Option('d', "dirs", Default = false, HelpText = "Determines if directory links should be created instead of file links. ", Required = false)]
 		public bool linkDirectories { get; private set; }
 
 		public AddLinksCommand () : base () { }
@@ -45,21 +48,49 @@ namespace Mklinker.Commands {
 			}
 
 			IConfig config = configHandler.LoadConfig(path);
-			
-			foreach (string file in fileSystem.Directory.GetFiles(pathResolver.GetAbsoluteResolvedPath(sourceDirectoryPath, config.Variables))) {
-				if (Regex.IsMatch(file, absoluteRegexFilter)) {
-					string fileName = fileSystem.Path.GetFileName (file);
+			CreateLinks (console, configHandler, fileSystem, pathResolver, config, sourceDirectoryPath, targetDirectoryPath);
+		}
 
-					if (Regex.IsMatch(fileName, regexFilter)) {
+		internal void CreateLinks (IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, IPathResolver pathResolver, IConfig config, string sourceDirectory, string targetDirectory) {
+			if (!linkDirectories) {
+				foreach (string file in fileSystem.Directory.GetFiles (pathResolver.GetAbsoluteResolvedPath (sourceDirectory, config.Variables))) {
+					TryCreateLink (console, configHandler, fileSystem, pathResolver, config, file, targetDirectory, true);
+				}
+
+				// Recursive - Will create links for all files in sub-dirs as well
+				if (includeSubdirectories) {
+					foreach (string directory in fileSystem.Directory.GetDirectories (pathResolver.GetAbsoluteResolvedPath (sourceDirectory, config.Variables))) {
+						CreateLinks (console, configHandler, fileSystem, pathResolver, config, directory, fileSystem.Path.Combine (targetDirectory, fileSystem.Path.GetFileName (directory)));
+					}
+				}
+			} else {
+				foreach (string directory in fileSystem.Directory.GetDirectories (pathResolver.GetAbsoluteResolvedPath (sourceDirectory, config.Variables))) {
+					TryCreateLink (console, configHandler, fileSystem, pathResolver, config, directory, targetDirectory, false);
+				}
+			}
+		}
+
+		internal void TryCreateLink (IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, IPathResolver pathResolver, IConfig config, string sourcePath, string targetBasePath, bool isFile) {
+			console.WriteLine ($"Debug: { sourcePath }, { targetBasePath }");
+			
+			try {
+				// Check absolute path regex filter first
+				if (Regex.IsMatch (pathResolver.GetAbsoluteResolvedPath(sourcePath, config.Variables), absoluteRegexFilter)) {
+					string fileOrDirectoryName = fileSystem.Path.GetFileName (sourcePath);
+
+					// Check file / directory name regex filter second
+					if (Regex.IsMatch (fileOrDirectoryName, regexFilter)) {
 						AddLinkCommand addLinkCommand = new AddLinkCommand (
-						fileSystem.Path.Combine (sourceDirectoryPath, fileName),
-						fileSystem.Path.Combine (targetDirectoryPath, fileName),
+						sourcePath,
+						fileSystem.Path.Combine(targetBasePath, fileOrDirectoryName),
 						linkType,
 						path);
 
 						addLinkCommand.Execute (console, configHandler, fileSystem, pathResolver);
 					}
 				}
+			} catch (ArgumentException) {
+				console.WriteLine ("Regex provided is invalid!");
 			}
 		}
 
