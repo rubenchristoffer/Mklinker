@@ -8,7 +8,7 @@ namespace Mklinker {
 
 	class Console : IConsole {
 
-		TextWriter IConsole.Writer => System.Console.Out;
+		TextWriter IConsole.Writer => new ConsoleHelpWriter();
 
 		string IConsole.ReadLine() {
 			return System.Console.ReadLine();
