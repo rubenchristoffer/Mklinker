@@ -227,7 +227,7 @@ var assemblies = [
       { "name": "Mklinker.ArgumentParser", "rp": "Mklinker_ArgumentParser.htm", "cl": 5, "ucl": 0, "cal": 5, "tl": 17, "ct": "LineCoverage", "mc": "-", "cb": 6, "tb": 6, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.CommandExecutor", "rp": "Mklinker_CommandExecutor.htm", "cl": 14, "ucl": 8, "cal": 22, "tl": 47, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.AddLinkCommand", "rp": "Mklinker_AddLinkCommand.htm", "cl": 26, "ucl": 5, "cal": 31, "tl": 66, "ct": "LineCoverage", "mc": "-", "cb": 10, "tb": 12, "lch": [], "bch": [], "hc": [] },
-      { "name": "Mklinker.Commands.AddLinksCommand", "rp": "Mklinker_AddLinksCommand.htm", "cl": 0, "ucl": 54, "cal": 54, "tl": 99, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 16, "lch": [], "bch": [], "hc": [] },
+      { "name": "Mklinker.Commands.AddLinksCommand", "rp": "Mklinker_AddLinksCommand.htm", "cl": 54, "ucl": 4, "cal": 58, "tl": 103, "ct": "LineCoverage", "mc": "-", "cb": 15, "tb": 16, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.AddVariableCommand", "rp": "Mklinker_AddVariableCommand.htm", "cl": 25, "ucl": 4, "cal": 29, "tl": 59, "ct": "LineCoverage", "mc": "-", "cb": 5, "tb": 6, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.ConfigCommand", "rp": "Mklinker_ConfigCommand.htm", "cl": 42, "ucl": 1, "cal": 43, "tl": 67, "ct": "LineCoverage", "mc": "-", "cb": 16, "tb": 16, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.InteractiveCommand", "rp": "Mklinker_InteractiveCommand.htm", "cl": 12, "ucl": 0, "cal": 12, "tl": 26, "ct": "LineCoverage", "mc": "-", "cb": 4, "tb": 4, "lch": [], "bch": [], "hc": [] },
