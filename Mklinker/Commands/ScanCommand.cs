@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 namespace Mklinker.Commands {
 
     [Verb("scan", HelpText = "Detect if circular paths (loops) exist for a given root folder by scanning all directories and collecting data. This detection is very rough and will only give an indication by displaying how often certain directory names are used (indicating loops around those directory names)")]
-    class DetectCommand {
+    class ScanCommand {
 
         private List<string> cases = new List<string>();
         private bool error = false;
