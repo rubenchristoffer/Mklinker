@@ -10,15 +10,16 @@ using System.Runtime.CompilerServices;
 
 namespace Mklinker.Commands {
 
-    [Verb("detect", HelpText = "Detect if circular paths exist for a given root folder. This detection is very rough and will only give an indication")]
+    [Verb("scan", HelpText = "Detect if circular paths (loops) exist for a given root folder by scanning all directories and collecting data. This detection is very rough and will only give an indication by displaying how often certain directory names are used (indicating loops around those directory names)")]
     class DetectCommand {
 
         private List<string> cases = new List<string>();
+        private bool error = false;
 
-        [Option ('p', "path", Default = ".", HelpText = "The root folder that should be scanned. Default will scan current working directory", Required = false)]
+        [Value (0, Default = ".", HelpText = "The root folder that should be scanned. Default will scan current working directory", Required = false)]
         public string rootFolder { get; private set; }
 
-        [Option('l', "limit", Default = 20, HelpText = "Maximum amount of subfolders used for detecting loop (recursion limit)", Required = false)]
+        [Option('l', "limit", Default = 20, HelpText = "Maximum amount of subfolders used for detecting loop (recursion limit). Higher values might result in more time, but will be more accurate", Required = false)]
         public int recursionLimit { get; private set; }
 
         [Option('v', "verbose", Default = false, HelpText = "Will display detailed output including every path that has reached the recursion limit")]
@@ -30,40 +31,56 @@ namespace Mklinker.Commands {
                 return;
             }
 
-            console.WriteLine ($"### Recursion limit test (limit = {recursionLimit}) ###", IConsole.ContentType.Header);
+            console.WriteLine ($"### Running recursion limit test (limit = {recursionLimit}) ###", IConsole.ContentType.Header);
             ScanRecursive (console, fileSystem, pathResolver, rootFolder, rootFolder, 0);
 
-            console.WriteLine ($"### Collecting word count for directory names ###", IConsole.ContentType.Header);
-            DetectRepeatingPath (console);
+            if (!error) {
+                if (cases.Count == 0) {
+                    console.WriteLine ("No loops found!", IConsole.ContentType.Positive);
+                } else {
+                    console.WriteLine ("Possible loops found!", IConsole.ContentType.Negative);
+                    console.WriteLine ();
 
-            if (cases.Count == 0) {
-                console.WriteLine ("No loops found!", IConsole.ContentType.Positive);
+                    console.WriteLine ($"### Collecting word count for directory names ###", IConsole.ContentType.Header);
+                    DetectRepeatingPath (console);
+                }
             }
         }
 
         internal void ScanRecursive (IConsole console, IFileSystem fileSystem, IPathResolver pathResolver, string rootFolder, string currentFolder, int recursionLevel) {
-            // Try to find loops by using a recursion limit
-            foreach (string directory in fileSystem.Directory.GetDirectories (currentFolder)) {
-                if (recursionLevel >= recursionLimit) {
-                    if (verbose) {
-                        console.WriteLine (directory);
-                        console.WriteLine ();
-                    }
-                    
-                    cases.Add (directory.Replace('\\', '/'));
+            try {
+                // Try to find loops by using a recursion limit
+                foreach (string directory in fileSystem.Directory.GetDirectories (currentFolder)) {
+                    if (recursionLevel >= recursionLimit) {
+                        if (verbose) {
+                            console.WriteLine (directory);
+                            console.WriteLine ();
+                        }
 
-                    continue;
+                        cases.Add (directory.Replace ('\\', '/'));
+
+                        continue;
+                    }
+
+                    ScanRecursive (console, fileSystem, pathResolver, rootFolder, directory, recursionLevel + 1);
+                }
+            } catch(IOException e) {
+                // Most common error is when recursion liimt is too high
+                console.WriteLine ("An error has occured!", IConsole.ContentType.Negative);
+                console.WriteLine ($"Perhaps recursion limit ({recursionLimit}) is set too high?", IConsole.ContentType.Negative);
+                console.WriteLine ($"Try setting recursion limit to {recursionLevel - 1} or lower", IConsole.ContentType.Negative);
+                
+                if (verbose) {
+                    console.WriteLine ();
+                    console.WriteLine (e.ToString(), IConsole.ContentType.Negative);
                 }
 
-                ScanRecursive (console, fileSystem, pathResolver, rootFolder, directory, recursionLevel + 1);
+                cases.Clear ();
+                error = true;
             }
         }
 
         internal void DetectRepeatingPath (IConsole console) {
-            if (cases.Count == 0) {
-                return;
-            }
-
             Dictionary<string, int> wordCount = new Dictionary<string, int> ();
             Dictionary<string, List<string>> wordAndPaths = new Dictionary<string, List<string>> ();
 
@@ -83,6 +100,7 @@ namespace Mklinker.Commands {
                 }
             }
 
+            // Write all word counts at the end
             var wordCollection = wordCount
                 .OrderByDescending(wc => wc.Value)
                 .Select (wc => $"{wc.Key} ({wc.Value})");
