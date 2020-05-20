@@ -42,7 +42,7 @@ namespace Mklinker.Commands {
                     console.WriteLine ();
 
                     console.WriteLine ($"### Collecting word count for directory names ###", IConsole.ContentType.Header);
-                    DetectRepeatingPath (console);
+                    CountDirectoryWords (console);
                 }
             }
         }
@@ -80,11 +80,13 @@ namespace Mklinker.Commands {
             }
         }
 
-        internal void DetectRepeatingPath (IConsole console) {
+        internal void CountDirectoryWords (IConsole console) {
             Dictionary<string, int> wordCount = new Dictionary<string, int> ();
             Dictionary<string, List<string>> wordAndPaths = new Dictionary<string, List<string>> ();
 
-            // Try to find directory that creates loop here
+            // Count how often directory words occur in the paths
+            // Directory names that appear often have a higher chance
+            // of being the cause of the loop or near the cause of the loop
             for (int i = 0; i < cases.Count; i++) {
                 string @case = cases[i];
                 string[] pathDirectories = @case.Split ('/');
