@@ -19,7 +19,7 @@ namespace Mklinker.Commands {
         [Value (0, Default = ".", HelpText = "The root folder that should be scanned. Default will scan current working directory", Required = false)]
         public string rootFolder { get; private set; }
 
-        [Option('l', "limit", Default = 20, HelpText = "Maximum amount of subfolders used for detecting loop (recursion limit). Higher values might result in more time, but will be more accurate", Required = false)]
+        [Option('l', "limit", Default = 30, HelpText = "Maximum amount of subfolders used for detecting loop (recursion limit). Higher values might result in more time, but will be more accurate", Required = false)]
         public int recursionLimit { get; private set; }
 
         [Option('v', "verbose", Default = false, HelpText = "Will display detailed output including every path that has reached the recursion limit")]
