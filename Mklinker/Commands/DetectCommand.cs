@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 
 namespace Mklinker.Commands {
 
-    [Verb("detect", HelpText = "Detect if circular paths exist for a given root folder")]
+    [Verb("detect", HelpText = "Detect if circular paths exist for a given root folder. This detection is very rough and will only give an indication")]
     class DetectCommand {
 
         private List<string> cases = new List<string>();
@@ -21,7 +21,7 @@ namespace Mklinker.Commands {
         [Option('l', "limit", Default = 20, HelpText = "Maximum amount of subfolders used for detecting loop (recursion limit)", Required = false)]
         public int recursionLimit { get; private set; }
 
-        [Option('v', "verbose", Default = true, HelpText = "Will display detailed output including every path that has reached the recursion limit")]
+        [Option('v', "verbose", Default = false, HelpText = "Will display detailed output including every path that has reached the recursion limit")]
         public bool verbose { get; private set; }
 
         internal void Execute (IConsole console, IFileSystem fileSystem, IPathResolver pathResolver) {
@@ -33,7 +33,7 @@ namespace Mklinker.Commands {
             console.WriteLine ($"### Recursion limit test (limit = {recursionLimit}) ###", IConsole.ContentType.Header);
             ScanRecursive (console, fileSystem, pathResolver, rootFolder, rootFolder, 0);
 
-            console.WriteLine ($"### Try to detect repeating directory names ###", IConsole.ContentType.Header);
+            console.WriteLine ($"### Collecting word count for directory names ###", IConsole.ContentType.Header);
             DetectRepeatingPath (console);
 
             if (cases.Count == 0) {
@@ -45,8 +45,11 @@ namespace Mklinker.Commands {
             // Try to find loops by using a recursion limit
             foreach (string directory in fileSystem.Directory.GetDirectories (currentFolder)) {
                 if (recursionLevel >= recursionLimit) {
-                    console.WriteLine (directory);
-                    console.WriteLine ();
+                    if (verbose) {
+                        console.WriteLine (directory);
+                        console.WriteLine ();
+                    }
+                    
                     cases.Add (directory.Replace('\\', '/'));
 
                     continue;
