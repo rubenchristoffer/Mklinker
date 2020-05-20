@@ -14,16 +14,16 @@ namespace Mklinker {
 		readonly IConfig defaultConfig;
 		readonly IArgumentParser argumentHandler;
 		readonly ILinker linker;
-		readonly IPathResolver pathFormatter;
+		readonly IPathResolver pathResolver;
 
-		public CommandExecutor (IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, IConfig defaultConfig, IArgumentParser argumentHandler, ILinker linker, IPathResolver pathFormatter) {
+		public CommandExecutor (IConsole console, IConfigHandler configHandler, IFileSystem fileSystem, IConfig defaultConfig, IArgumentParser argumentHandler, ILinker linker, IPathResolver pathResolver) {
 			this.console = console;
 			this.configHandler = configHandler;
 			this.fileSystem = fileSystem;
 			this.defaultConfig = defaultConfig;
 			this.argumentHandler = argumentHandler;
 			this.linker = linker;
-			this.pathFormatter = pathFormatter;
+			this.pathResolver = pathResolver;
 		}
 
 		void ICommandExecutor.Execute(params string[] args) {
@@ -33,14 +33,14 @@ namespace Mklinker {
 
 			parserResult
 				.WithParsed<IDefaultCommandHandler>(flag => flag.Execute(console, configHandler, fileSystem))
-				.WithParsed<ConfigCommand>(cmd => cmd.Execute(console, configHandler, defaultConfig, pathFormatter))
+				.WithParsed<ConfigCommand>(cmd => cmd.Execute(console, configHandler, defaultConfig, pathResolver))
 				.WithParsed<InteractiveCommand>(cmd => cmd.Execute (console, argumentHandler, this))
-				.WithParsed<LinkAllCommand>(cmd => cmd.Execute (console, configHandler, fileSystem, linker, pathFormatter))
-				.WithParsed<AddLinkCommand>(cmd => cmd.Execute (console, configHandler, fileSystem, pathFormatter))
-				.WithParsed<ValidateCommand>(cmd => cmd.Execute(console, configHandler, fileSystem, pathFormatter))
-				.WithParsed<ListCommand>(cmd => cmd.Execute (console, configHandler, fileSystem, pathFormatter))
-				.WithParsed<AddLinksCommand>(cmd => cmd.Execute(console, configHandler, fileSystem, pathFormatter))
-				.WithParsed<DetectCommand>(cmd => cmd.Execute (console, fileSystem));
+				.WithParsed<LinkAllCommand>(cmd => cmd.Execute (console, configHandler, fileSystem, linker, pathResolver))
+				.WithParsed<AddLinkCommand>(cmd => cmd.Execute (console, configHandler, fileSystem, pathResolver))
+				.WithParsed<ValidateCommand>(cmd => cmd.Execute(console, configHandler, fileSystem, pathResolver))
+				.WithParsed<ListCommand>(cmd => cmd.Execute (console, configHandler, fileSystem, pathResolver))
+				.WithParsed<AddLinksCommand>(cmd => cmd.Execute(console, configHandler, fileSystem, pathResolver))
+				.WithParsed<DetectCommand>(cmd => cmd.Execute (console, fileSystem, pathResolver));
 		}
 
 	}
