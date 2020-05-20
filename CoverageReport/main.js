@@ -230,7 +230,7 @@ var assemblies = [
       { "name": "Mklinker.Commands.AddLinksCommand", "rp": "Mklinker_AddLinksCommand.htm", "cl": 56, "ucl": 1, "cal": 57, "tl": 101, "ct": "LineCoverage", "mc": "-", "cb": 16, "tb": 16, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.AddVariableCommand", "rp": "Mklinker_AddVariableCommand.htm", "cl": 25, "ucl": 4, "cal": 29, "tl": 59, "ct": "LineCoverage", "mc": "-", "cb": 5, "tb": 6, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.ConfigCommand", "rp": "Mklinker_ConfigCommand.htm", "cl": 43, "ucl": 1, "cal": 44, "tl": 68, "ct": "LineCoverage", "mc": "-", "cb": 16, "tb": 16, "lch": [], "bch": [], "hc": [] },
-      { "name": "Mklinker.Commands.DetectCommand", "rp": "Mklinker_DetectCommand.htm", "cl": 0, "ucl": 14, "cal": 14, "tl": 36, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 4, "lch": [], "bch": [], "hc": [] },
+      { "name": "Mklinker.Commands.DetectCommand", "rp": "Mklinker_DetectCommand.htm", "cl": 0, "ucl": 72, "cal": 72, "tl": 123, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 28, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.InteractiveCommand", "rp": "Mklinker_InteractiveCommand.htm", "cl": 12, "ucl": 0, "cal": 12, "tl": 26, "ct": "LineCoverage", "mc": "-", "cb": 4, "tb": 4, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.LinkAllCommand", "rp": "Mklinker_LinkAllCommand.htm", "cl": 20, "ucl": 4, "cal": 24, "tl": 52, "ct": "LineCoverage", "mc": "-", "cb": 9, "tb": 10, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.ListCommand", "rp": "Mklinker_ListCommand.htm", "cl": 23, "ucl": 9, "cal": 32, "tl": 58, "ct": "LineCoverage", "mc": "-", "cb": 10, "tb": 12, "lch": [], "bch": [], "hc": [] },
