@@ -48,6 +48,9 @@ namespace Mklinker.Commands {
         }
 
         internal void ScanRecursive (IConsole console, IFileSystem fileSystem, IPathResolver pathResolver, string rootFolder, string currentFolder, int recursionLevel) {
+            if (error)
+                return;
+            
             try {
                 // Try to find loops by using a recursion limit
                 foreach (string directory in fileSystem.Directory.GetDirectories (currentFolder)) {
@@ -73,6 +76,18 @@ namespace Mklinker.Commands {
                 if (verbose) {
                     console.WriteLine ();
                     console.WriteLine (e.ToString(), IConsole.ContentType.Negative);
+                }
+
+                cases.Clear ();
+                error = true;
+            } catch (UnauthorizedAccessException e) {
+                console.WriteLine ("An error has occured!", IConsole.ContentType.Negative);
+                console.WriteLine ("Mklinker does not have access to a directory", IConsole.ContentType.Negative);
+                console.WriteLine ("Try again with admin privileges", IConsole.ContentType.Negative);
+
+                if (verbose) {
+                    console.WriteLine ();
+                    console.WriteLine (e.ToString (), IConsole.ContentType.Negative);
                 }
 
                 cases.Clear ();
