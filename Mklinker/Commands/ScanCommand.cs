@@ -25,6 +25,9 @@ namespace Mklinker.Commands {
         [Option('v', "verbose", Default = false, HelpText = "Will display detailed output including every path that has reached the recursion limit")]
         public bool verbose { get; private set; }
 
+        [Option('i', "ignore", Default = false, HelpText = "Will ignore folders Mklinker does not have access to and continue the scan", Required = false)]
+        public bool ignoreUnauthorizedFolders { get; private set; }
+
         internal void Execute (IConsole console, IFileSystem fileSystem, IPathResolver pathResolver) {
             if (!fileSystem.Directory.Exists(rootFolder)) {
                 console.WriteLine ($"Root folder '{rootFolder}' does not exist", IConsole.ContentType.Negative);
@@ -81,17 +84,23 @@ namespace Mklinker.Commands {
                 cases.Clear ();
                 error = true;
             } catch (UnauthorizedAccessException e) {
-                console.WriteLine ("An error has occured!", IConsole.ContentType.Negative);
-                console.WriteLine ("Mklinker does not have access to a directory", IConsole.ContentType.Negative);
-                console.WriteLine ("Try again with admin privileges", IConsole.ContentType.Negative);
+                if (ignoreUnauthorizedFolders) {
+                    if (verbose) {
+                        console.WriteLine ("Ignoring folder Mklinker does not have access to");
+                    }
+                } else {
+                    console.WriteLine ("An error has occured!", IConsole.ContentType.Negative);
+                    console.WriteLine ("Mklinker does not have access to a directory", IConsole.ContentType.Negative);
+                    console.WriteLine ("Try again with admin privileges or run with --ignore flag", IConsole.ContentType.Negative);
 
-                if (verbose) {
-                    console.WriteLine ();
-                    console.WriteLine (e.ToString (), IConsole.ContentType.Negative);
+                    if (verbose) {
+                        console.WriteLine ();
+                        console.WriteLine (e.ToString (), IConsole.ContentType.Negative);
+                    }
+
+                    cases.Clear ();
+                    error = true;
                 }
-
-                cases.Clear ();
-                error = true;
             }
         }
 
