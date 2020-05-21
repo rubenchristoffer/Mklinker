@@ -28,6 +28,15 @@ namespace Mklinker.Commands {
         [Option('i', "ignore", Default = false, HelpText = "Will ignore folders Mklinker does not have access to and continue the scan", Required = false)]
         public bool ignoreUnauthorizedFolders { get; private set; }
 
+        public ScanCommand () {}
+
+        public ScanCommand (string rootFolder, int recursionLimit, bool verbose, bool ignoreUnauthorizedFolders) {
+            this.rootFolder = rootFolder;
+            this.recursionLimit = recursionLimit;
+            this.verbose = verbose;
+            this.ignoreUnauthorizedFolders = ignoreUnauthorizedFolders;
+        }
+
         internal void Execute (IConsole console, IFileSystem fileSystem, IPathResolver pathResolver) {
             if (!fileSystem.Directory.Exists(rootFolder)) {
                 console.WriteLine ($"Root folder '{rootFolder}' does not exist", IConsole.ContentType.Negative);
