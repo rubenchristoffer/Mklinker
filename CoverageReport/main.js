@@ -235,7 +235,7 @@ var assemblies = [
       { "name": "Mklinker.Commands.ListCommand", "rp": "Mklinker_ListCommand.htm", "cl": 23, "ucl": 9, "cal": 32, "tl": 58, "ct": "LineCoverage", "mc": "-", "cb": 10, "tb": 12, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.RemoveLinkCommand", "rp": "Mklinker_RemoveLinkCommand.htm", "cl": 15, "ucl": 4, "cal": 19, "tl": 41, "ct": "LineCoverage", "mc": "-", "cb": 3, "tb": 4, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.RemoveVariableCommand", "rp": "Mklinker_RemoveVariableCommand.htm", "cl": 15, "ucl": 4, "cal": 19, "tl": 44, "ct": "LineCoverage", "mc": "-", "cb": 3, "tb": 4, "lch": [], "bch": [], "hc": [] },
-      { "name": "Mklinker.Commands.ScanCommand", "rp": "Mklinker_ScanCommand.htm", "cl": 0, "ucl": 72, "cal": 72, "tl": 123, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 28, "lch": [], "bch": [], "hc": [] },
+      { "name": "Mklinker.Commands.ScanCommand", "rp": "Mklinker_ScanCommand.htm", "cl": 62, "ucl": 36, "cal": 98, "tl": 156, "ct": "LineCoverage", "mc": "-", "cb": 27, "tb": 36, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Commands.ValidateCommand", "rp": "Mklinker_ValidateCommand.htm", "cl": 53, "ucl": 10, "cal": 63, "tl": 101, "ct": "LineCoverage", "mc": "-", "cb": 39, "tb": 52, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.Config", "rp": "Mklinker_Config.htm", "cl": 9, "ucl": 0, "cal": 9, "tl": 32, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
       { "name": "Mklinker.ConfigHandler", "rp": "Mklinker_ConfigHandler.htm", "cl": 16, "ucl": 0, "cal": 16, "tl": 34, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
