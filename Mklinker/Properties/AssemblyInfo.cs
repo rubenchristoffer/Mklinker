@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Mklinker")]
-[assembly: AssemblyDescription("Mklinker is a cross-platform console utility that let's you create multiple symbolic / junction / hard links at once based on a portable config file.")]
+[assembly: AssemblyDescription("Mklinker is a cross-platform console utility that let's you create multiple symbolic / junction / hard links at once based on a portable config file")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Mklinker")]
