@@ -21,16 +21,16 @@ namespace Mklinker.Tests.Commands {
 			testConsole = new TestConsole ();
 
 			testFileSystem = new MockFileSystem (new Dictionary<string, MockFileData> {
-				{ @"c:\config.linker", new MockFileData("<?xml version=\"1.0\" encoding=\"utf-16\"?><Config xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" Version=\"v1.1.1\"></Config>") },
-				{ @"c:\invalidconfig.linker", new MockFileData("This content is invalid for a linker file!") },
-				{ @"c:\demo\jQuery.js", new MockFileData("some js") },
-				{ @"c:\demo\image.gif", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) },
-				{ @"somedirectory", new MockDirectoryData() },
+				{ @"c:/config.linker", new MockFileData("<?xml version=\"1.0\" encoding=\"utf-16\"?><Config xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" Version=\"v1.1.1\"></Config>") },
+				{ @"c:/invalidconfig.linker", new MockFileData("This content is invalid for a linker file!") },
+				{ @"c:/demo/jQuery.js", new MockFileData("some js") },
+				{ @"c:/demo/image.gif", new MockFileData(new byte[] { 0x12, 0x34, 0x56, 0xd2 }) },
+				{ @"c:/somedirectory/", new MockDirectoryData() },
 
 				// Simulate circular junction / symbolic directory
 				// The loop folder in this case is a symlink to c:\
 				// causing this kind of pattern when enumerating directories
-				{ @"c:\somedirectory\loop\somedirectory\loop\somedirectory\loop", new MockDirectoryData() }
+				{ @"c:/somedirectory/loop/somedirectory/loop/somedirectory/loop/", new MockDirectoryData() }
 			});
 
 			testPathResolver = new TestPathResolver ();
@@ -39,7 +39,7 @@ namespace Mklinker.Tests.Commands {
 		[Test]
 		public void Execute_WithNoLoops_WillFindNoLoops () {
 			// Arrange
-			ScanCommand command = new ScanCommand (@"c:\demo", 5, false, false);
+			ScanCommand command = new ScanCommand (@"c:/demo", 5, false, false);
 
 			// Act
 			command.Execute (testConsole, testFileSystem, testPathResolver);
@@ -51,7 +51,7 @@ namespace Mklinker.Tests.Commands {
 		[Test]
 		public void Execute_WithLoop_WillFindLoop () {
 			// Arrange
-			ScanCommand command = new ScanCommand (@"c:\", 5, false, false);
+			ScanCommand command = new ScanCommand (@"c:/", 5, false, false);
 
 			// Act
 			command.Execute (testConsole, testFileSystem, testPathResolver);
@@ -69,7 +69,7 @@ namespace Mklinker.Tests.Commands {
 		 */
 		public void Execute_WithLoopAndHighRecursionLimit_WillNotFindLoop () {
 			// Arrange
-			ScanCommand command = new ScanCommand (@"c:\", 10, false, false);
+			ScanCommand command = new ScanCommand (@"c:/", 10, false, false);
 
 			// Act
 			command.Execute (testConsole, testFileSystem, testPathResolver);
@@ -81,7 +81,7 @@ namespace Mklinker.Tests.Commands {
 		[Test]
 		public void Execute_WithNonExistingRootFolder_WillPrintError () {
 			// Arrange
-			ScanCommand command = new ScanCommand (@"c:\doesnotexist", 5, false, false);
+			ScanCommand command = new ScanCommand (@"c:/doesnotexist", 5, false, false);
 
 			// Act
 			command.Execute (testConsole, testFileSystem, testPathResolver);
