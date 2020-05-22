@@ -14,6 +14,8 @@ namespace Mklinker {
 		readonly IFileSystem fileSystem;
 		readonly IProcess process;
 
+		public bool verbose { get; set; }
+
 		public UnixLinker(IConsole console, IFileSystem fileSystem, IProcess process) {
 			this.console = console;
 			this.fileSystem = fileSystem;
@@ -50,6 +52,11 @@ namespace Mklinker {
 			}
 
 			ProcessStartInfo processStartInfo = GetProcessInfo(fileSystem, resolvedSourcePath, resolvedTargetPath, linkType);
+			
+			if (verbose) {
+				console.WriteLine ($"$ {processStartInfo.FileName} {processStartInfo.Arguments}");
+			}
+			
 			IProcess mklinkProcess = process.Start(processStartInfo);
 			bool success = true;
 

@@ -27,6 +27,9 @@ namespace Mklinker.Commands {
 			console.WriteLine ("\nCreating links based on config...");
 
 			int successes = 0;
+			
+			// Allow linkers verbose output if flag is set for this command
+			linker.verbose = verbose;
 
 			foreach (ConfigLink configLink in config.LinkList) {
 				string resolvedSourcePath = pathResolver.GetAbsoluteResolvedPath (configLink.sourcePath, config.Variables);
