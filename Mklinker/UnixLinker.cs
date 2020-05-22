@@ -23,7 +23,9 @@ namespace Mklinker {
 		internal ProcessStartInfo GetProcessInfo(IFileSystem fileSystem, string resolvedSourcePath, string resolvedTargetPath, ConfigLink.LinkType linkType) {
 			return new ProcessStartInfo {
 				FileName = "ln",
-				Arguments = $"{ resolvedSourcePath } { resolvedTargetPath } { GetLinkTypeArgument(fileSystem, linkType, resolvedSourcePath) }",
+				Arguments = $"\"{ resolvedSourcePath }\"" +
+				$" \"{ resolvedTargetPath }\"" +
+				$" \"{ GetLinkTypeArgument(fileSystem, linkType, resolvedSourcePath) }\"",
 				RedirectStandardOutput = true,
 				RedirectStandardError = true,
 				UseShellExecute = false

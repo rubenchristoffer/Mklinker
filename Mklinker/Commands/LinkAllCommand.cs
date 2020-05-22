@@ -10,6 +10,9 @@ namespace Mklinker.Commands {
 	[Verb ("linkall", HelpText = "Generates all links from config")]
 	class LinkAllCommand : GlobalOptions {
 
+		[Option('v', "verbose", Default = false, HelpText = "Gives more detailed output", Required = false)]
+		public bool verbose { get; private set; }
+
 		public LinkAllCommand() : base () {}
 		public LinkAllCommand (string path) : base (path) {}
 
