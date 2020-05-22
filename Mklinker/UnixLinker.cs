@@ -27,7 +27,7 @@ namespace Mklinker {
 				FileName = "ln",
 				Arguments = $"\"{ resolvedSourcePath }\"" +
 				$" \"{ resolvedTargetPath }\"" +
-				$" \"{ GetLinkTypeArgument(fileSystem, linkType, resolvedSourcePath) }\"",
+				$" { GetLinkTypeArgument(fileSystem, linkType, resolvedSourcePath) }",
 				RedirectStandardOutput = true,
 				RedirectStandardError = true,
 				UseShellExecute = false
