@@ -10,7 +10,7 @@ namespace Mklinker {
 	class PathResolver : IPathResolver {
 
 		public const string delimiter = "?";
-		public static readonly string regex = $@"{ Regex.Escape(delimiter) }[\s\S]*{ Regex.Escape(delimiter) }";
+		public static readonly string regex = $@"{ Regex.Escape(delimiter) }[^?]*{ Regex.Escape(delimiter) }";
 
 		readonly IFileSystem fileSystem;
 

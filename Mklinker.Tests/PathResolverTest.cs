@@ -55,20 +55,21 @@ namespace Mklinker.Tests {
 		[Test]
 		public void GetAbsoluteResolvedPath_WithNestedVariablePath_ShouldReturnResolvedPath() {
 			// Arrange
-			string testPath = $@"{ PathResolver.delimiter }UserPath{ PathResolver.delimiter }";
+			string testPath = $@"{ PathResolver.delimiter }TMP{ PathResolver.delimiter }";
 			PathResolver pathFormatter = new PathResolver(testFileSystem.Object);
 			testFileSystem.Setup(m => m.Path.GetFullPath(It.IsAny<string>())).Returns<string>(val => val);
 
 			var testVariables = new List<Variable>(new Variable[] { 
 				new Variable("User", "Frans"),
-				new Variable("UserPath", $@"C:/Users/{ PathResolver.delimiter }User{ PathResolver.delimiter }/Desktop")
+				new Variable("UserPath", $@"C:/Users/{ PathResolver.delimiter }User{ PathResolver.delimiter }/Desktop"),
+				new Variable("TMP", "?UserPath?/tmp/?User?")
 			});
 
 			// Act
 			string result = pathFormatter.GetAbsoluteResolvedPath(testPath, testVariables);
 
 			// Assert
-			Assert.AreEqual(@"C:/Users/Frans/Desktop", result);
+			Assert.AreEqual(@"C:/Users/Frans/Desktop/tmp/Frans", result);
 		}
 
 		[Test]
