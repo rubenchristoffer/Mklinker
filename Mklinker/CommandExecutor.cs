@@ -40,7 +40,8 @@ namespace Mklinker {
 				.WithParsed<ValidateCommand>(cmd => cmd.Execute(console, configHandler, fileSystem, pathResolver))
 				.WithParsed<ListCommand>(cmd => cmd.Execute (console, configHandler, fileSystem, pathResolver))
 				.WithParsed<AddLinksCommand>(cmd => cmd.Execute(console, configHandler, fileSystem, pathResolver))
-				.WithParsed<ScanCommand>(cmd => cmd.Execute (console, fileSystem, pathResolver));
+				.WithParsed<ScanCommand>(cmd => cmd.Execute (console, fileSystem, pathResolver))
+				.WithParsed<RemoveLinkCommand>(cmd => cmd.Execute(console, configHandler, fileSystem, pathResolver));
 		}
 
 	}
