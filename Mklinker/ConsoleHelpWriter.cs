@@ -17,7 +17,7 @@ namespace Mklinker {
 			// Use prefixes to add color coding to certain lines
 			string[] yellowPrefixes = { "Mklinker", "Copyright" };
 			string[] whitePrefixes = { "help", "--help", "version", "--version" };
-			string[] redPrefixes = { "ERROR", "Verb", "Option", "A required" };
+			string[] redPrefixes = { "ERROR", "Verb", "Option", "A required", "No verb" };
 
 			if (yellowPrefixes.Any (p => value.Trim ().StartsWith (p))) {
 				System.Console.ForegroundColor = System.ConsoleColor.Yellow;
