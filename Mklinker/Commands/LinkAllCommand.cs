@@ -37,8 +37,17 @@ namespace Mklinker.Commands {
 
 				CreateSubDirectories (console, fileSystem, pathResolver, config, resolvedTargetPath);
 
-				if (linker.CreateLink (resolvedSourcePath, resolvedTargetPath, configLink.linkType))
+				if (fileSystem.Directory.Exists(resolvedTargetPath) || fileSystem.File.Exists(resolvedTargetPath)) {
+					console.Write ($"Path '{configLink.targetPath}' already exists", IConsole.ContentType.Negative);
+
+					if (verbose) {
+						console.Write ($" (resolved to '{resolvedTargetPath}')", IConsole.ContentType.Negative);
+					}
+
+					console.WriteLine ();
+				} else if (linker.CreateLink (resolvedSourcePath, resolvedTargetPath, configLink.linkType)) {
 					successes++;
+				}
 			}
 
 			console.WriteLine ("\n### Finished! Created {0} / {1} links ###", successes, config.LinkList.Count);
