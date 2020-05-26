@@ -25,20 +25,30 @@
 
 Mklinker is a cross-platform console utility that let's you create multiple symbolic / junction / hard links at once based on a single config file. 
 
-## Why use Mklinker?
-- With Mklinker you can keep the config file around and if you for example re-install your operating system you can just use Mklinker and restore all the various links you had before.
-- With Mklinker you can send someone the config file and they can easily create all the links.  
-- Mklinker is cross-platform 
+## Why use Mklinker? Who cares about symbolic links?
+- With Mklinker you can keep the config file around and if you for example re-install your operating system you can just use Mklinker and restore all the various links you had before. This is especially useful if you are using a syncing program like Dropbox as it allows you to easily add links to outside folders like `AppData`, `Program Files` or `My Documents`
+- With Mklinker you can easily setup outside references in your projects (you're welcome to use it in your github repos!)
+- With Mklinker you can send someone the config file and they can easily create all the links 
+- Mklinker is cross-platform (windows, linux, mac)
 
 ## Installation
-### Using pre-compiled binaries
-Just copy the Mklinker binary from <a href="../../releases/">releases</a> (you have to unzip the zip file and copy the file for your operating system) and run "mklinker" in a console window (or whatever you rename your file to) and a help menu will tell you the commands you can use.
+### Using NuGet (preferred)
+Installing using NuGet is the easiest and preferred way as it allows you to call `mklinker` commands globally using command-line. `Note that you need .NET Core 3.1 installed` (download <a href="https://dotnet.microsoft.com/download/dotnet-core/3.1">here</a>).
 
-### Using NuGet
+#### Instructions
 Go to NuGet package <a href="https://www.nuget.org/packages/Mklinker/">here</a> and copy command listed under .NET CLI to install Mklinker as a global tool. You can then run `mklinker` from the command-line globally.
 
-### From source
-Clone the repository and run publish.bat and it will compile the binaries and put them into `Mklinker/bin` in the format `Mklinker-x.y.z-OS`. 
+### Using pre-compiled binaries
+Using pre-compiled binaries is a viable alternative if you do not have the .NET SDK installed and just want to run mklinker locally rather than globally. Note that it *is* possible to make it global, but in order to do so you would have to add the folder where you copy mklinker to the <a href="https://en.wikipedia.org/wiki/PATH_(variable)">PATH environmental variable</a> or copy mklinker to an existing folder that is specified in the PATH environmental variable.
+
+#### Instructions
+Just copy the Mklinker binary from <a href="../../releases/">releases</a> (you have to unzip the zip file and copy the file for your operating system) and run "mklinker" in a console window (or whatever you rename your file to) and a help menu will tell you the commands you can use.
+
+### From source code
+If you are a purist or simply paranoid it is possible to compile the binaries yourself from the source code!
+
+#### Instructions
+Clone the repository using `git clone https://github.com/rubenchristoffer/Mklinker.git` (you need git installed!) and run `publish.bat` and it will compile the binaries and put them into the `Mklinker/bin/` folder in the format `Mklinker-x.y.z-OS`. You can then copy the binaries to wherever you want to install and run Mklinker. See the instructions above `Using pre-compiled binaries` for more info about what to do with the binaries you just compiled.
 
 ## Features
 - Supports symbolic, junction and hard links on Windows platform  
