@@ -73,7 +73,9 @@ If you are a purist or simply paranoid it is possible to compile the binaries yo
 The binaries will then be compiled and put into the `Mklinker/bin/` folder in the format `Mklinker-x.y.z-OS`. You can then copy the binaries to wherever you want to install and run Mklinker. See the instructions above `Using pre-compiled binaries` for more info about what to do with the binaries you just compiled.
 
 ## How do I use Mklinker? <a name="howto"></a>
-Run `mklinker help` to see all verbs / commands and their description. You can also run `mklinker help [VERB]` or `mklinker [VERB] --help` in order to get more information about that given verb / command.
+Run `mklinker help` to see all verbs / commands and their description. You can also run `mklinker help [VERB]` or `mklinker [VERB] --help` in order to get more information about that given verb / command. For example, `mklinker help addlink` will show you arguments that the `addlink` verb / command takes.
+
+For more info, check out the <a href="https://github.com/rubenchristoffer/Mklinker/wiki/Getting-started">Getting started page on the wiki</a>.
 
 ## Features <a name="features"></a>
 - Supports symbolic, junction and hard links on Windows platform  
