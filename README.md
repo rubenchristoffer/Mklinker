@@ -68,7 +68,7 @@ If you are a purist or simply paranoid it is possible to compile the binaries yo
 #### Instructions
 1.  Clone the repository using `git clone https://github.com/rubenchristoffer/Mklinker.git` (you need <a href="https://git-scm.com/">git</a> installed)
 1.  Navigate to root folder for Mklinker
-1.  Run `publish.bat` (you need <a href="https://dotnet.microsoft.com/download/dotnet-core/3.1">.NET Core 3.1 SDK</a> installed)
+1.  Run `publish.bat` or `publish.sh` (you need <a href="https://dotnet.microsoft.com/download/dotnet-core/3.1">.NET Core 3.1 SDK</a> installed)
  
 The binaries will then be compiled and put into the `Mklinker/bin/` folder in the format `Mklinker-x.y.z-OS`. You can then copy the binaries to wherever you want to install and run Mklinker. See the instructions above `Using pre-compiled binaries` for more info about what to do with the binaries you just compiled.
 
@@ -87,3 +87,6 @@ For more info, check out the <a href="https://github.com/rubenchristoffer/Mklink
 - Supports interactive mode where you can run multiple commands without `mklinker` in front
 - Supports a scan command which will help with finding circular paths that can arise due to symbolic directories / junctions pointing to a parent folder. This is important when combining Mklinker with Syncing tools like Dropbox as loops may cause the syncing to go on "forever"
 - Supports adding multiple links at once using optional regex filters that also works for sub-directories (allows for recursion)
+
+## Contributing
+Anyone is allowed to contribute and it is very appreciated! If you want to contribute, take a look at the [CONTRIBUTING](./CONTRIBUTING.md) guidelines to get started.
