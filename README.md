@@ -33,6 +33,7 @@ Mklinker is a cross-platform console utility that let's you create multiple symb
     1. [From source code](#source)
 1. [How do I use Mklinker?](#howto)
 1. [Features](#features)
+1. [Contributing](#contributing)
 
 ## Why use Mklinker? Who cares about symbolic links? <a name="introduction"></a>
 - With Mklinker you can keep the config file around and if you for example re-install your operating system you can just use Mklinker and restore all the various links you had before. This is especially useful if you are using a syncing program like Dropbox as it allows you to easily add links to outside folders like `AppData`, `Program Files` or `My Documents`
@@ -88,5 +89,5 @@ For more info, check out the <a href="https://github.com/rubenchristoffer/Mklink
 - Supports a scan command which will help with finding circular paths that can arise due to symbolic directories / junctions pointing to a parent folder. This is important when combining Mklinker with Syncing tools like Dropbox as loops may cause the syncing to go on "forever"
 - Supports adding multiple links at once using optional regex filters that also works for sub-directories (allows for recursion)
 
-## Contributing
+## Contributing <a name="contributing"></a>
 Anyone is allowed to contribute and it is very appreciated! If you want to contribute, take a look at the [CONTRIBUTING](./CONTRIBUTING.md) guidelines to get started.
